@@ -10,9 +10,15 @@
     <p id="console"></p>
     <div id="battleMenu">
         <div id="battleOptionsMenu">
-            <button id="attack" onclick="battleMenu()">Attack!</button> <br>
-            <button id="bag" onclick="battleMenu()">Bag</button> <br>
-            <button id="run" onclick="battleMenu()">Run</button> <br>
+            <button id="attack" onclick="Attack()">Attack!</button> <br>
+            <button id="bag" onclick="Bag()">Bag</button> <br>
+            <button id="run" onclick="Run()">Run</button> <br>
+        </div>
+        <div id="eatermonEnemyContainer">
+            <img id="eatermonEnemy">
+        </div>
+        <div id="eatermonPlayerContainer">
+            <img id="eatermonPlayer">
         </div>
     </div>
     <canvas id="gameCanvas">
@@ -21,6 +27,8 @@
     <script src="Javascript Files/player.js"></script>    <!-- Load player.js second -->
     <script src="Javascript Files/grass.js"></script>      <!-- Then load game.js last -->
     <script src="Javascript Files/encounter.js"></script>      <!-- Then load game.js last -->
+    <script src="Javascript Files/eatermon.js"></script>      <!-- Then load game.js last -->
+    <script src="Javascript Files/eatermonMoves.js"></script>      <!-- Then load game.js last -->
     <script src="Javascript Files/game.js"></script>      <!-- Then load game.js last -->
 </body>
 </html>

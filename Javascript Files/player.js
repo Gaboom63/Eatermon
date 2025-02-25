@@ -7,6 +7,7 @@ const player = {
     height: 50,
     speed: 5,
     color: 'darkcyan'
+    
 };
 
 // Function to update player's position

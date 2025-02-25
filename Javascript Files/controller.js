@@ -1,6 +1,6 @@
 // controller.js
 
-const keys = {
+ const keys = {
     up: false,
     down: false,
     left: false,
