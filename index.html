@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-Down Game Template</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <p id="console"></p>
+    <div id="battleMenu">
+        <div id="battleOptionsMenu">
+            <button id="attack" onclick="battleMenu()">Attack!</button> <br>
+            <button id="bag" onclick="battleMenu()">Bag</button> <br>
+            <button id="run" onclick="battleMenu()">Run</button> <br>
+        </div>
+    </div>
+    <canvas id="gameCanvas">
+    </canvas>
+    <script src="Javascript Files/controller.js"></script> <!-- Load controller.js first -->
+    <script src="Javascript Files/player.js"></script>    <!-- Load player.js second -->
+    <script src="Javascript Files/grass.js"></script>      <!-- Then load game.js last -->
+    <script src="Javascript Files/encounter.js"></script>      <!-- Then load game.js last -->
+    <script src="Javascript Files/game.js"></script>      <!-- Then load game.js last -->
+</body>
+</html>
