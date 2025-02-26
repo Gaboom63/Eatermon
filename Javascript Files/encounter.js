@@ -7,6 +7,13 @@ let enemyEatermonIndex = 0; // Default to Woodle as the enemy
 let battleText = document.getElementById('battleTextContainer'); 
 let enemyHP = document.getElementById("enemyHP"); 
 
+
+function restoreEnemyHp() {
+    if(hasEncounted === true) {
+        const selectedEatermon = eatermon[eatermonIndex];
+ 
+    }
+}
 function encounter() {
     let pickNum = Math.random() * (500 - 1) + 1;
 
@@ -66,6 +73,13 @@ function generateAttackButtons() {
     }
 }
 
+function updateHp() {
+    let enemyHpText = document.getElementById('enemyHP');
+    let playerHpText = document.getElementById('playerHP');
+    enemyHpText.innerHTML = `<b> ${eatermon[enemyEatermonIndex].name}'s HP: ${eatermon[enemyEatermonIndex].hp} / ${eatermon[enemyEatermonIndex].maxHp}</b>`;
+    playerHpText.innerHTML = `<b> ${eatermon[currentEatermonIndex].name}'s HP: ${eatermon[currentEatermonIndex].hp} / ${eatermon[currentEatermonIndex].maxHp}</b>`;
+
+}
 
 
 function attackMove(eatermonIndex, moveIndex) {
@@ -90,17 +104,22 @@ function attackMove(eatermonIndex, moveIndex) {
             setTimeout(() => {
                 battleText.innerHTML = `You Won Against ${eatermon[enemyEatermonIndex].name}!`; 
                 enemyHp.style.display = `none`; 
+                setTimeout(() => {
+                    battleMenuScript.style.display = 'none';
+                },1000)
             },1000);
         }
-
+        
 
     console.log(`${eatermon[enemyEatermonIndex].name}'s HP: ${eatermon[enemyEatermonIndex].hp}`);
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br> <b> ${eatermon[enemyEatermonIndex].name}'s HP:    ${eatermon[currentEatermonIndex].hp} </b>`;
-    enemyHpText.innerHTML = `<b> ${eatermon[enemyEatermonIndex].name}'s HP:    ${eatermon[currentEatermonIndex].hp} </b>`;
     // After player's move, trigger enemy's move
     setTimeout(() => {
-        enemyMove();
+        if(eatermon[enemyEatermonIndex].hp > 0) {
+            enemyMove();
+        }
     }, 1000); 
+    updateHp(); // Update HP UI after attack
 }
 
 // Function to simulate the enemy's random move
@@ -119,15 +138,16 @@ function enemyMove() {
 
     if (selectedEnemyMove.power > 0) {
         eatermon[currentEatermonIndex].hp -= selectedEnemyMove.power;
-        playerHp.style.width = `${eatermon[enemyEatermonIndex].hp}%`;
+        playerHp.style.width = `${eatermon[currentEatermonIndex].hp}%`;
     } 
-    if(eatermon[enemyEatermonIndex].hp <= 0) {
+    if(eatermon[currentEatermonIndex].hp <= 0) {
         playerHp.style.width = `0%`;
         setTimeout(() => {
             playerHp.style.display = `none`; 
         },1000);
     }
 
+    updateHp(); // Update HP UI after attack
 
     battleText.innerHTML = `${enemyEatermon.name} used ${selectedEnemyMove.name}! <br> <b>${eatermon[currentEatermonIndex].name}'s HP: ${eatermon[currentEatermonIndex].hp}</b>`;
 }
@@ -244,3 +264,58 @@ function triggerVineWhipAnimation() {
     }, 1500); // Adjust the timeout as necessary
 }
 
+
+function triggerFireStarAnimation() {
+    const fireball = document.getElementById('firestar');
+    const player = document.getElementById('eatermonPlayer');
+    const enemy = document.getElementById('eatermonEnemy');
+
+    // Get the player's and enemy's positions
+    const playerRect = player.getBoundingClientRect();
+    const enemyRect = enemy.getBoundingClientRect();
+
+    // Calculate the distance from player to enemy in both X and Y directions
+    const distanceX = enemyRect.left + enemyRect.width / 2 - (playerRect.left + playerRect.width / 2);
+    const distanceY = enemyRect.top + enemyRect.height / 2 - (playerRect.top + playerRect.height / 2);
+
+    // Set the initial position of the fireball at the player's position
+    fireball.style.left = `${playerRect.left + playerRect.width / 2 - 25}px`; // Center the fireball horizontally
+    fireball.style.top = `${playerRect.top + playerRect.height / 2 - 25}px`;  // Center the fireball vertically
+
+    // Show the fireball
+    fireball.style.display = 'block';
+
+    // Variables to track the fireball's movement
+    let moveX = 0;
+    let moveY = 0;
+
+    // The speed of the fireball's movement
+    const speed = 10; // Change this to control how fast the fireball moves
+
+    // Animate the fireball
+    const interval = setInterval(() => {
+        moveX += distanceX / 50; // Divide distance to get incremental movement
+        moveY += distanceY / 50;
+
+        // Apply the new position using transform
+        fireball.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        
+        // Stop the animation once the fireball reaches the enemy's position
+        if (Math.abs(moveX) >= Math.abs(distanceX) && Math.abs(moveY) >= Math.abs(distanceY)) {
+            clearInterval(interval);
+
+            // Position the fireball exactly at the enemy's location for the explosion
+            fireball.style.left = `${enemyRect.left + enemyRect.width / 2 - 25}px`;  // Center fireball at enemy
+            fireball.style.top = `${enemyRect.top + enemyRect.height / 2 - 25}px`;   // Center fireball at enemy
+
+            // Trigger explosion after fireball reaches the enemy
+            fireball.style.animation = 'explosion 1s forwards';  // Trigger explosion animation
+            
+            // Optionally hide the fireball after animation
+            setTimeout(() => {
+                fireball.style.display = 'none';
+                fireball.style.animation = 'none';
+            }, 1000);  // Match with the duration of explosion animation
+        }
+    }, 20); // Adjust the interval time to control the animation speed
+}
