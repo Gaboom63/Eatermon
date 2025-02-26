@@ -14,6 +14,14 @@ const eatermon = [
      attack: 30, 
      src: "images/tomadoodle.png",
      canFlee: false
+    },
+    {
+         id: 2, 
+         name: "Druewl",
+         hp: 120, 
+         attack: 30, 
+         src: "images/druewl.png",
+         canFlee: false
     }
  ]
  
@@ -24,7 +32,7 @@ const eatermon = [
     const enemyImg = document.getElementById("eatermonEnemy");
      const playerImg = document.getElementById("eatermonPlayer");
      
-     enemyImg.src = eatermon[0].src;  // Enemy is Woodle
+     enemyImg.src = eatermon[2].src;  // Enemy is Woodle
      playerImg.src = eatermon[1].src; // Player is Tomadoodle
  }
  

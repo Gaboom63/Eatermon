@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Top-Down Game Template</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <p id="console"></p>
     <div id="battleMenu">
@@ -30,17 +35,20 @@
         <div id="battleHpBar">
             <div id="enemyinnerBar"></div>
         </div>
+        <div id="enemyHpDiv">
+            <p id="enemyHP"></p>
+        </div>
 
-     
     </div>
     <canvas id="gameCanvas">
     </canvas>
     <script src="Javascript Files/controller.js"></script> <!-- Load controller.js first -->
-    <script src="Javascript Files/player.js"></script>    <!-- Load player.js second -->
-    <script src="Javascript Files/grass.js"></script>      <!-- Then load game.js last -->
-    <script src="Javascript Files/encounter.js"></script>      <!-- Then load game.js last -->
-    <script src="Javascript Files/eatermon.js"></script>      <!-- Then load game.js last -->
-    <script src="Javascript Files/eatermonMoves.js"></script>      <!-- Then load game.js last -->
-    <script src="Javascript Files/game.js"></script>      <!-- Then load game.js last -->
+    <script src="Javascript Files/player.js"></script> <!-- Load player.js second -->
+    <script src="Javascript Files/grass.js"></script> <!-- Then load game.js last -->
+    <script src="Javascript Files/encounter.js"></script> <!-- Then load game.js last -->
+    <script src="Javascript Files/eatermon.js"></script> <!-- Then load game.js last -->
+    <script src="Javascript Files/eatermonMoves.js"></script> <!-- Then load game.js last -->
+    <script src="Javascript Files/game.js"></script> <!-- Then load game.js last -->
 </body>
+
 </html>
