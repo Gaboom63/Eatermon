@@ -16,5 +16,14 @@ const eatermonMoves = [
             { name: "Scratch", power: 10, type: "Normal" },
             { name: "Ember", power: 25, type: "Fire" }
         ]
+    },
+    {
+        eatermon: eatermon[2], // Tomadoodle
+        moves: [
+            { name: "Snot", power: 15, type: "Fire" },
+            { name: "Burp", power: 20, type: "Fire" },
+            { name: "Scratch", power: 10, type: "Normal" },
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
     }
 ];

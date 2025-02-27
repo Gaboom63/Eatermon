@@ -1,15 +1,15 @@
 // Grass patch properties (base grass object)
 const grass = [
     {
-        x: Math.random() * (100 - 1) + 1, 
-        y: Math.random() * (100 - 1) + 1,
+        x: 40, 
+        y: 20,
         width: 100,
         height: 100,
         color: 'green'
     },
     {
-        x: Math.random() * (100 - 1) + 1,
-        y: Math.random() * (100 - 1) + 1,
+        x: 10,
+        y: 20,
         width: 100,
         height: 100,
         color: 'green'

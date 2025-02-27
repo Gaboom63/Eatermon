@@ -35,9 +35,9 @@ const eatermon = [
     const enemyImg = document.getElementById("eatermonEnemy");
      const playerImg = document.getElementById("eatermonPlayer");
      
-     enemyImg.src = eatermon[2].src;  // Enemy is Woodle
+     enemyImg.src = eatermon[enemyEatermonIndex].src;  // Enemy is dynamically selected
      playerImg.src = eatermon[1].src; // Player is Tomadoodle
  }
  
- loadingImages(); 
+//  loadingImages(); 
 

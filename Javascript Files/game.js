@@ -18,6 +18,10 @@ function gameLoop() {
     drawGrass();
     drawPlayer();
     encounter();
+    loadingImages();
+    // console.log(pickNum);
+
+    updateHp(); // Update UI with the new enemy's HP
     // battleMenu();
     // Call next frame
     requestAnimationFrame(gameLoop);

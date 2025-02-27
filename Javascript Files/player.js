@@ -1,7 +1,7 @@
 // player.js
 
 const player = {
-    x: 0,
+    x: 200,
     y: 0,
     width: 50,
     height: 50,
