@@ -2,6 +2,7 @@
 // Set up canvas
  const canvas = document.getElementById('gameCanvas');
  const ctx = canvas.getContext('2d');
+ let inBattle = false;
 
 // Set canvas dimensions
 canvas.width = window.innerWidth;
@@ -17,8 +18,9 @@ function gameLoop() {
     updatePlayerPosition();
     drawGrass();
     drawPlayer();
-    encounter();
-    loadingImages();
+    if (!inBattle) {
+        encounter();
+    }    loadingImages();
     // console.log(pickNum);
 
     updateHp(); // Update UI with the new enemy's HP
@@ -26,6 +28,7 @@ function gameLoop() {
     // Call next frame
     requestAnimationFrame(gameLoop);
 }
+
 
 
 // Start game loop
