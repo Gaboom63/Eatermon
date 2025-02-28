@@ -23,7 +23,7 @@ function encounter() {
             player.y + player.height <= currentGrass.y + currentGrass.height &&  // Player's bottom edge is above grass bottom edge
             pickNum < 50 && !inBattle // 10% encounter chance
         ) {
-            consolep.innerHTML = `Hello: ${pickNum}`;
+            // consolep.innerHTML = `Hello: ${pickNum}`;
             hasEncounted = true;
             inBattle = true;
             break; // If we encounter, exit the loop
@@ -36,7 +36,7 @@ function encounter() {
             enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
         } while (enemyEatermonIndex === currentEatermonIndex); // Ensure it's not the same as the player's
 
-        consolep.innerHTML = `Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`;
+        // consolep.innerHTML = `Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`;
         
         // Initialize the battle
         restoreEnemyHp(); // Restore enemy HP to max
