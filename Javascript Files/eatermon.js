@@ -38,6 +38,16 @@ const eatermon = [
         attack: 40, 
         src: "images/Flopper.png",
         canFlee: false
+    }, 
+    {
+        type: eatermonTypes[0].type, 
+        id: 4, 
+        name: "Poporlation",
+        hp: 120, 
+        maxHp: 120, 
+        src: "images/Poporlation.png",
+        canFlee: false,
+        abilities: ["Heat Resist"],  // Woodle has Heat Resist
     }
 ]
 

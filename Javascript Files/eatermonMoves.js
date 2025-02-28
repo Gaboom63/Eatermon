@@ -23,7 +23,7 @@ const eatermonMoves = [
             { name: "Snot", power: 15, type: eatermonTypes[4].type },
             { name: "Burp", power: 20, type: eatermonTypes[6].type },
             { name: "Scratch", power: 10, type: eatermonTypes[4].type },
-            { name: "Tears", power: 40, type: eatermonTypes[1].type }
+            { name: "Drool", power: 40, type: eatermonTypes[1].type }
         ]
     },
     {

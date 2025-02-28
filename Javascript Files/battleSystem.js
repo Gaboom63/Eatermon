@@ -42,6 +42,12 @@ function attackMove(eatermonIndex, moveIndex) {
         modifiedPower *= 0.5;  // Halve the power if the move is weak against the enemy
     }
 
+    // Check if the move is Fire-type and if the enemy has Heat Resist
+    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
+        console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
+        modifiedPower = 0; // No damage dealt
+    }
+
     // Apply the modified power to the enemy HP
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;
@@ -92,28 +98,7 @@ function attackMove(eatermonIndex, moveIndex) {
     updateHp(); // Update HP UI after attack
 }
 
-
-
-// Get type effectiveness between two types
-function getTypeEffectiveness(attackType, defenseType) {
-    // Find the attacker's type and its strengths and weaknesses
-    const attackerType = eatermonTypes.find(type => type.type === attackType);
-    const defenderType = eatermonTypes.find(type => type.type === defenseType);
-
-    if (!attackerType || !defenderType) {
-        return 'neutral'; // If no match, return neutral
-    }
-
-    // Check if the defense type is weak or strong against the attack type
-    if (attackerType.strong.includes(defenderType.type)) {
-        return 'strong';  // Attack is strong
-    } else if (attackerType.weak.includes(defenderType.type)) {
-        return 'weak';    // Attack is weak
-    }
-
-    return 'neutral'; // No effect (neutral)
-}
-
+// Enemy attack move
 function enemyMove() {
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyMoves = eatermonMoves[enemyEatermonIndex].moves;
@@ -137,6 +122,12 @@ function enemyMove() {
         modifiedPower *= 2;  // Double the power if the move is strong against the player
     } else if (typeEffectiveness === 'weak') {
         modifiedPower *= 0.5;  // Halve the power if the move is weak against the player
+    }
+
+    // Check if the move is Fire-type and if the player has Heat Resist
+    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(playerEatermon) && playerEatermon.type === "Fire") {
+        console.log(`${playerEatermon.name} resists Fire-type damage due to Heat Resist!`);
+        modifiedPower = 0; // No damage dealt
     }
 
     // Apply the modified power to the player's HP
@@ -169,3 +160,25 @@ function enemyMove() {
 
     battleText.innerHTML = `${enemyEatermon.name} used ${selectedEnemyMove.name}! <br><b>${playerEatermon.name}'s HP: ${playerEatermon.hp}</b>`;
 }
+
+
+// Get type effectiveness between two types
+function getTypeEffectiveness(attackType, defenseType) {
+    // Find the attacker's type and its strengths and weaknesses
+    const attackerType = eatermonTypes.find(type => type.type === attackType);
+    const defenderType = eatermonTypes.find(type => type.type === defenseType);
+
+    if (!attackerType || !defenderType) {
+        return 'neutral'; // If no match, return neutral
+    }
+
+    // Check if the defense type is weak or strong against the attack type
+    if (attackerType.strong.includes(defenderType.type)) {
+        return 'strong';  // Attack is strong
+    } else if (attackerType.weak.includes(defenderType.type)) {
+        return 'weak';    // Attack is weak
+    }
+
+    return 'neutral'; // No effect (neutral)
+}
+
