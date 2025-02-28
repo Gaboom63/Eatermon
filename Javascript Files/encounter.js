@@ -6,11 +6,14 @@ let currentEatermonIndex = 1; // Default to Tomadoodle, you can dynamically chan
 let enemyEatermonIndex = 0; // Default to Woodle as the enemy
 let battleText = document.getElementById('battleTextContainer');
 let enemyHP = document.getElementById("enemyHP");
+let enemyHpInner = document.getElementById('enemyinnerBar');
 
 // Restore enemy HP at the beginning of battle
 function restoreEnemyHp() {
     if(hasEncounted) {
         eatermon[enemyEatermonIndex].hp = eatermon[enemyEatermonIndex].maxHp;
+        enemyHpInner.style.display = 'block'; 
+        enemyHpInner.style.width = `${eatermon[enemyEatermonIndex].maxHp}%`;
     }
 }
 
@@ -18,7 +21,7 @@ function restoreEnemyHp() {
 function encounter() {
     // For each grass area, check if player is inside
     for (let i = 0; i < grass.length; i++) {
-        let pickNum = Math.random() * (500 - 1) + 1;
+        let pickNum = Math.random() * (10000 - 1) + 1;
         const currentGrass = grass[i];
 
         if (
@@ -92,11 +95,10 @@ function attackMove(eatermonIndex, moveIndex) {
     const selectedEatermon = eatermon[eatermonIndex];
     const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
     let enemyHpText = document.getElementById('enemyHP');
-    let enemyHp = document.getElementById('enemyinnerBar');
 
     if (selectedMove.power > 0) {
         eatermon[enemyEatermonIndex].hp -= selectedMove.power;
-        enemyHp.style.width = `${eatermon[enemyEatermonIndex].hp}%`;
+        enemyHpInner.style.width = `${eatermon[enemyEatermonIndex].hp}%`;
     }
 
     if (selectedMove.name === "Fireball") {
@@ -107,10 +109,10 @@ function attackMove(eatermonIndex, moveIndex) {
     }
     
     if (eatermon[enemyEatermonIndex].hp <= 0) {
-        enemyHp.style.width = `0%`;
+        enemyHpInner.style.width = `0%`;
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${eatermon[enemyEatermonIndex].name}!`;
-            enemyHp.style.display = `none`;
+            enemyHpInner.style.display = `none`;
             setTimeout(() => {
                 battleMenuScript.style.display = 'none'; // End the battle
             }, 1000);
@@ -177,4 +179,7 @@ function Attack() {
 
 function Run() {
     battleMenuScript.style.display = 'none'; // Hide battle menu to run away
+    setTimeout(() => {
+        inBattle = false; 
+    }, 3000);
 }
