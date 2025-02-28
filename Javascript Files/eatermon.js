@@ -1,5 +1,6 @@
 const eatermon = [
     {
+        type: eatermonTypes[2].type, 
         id: 0,
         name: "Woodle",
         hp: 90,
@@ -9,6 +10,7 @@ const eatermon = [
         canFlee: false
     },
     {
+        type: eatermonTypes[0].type, 
         id: 1,
         name: "Tomadoodle",
         hp: 100,
@@ -18,6 +20,7 @@ const eatermon = [
         canFlee: false
     },
     {
+        type: eatermonTypes[1].type, 
         id: 2,
         name: "Druewl",
         hp: 105,
@@ -27,6 +30,7 @@ const eatermon = [
         canFlee: false
     },
     {
+        type: eatermonTypes[3].type, 
         id: 3,
         name: "Flopper",
         hp: 130, 
