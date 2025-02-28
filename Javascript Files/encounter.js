@@ -7,7 +7,7 @@ let enemyEatermonIndex = 0; // Default to Woodle as the enemy
 let battleText = document.getElementById('battleTextContainer');
 let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
-
+let playerHpInner = document.getElementById('playerinnerBar')
 
 // Handle encounters when the player enters certain areas
 function encounter() {

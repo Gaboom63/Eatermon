@@ -7,35 +7,6 @@ function restoreEnemyHp() {
     }
 }
 
-// Generate attack buttons based on the player's moves
-function generateAttackButtons() {
-    let selectedEatermon = eatermon[currentEatermonIndex];
-    let moves = eatermonMoves.find(e => e.eatermon.name === selectedEatermon.name)?.moves;
-
-    if (moves && moves.length >= 4) {
-        battleMenuOptions.innerHTML = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)">${moves[0].name || 'Attack 1'}</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)">${moves[1].name || 'Attack 2'}</button>
-            <br><br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)">${moves[2].name || 'Attack 3'}</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)">${moves[3].name || 'Attack 4'}</button>
-            <br>
-            <button id="backButton" onclick="backButton()">Back</button>
-        `;
-    } else {
-        // Fallback in case the moves are not available (for example, fewer than 4 moves)
-        battleMenuOptions.innerHTML = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)">Attack 1</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)">Attack 2</button>
-            <br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)">Attack 3</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)">Attack 4</button>
-            <br>
-            <button id="backButton" onclick="backButton()">Back</button>
-        `;
-    }
-}
-
 // Update HP display
 function updateHp() {
     let enemyHpText = document.getElementById('enemyHP');
@@ -45,12 +16,18 @@ function updateHp() {
 }
 
 // Handle player's attack with type matchups
-// Handle player's attack with type matchups
 function attackMove(eatermonIndex, moveIndex) {
     const selectedEatermon = eatermon[eatermonIndex];
     const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
+
+    if (selectedMove.name === "Fireball") {
+        triggerFireballAnimation();
+    }
+    if (selectedMove.name === "Flame Burst") {
+        triggerFireStarAnimation();
+    }
 
     let modifiedPower = selectedMove.power;
 
@@ -68,6 +45,7 @@ function attackMove(eatermonIndex, moveIndex) {
     // Apply the modified power to the enemy HP
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;
+        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
 
@@ -85,19 +63,36 @@ function attackMove(eatermonIndex, moveIndex) {
             }, 1000);
         }, 1000);
         setTimeout(() => {
+            inBattle = false; // Set battle to false to end the battle
+        }, 3000);
+    } else if (selectedEatermon.hp <= 0) { // Check if player is dead
+        playerHpInner.style.width = `0%`;
+        setTimeout(() => {
+            battleText.innerHTML = `You Lost Against ${enemyEatermon.name}!`;
+            enemyHpInner.style.display = `none`;
+            setTimeout(() => {
+                battleMenuScript.style.display = 'none'; // End the battle
+            }, 1000);
+        }, 1000);
+        setTimeout(() => {
             inBattle = false;
+            console.log("Player has died, exiting battle...");
         }, 3000);
     }
 
     // Trigger enemy's move after a delay
-    setTimeout(() => {
-        if (enemyEatermon.hp > 0) {
-            enemyMove(); // Enemy attacks
-        }
-    }, 1000);
+    if (selectedEatermon.hp > 0) { // Ensure player is still alive before enemy moves
+        setTimeout(() => {
+            if (enemyEatermon.hp > 0) {
+                enemyMove(); // Enemy attacks
+            }
+        }, 1000);
+    }
 
     updateHp(); // Update HP UI after attack
 }
+
+
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {
@@ -119,15 +114,17 @@ function getTypeEffectiveness(attackType, defenseType) {
     return 'neutral'; // No effect (neutral)
 }
 
-
-// Simulate enemy's random move
-// Simulate enemy's random move with type matchups
 function enemyMove() {
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyMoves = eatermonMoves[enemyEatermonIndex].moves;
     const selectedEnemyMove = enemyMoves[Math.floor(Math.random() * enemyMoves.length)];
     const playerEatermon = eatermon[currentEatermonIndex];
     const playerType = playerEatermon.type;
+
+    if (playerEatermon.hp <= 0) {
+        // If player is already defeated, stop enemy from attacking
+        return;
+    }
 
     let modifiedPower = selectedEnemyMove.power;
 
@@ -145,6 +142,7 @@ function enemyMove() {
     // Apply the modified power to the player's HP
     if (modifiedPower > 0) {
         playerEatermon.hp -= modifiedPower;
+        playerEatermon.hp = Math.max(0, playerEatermon.hp); // Ensure player's HP doesn't go below 0
         const playerHpInner = document.getElementById('playerinnerBar');
         playerHpInner.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
     }
@@ -155,7 +153,16 @@ function enemyMove() {
         playerHpInner.style.width = `0%`;
         setTimeout(() => {
             playerHpInner.style.display = `none`;
+            battleText.innerHTML = `You Lost Against ${enemyEatermon.name}!`;
+            
         }, 1000);
+        setTimeout(() => {
+            inBattle = false; // End the battle if the player is dead
+            battleMenuScript.style.display = 'none'; // End the battle
+            console.log("Player has died, exiting battle...");
+            alert("You Died (Debug So Reloading)");
+            location.reload(); 
+        }, 3000);
     }
 
     updateHp(); // Update HP UI after attack

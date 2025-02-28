@@ -100,7 +100,7 @@ function triggerVineWhipAnimation() {
 
 
 function triggerFireStarAnimation() {
-    const fireball = document.getElementById('firestar');
+    const firestar = document.getElementById('firestar');
     const player = document.getElementById('eatermonPlayer');
     const enemy = document.getElementById('eatermonEnemy');
 
@@ -113,11 +113,11 @@ function triggerFireStarAnimation() {
     const distanceY = enemyRect.top + enemyRect.height / 2 - (playerRect.top + playerRect.height / 2);
 
     // Set the initial position of the fireball at the player's position
-    fireball.style.left = `${playerRect.left + playerRect.width / 2 - 25}px`; // Center the fireball horizontally
-    fireball.style.top = `${playerRect.top + playerRect.height / 2 - 25}px`;  // Center the fireball vertically
+    firestar.style.left = `${playerRect.left + playerRect.width / 2 - 25}px`; // Center the fireball horizontally
+    firestar.style.top = `${playerRect.top + playerRect.height / 2 - 25}px`;  // Center the fireball vertically
 
     // Show the fireball
-    fireball.style.display = 'block';
+    firestar.style.display = 'block';
 
     // Variables to track the fireball's movement
     let moveX = 0;
@@ -132,24 +132,25 @@ function triggerFireStarAnimation() {
         moveY += distanceY / 50;
 
         // Apply the new position using transform
-        fireball.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        firestar.style.transform = `translate(${moveX}px, ${moveY}px)`;
         
         // Stop the animation once the fireball reaches the enemy's position
         if (Math.abs(moveX) >= Math.abs(distanceX) && Math.abs(moveY) >= Math.abs(distanceY)) {
             clearInterval(interval);
 
             // Position the fireball exactly at the enemy's location for the explosion
-            fireball.style.left = `${enemyRect.left + enemyRect.width / 2 - 25}px`;  // Center fireball at enemy
-            fireball.style.top = `${enemyRect.top + enemyRect.height / 2 - 25}px`;   // Center fireball at enemy
+            firestar.style.left = `${enemyRect.left + enemyRect.width / 2 - 25}px`;  // Center fireball at enemy
+            firestar.style.top = `${enemyRect.top + enemyRect.height / 2 - 25}px`;   // Center fireball at enemy
 
             // Trigger explosion after fireball reaches the enemy
-            fireball.style.animation = 'explosion 1s forwards';  // Trigger explosion animation
+            firestar.style.animation = 'explosion 1s forwards';  // Trigger explosion animation
             
             // Optionally hide the fireball after animation
             setTimeout(() => {
-                fireball.style.display = 'none';
-                fireball.style.animation = 'none';
+                firestar.style.display = 'none';
+                firestar.style.animation = 'none';
             }, 1000);  // Match with the duration of explosion animation
         }
     }, 20); // Adjust the interval time to control the animation speed
 }
+
