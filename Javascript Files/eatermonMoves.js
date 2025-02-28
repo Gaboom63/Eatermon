@@ -25,5 +25,5 @@ const eatermonMoves = [
             { name: "Scratch", power: 10, type: "Normal" },
             { name: "Tears", power: 40, type: "Fire" }
         ]
-    }
+    },
 ];

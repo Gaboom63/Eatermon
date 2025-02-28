@@ -6,8 +6,18 @@ const player = {
     width: 50,
     height: 50,
     speed: 5,
-    color: 'darkcyan'
-    
+    // color: 'darkcyan',
+    src: 'images/player.png'
+};
+
+// Assuming you have an image element with id "Player" in your HTML
+const playerImage = new Image();
+playerImage.src = player.src;  // Set the player's image source
+
+// You might want to wait for the image to load before drawing
+playerImage.onload = function() {
+    // Once the image is loaded, you can call the drawing function
+    drawPlayer();
 };
 
 // Function to update player's position
@@ -24,6 +34,12 @@ function updatePlayerPosition() {
 
 // Function to draw player on canvas
 function drawPlayer() {
-    ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    // Draw the background or player color if needed
+    // ctx.fillStyle = player.color;
+    // ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    // Draw the player's image
+    if (playerImage.complete) {
+        ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+    }
 }
