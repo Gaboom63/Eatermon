@@ -114,6 +114,7 @@ canvas {
 #attack::after,
 #bag::after,
 #run::after,
+#bagItemsBack::after,
 #backButton::after {
     content: "→";
     /* Arrow symbol */
@@ -133,6 +134,7 @@ canvas {
 #attack:hover,
 #bag:hover,
 #run:hover,
+#bagItemsBack:hover,
 #backButton:hover {
     background-color: rgb(89, 89, 89);
     border: 2px white dotted;
@@ -170,7 +172,7 @@ canvas {
     left: 15%;
 }
 
-#attackButton1 {
+#attackButton1, #bagItems1 {
     width: 150px;
     height: 100px;
     background-color: gray;
@@ -182,7 +184,7 @@ canvas {
     /* transition: width 0.5s ease-in-out; */
 }
 
-#attackButton2 {
+#attackButton2, #bagItems2 {
     width: 140px;
     height: 100px;
     background-color: gray;
@@ -194,7 +196,7 @@ canvas {
     /* transition: width 0.5s ease-in-out; */
 }
 
-#attackButton3 {
+#attackButton3, #bagItems3 {
     width: 150px;
     height: 100px;
     background-color: gray;
@@ -206,7 +208,7 @@ canvas {
     /* transition: width 0.5s ease-in-out; */
 }
 
-#attackButton4 {
+#attackButton4, #bagItems4 {
     width: 140px;
     height: 100px;
     background-color: gray;
@@ -218,7 +220,7 @@ canvas {
     /* transition: width 0.5s ease-in-out; */
 }
 
-#backButton {
+#backButton, #bagItemsBack {
     background-color: gray;
     border: none;
     width: 150px;
@@ -237,6 +239,11 @@ canvas {
 #attackButton2:hover,
 #attackButton3:hover,
 #attackButton4:hover,
+#bagItems1:hover,
+#bagItems2:hover,
+#bagItems3:hover,
+#bagItems4:hover,
+#bagItemsBack:hover,
 #backButton:hover {
     background-color: rgb(89, 89, 89);
     border: 2px white dotted;

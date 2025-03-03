@@ -45,7 +45,16 @@ function Attack() {
 }
 
 function Bag() {
-
+    let menuBag = document.getElementById('bag'); 
+    battleMenuOptions.innerHTML = `
+        <button id="bagItems1">Hp/Restore Items</button>
+        <button id="bagItems2">Plates</button>
+        <br><br>
+        <button id="bagItems3">Status Items</button>
+        <button id="bagItems4">Battle Items</button>
+        <br>
+        <button id="bagItemsBack" onclick="backButton()">Back</button>
+    `
 }
 
 function Run() {
