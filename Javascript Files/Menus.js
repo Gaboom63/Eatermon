@@ -1,5 +1,6 @@
 let items = []; 
-
+let catching = false; 
+let caught = null; 
 function backButton() {
     battleMenuOptions.innerHTML = `
       <button id="attack" onclick="Attack()">Attack!</button> <br>
@@ -34,9 +35,6 @@ function generateAttackButtons() {
             <button id="backButton" onclick="backButton()">Back</button>
         `;
     }
-    if(moves[1].name = "Fire Burst") {
-        console.log("Working!")
-    }
 }
 
 
@@ -48,7 +46,7 @@ function Bag() {
     let menuBag = document.getElementById('bag'); 
     battleMenuOptions.innerHTML = `
         <button id="bagItems1">Hp/Restore Items</button>
-        <button id="bagItems2">Plates</button>
+        <button id="bagItems2" onclick="loadPlates()">Plates</button>
         <br><br>
         <button id="bagItems3">Status Items</button>
         <button id="bagItems4">Battle Items</button>
@@ -62,4 +60,33 @@ function Run() {
     setTimeout(() => {
         inBattle = false;
     }, 3000);
+}
+
+function loadPlates() {
+    battleMenuOptions.innerHTML = `
+    <button id="bagItems1" onclick="catchThatMon()">Basic Place <img src="images/plates/blankPlate.png" id="plateImage"></img></button>
+    <br>
+    <button id="bagItemsBack" onclick="backButton()">Back</button>
+    `
+}
+
+const plates = [
+    {
+        src: "images/plates/blankPlate.png"
+    }
+]
+
+function catchThatMon() {
+    enemyImg.src = plates[0].src;
+    catching = true; 
+   
+    if(caught === true) {
+
+    }
+
+    if(caught === false) {
+        setTimeout(() => {
+            catching = false; 
+        }, 1000)    
+    }
 }

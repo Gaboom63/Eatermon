@@ -1,3 +1,6 @@
+const enemyImg = document.getElementById("eatermonEnemy");
+const playerImg = document.getElementById("eatermonPlayer");
+
 const eatermon = [
     {
         type: eatermonTypes[2].type, 
@@ -87,11 +90,9 @@ console.log(eatermon);
 
 
 function loadingImages() {
-    const enemyImg = document.getElementById("eatermonEnemy");
-    const playerImg = document.getElementById("eatermonPlayer");
 
     enemyImg.src = eatermon[enemyEatermonIndex].src;  // Enemy is dynamically selected
-    playerImg.src = eatermon[1].src; // Player is Tomadoodle
+    playerImg.src = eatermon[currentEatermonIndex].src; // Player is Tomadoodle
 }
 
 //  loadingImages(); 

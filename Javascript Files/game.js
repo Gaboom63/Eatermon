@@ -22,7 +22,9 @@ function gameLoop() {
         encounter();
     }    loadingImages();
     // console.log(pickNum);
-
+    if(catching) {
+        catchThatMon();
+    }
     updateHp(); // Update UI with the new enemy's HP
     // battleMenu();
     // Call next frame

@@ -2,12 +2,34 @@ let consolep = document.getElementById('console');
 let hasEncounted = false;
 let battleMenuScript = document.getElementById('battleMenu');
 let battleMenuOptions = document.getElementById('battleOptionsMenu');
-let currentEatermonIndex = 1; // Default to Tomadoodle, you can dynamically change this based on the encounter
+let currentEatermonIndex = [1]; // Default to Tomadoodle, you can dynamically change this based on the encounter
 let enemyEatermonIndex = 0; // Default to Woodle as the enemy
 let battleText = document.getElementById('battleTextContainer');
 let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
-let playerHpInner = document.getElementById('playerinnerBar')
+let playerHpInner = document.getElementById('playerinnerBar');
+
+// function getStarter() {
+//  let pickStarter =  prompt(`What Starter Will You Choose?
+//         Woodle(1)?
+//         Tomadoodle(2)?
+//         Druewl(3)?
+//     `);
+
+//     if(pickStarter == 1) {
+//        currentEatermonIndex = [0];
+//     } else if (pickStarter == 2) {
+//         currentEatermonIndex = [1];
+//     } else if (pickStarter == 3) {
+//         currentEatermonIndex = [2]
+//     } else if (pickStarter != 1 && pickStarter != 2 && pickStarter != 3) {
+//         alert(`Please Put In A Valid Number!`)
+//         getStarter();
+//     }
+
+// }
+
+getStarter();
 
 // Handle encounters when the player enters certain areas
 function encounter() {

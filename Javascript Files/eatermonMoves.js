@@ -37,6 +37,6 @@ const eatermonMoves = [
     },
 ];
 
-console.log(eatermonMoves); 
+// console.log(eatermonMoves); 
 
 
