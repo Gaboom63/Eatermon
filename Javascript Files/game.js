@@ -23,7 +23,7 @@ function gameLoop() {
     }    loadingImages();
     // console.log(pickNum);
     if(catching) {
-        catchThatMon();
+        enemyImg.src = plates[0].src; // Show the plate image
     }
     updateHp(); // Update UI with the new enemy's HP
     // battleMenu();

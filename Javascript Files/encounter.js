@@ -9,28 +9,7 @@ let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
 let playerHpInner = document.getElementById('playerinnerBar');
 
-// function getStarter() {
-//  let pickStarter =  prompt(`What Starter Will You Choose?
-//         Woodle(1)?
-//         Tomadoodle(2)?
-//         Druewl(3)?
-//     `);
-
-//     if(pickStarter == 1) {
-//        currentEatermonIndex = [0];
-//     } else if (pickStarter == 2) {
-//         currentEatermonIndex = [1];
-//     } else if (pickStarter == 3) {
-//         currentEatermonIndex = [2]
-//     } else if (pickStarter != 1 && pickStarter != 2 && pickStarter != 3) {
-//         alert(`Please Put In A Valid Number!`)
-//         getStarter();
-//     }
-
-// }
-
-getStarter();
-
+    
 // Handle encounters when the player enters certain areas
 function encounter() {
     // For each grass area, check if player is inside

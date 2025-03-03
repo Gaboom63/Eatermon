@@ -1,6 +1,6 @@
 let items = []; 
 let catching = false; 
-let caught = null; 
+let caught = true; 
 function backButton() {
     battleMenuOptions.innerHTML = `
       <button id="attack" onclick="Attack()">Attack!</button> <br>
@@ -76,17 +76,118 @@ const plates = [
     }
 ]
 
+let playerParty = [];  // Array to store the player's captured Eatermon
+    // // Function to get the starter Eatermon and initialize the party
+// function getStarter() {
+//     pickStarter = prompt(What Starter Will You Choose?
+//     Woodle(1)?
+//     Tomadoodle(2)?
+//     Druewl(3)?
+//     );
+
+//     // Set the currentEatermonIndex based on user input
+//     if (pickStarter == 1) {
+//         currentEatermonIndex = 0; // Set index for Woodle
+//         playerParty.push(eatermon[currentEatermonIndex]);
+//     } else if (pickStarter == 2) {
+//         currentEatermonIndex = 1; // Set index for Tomadoodle
+//     } else if (pickStarter == 3) {
+//         currentEatermonIndex = 2; // Set index for Druewl
+//     } else {
+//         alert(Please Put In A Valid Number!);
+//         getStarter(); // Retry if invalid input
+//         return; // Exit the function early
+//     }
+
+//     // Initialize the player's party with the selected Eatermon (using the index)
+//     console.log("Your party has been initialized:");
+//     console.log(playerParty); // Show the player's party with the selected starter
+// }
+
+// // Call the getStarter function to initialize the party
+// getStarter();
+
+playerParty.push(eatermon[currentEatermonIndex]);
+
+// Function to catch the enemy Eatermon and add it to the player's party
+// Function to catch the enemy Eatermon and add it to the player's party
 function catchThatMon() {
-    enemyImg.src = plates[0].src;
-    catching = true; 
-   
-    if(caught === true) {
+    enemyImg.src = plates[0].src; // Show the plate image
+    catching = true; // Start the catching process
+    
+    // Simulate a catch success rate (you can adjust this value)
+    let catchChance = Math.random(); // Random number between 0 and 1
 
+    // If the catch chance is higher than a threshold (let's say 0.5 for 50%)
+    if (catchChance > 0.5) {
+        caught = true;
+        playerParty.push(eatermon[enemyEatermonIndex]); // Add the captured Eatermon to the player's party
+        console.log(`${eatermon[enemyEatermonIndex].name} has been caught and added to your party!`);
+        console.log(playerParty); // Show the player's party after catching
+        
+        battleText.innerHTML = `${eatermon[enemyEatermonIndex].name} has been added to your party!`;
+    } else {
+        caught = false;
+        console.log("The capture attempt failed.");
+        battleText.innerHTML = "The capture attempt failed.";
     }
 
-    if(caught === false) {
-        setTimeout(() => {
-            catching = false; 
-        }, 1000)    
+    // Reset catching after a brief moment
+    setTimeout(() => {
+        catching = false;
+    }, 1000);
+}
+
+// Function to show the switch menu and switch between Eatermon
+function showSwitchMenu() {
+    let switchMenuText = "Select a new Eatermon to switch in battle:\n";
+    
+    // Loop through the player's party and create a list of options
+    playerParty.forEach((eatermon, index) => {
+        switchMenuText += `${index + 1}. ${eatermon.name}\n`;
+    });
+
+    switchMenuText += `Enter the number of the Eatermon you want to switch to:`;
+    
+    // Simulating a switch menu using prompt for simplicity
+    let playerChoice = parseInt(prompt(switchMenuText));
+
+    // Check if the choice is valid
+    if (playerChoice >= 1 && playerChoice <= playerParty.length) {
+        currentEatermonIndex = playerChoice - 1; // Update the current Eatermon index
+        console.log(`Switched to ${playerParty[currentEatermonIndex].name}`);
+        battleText.innerHTML = `Switched to ${playerParty[currentEatermonIndex].name}`;
+    } else {
+        console.log("Invalid choice, no switch made.");
+        battleText.innerHTML = "Invalid choice, no switch made.";
     }
+}
+
+// Function to show the player's party in the bag
+function showResultsOfMenuBag() {
+    let bag = document.getElementById('escapeMenu');
+    bag.innerHTML = `
+    <h1>Your Eatermon Party</h1>
+    <br>
+    ${playerParty.map((eatermon, index) => `${index + 1}. ${eatermon.name}`).join('<br>')}
+    <br>
+    <button onclick="showSwitchMenu()">Switch Eatermon</button> <!-- Button to switch Eatermon -->
+    <button id="bagItemsBack" onclick="backEsacpe()">Back</button>
+    `;
+}
+
+// Switches back to the game menu
+function backEsacpe() {
+    let escape = document.getElementById('escapeMenu');
+    escape.innerHTML = `
+     <div class="menu-header">
+            <h2>Game Menu</h2>
+        </div>
+        <div class="menu-options" id="menu-options">
+            <button class="menu-btn" onclick="closeMenu()"><span class="icon">&#x2190;</span> Return to Game</button>
+            <button class="menu-btn" id="menuBag" onclick="showResultsOfMenuBag()"><span class="icon">&#x01F4BC;</span> Bag</button>
+            <button class="menu-btn"><span class="icon">&#x1F3A5;</span> Settings</button>
+            <button class="menu-btn""><span class="icon">&#x1F6AB;</span> Quit Game</button>
+        </div>
+   `;
 }
