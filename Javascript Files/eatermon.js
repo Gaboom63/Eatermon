@@ -48,7 +48,39 @@ const eatermon = [
         src: "images/Poporlation.png",
         canFlee: false,
         abilities: ["Heat Resist"],  // Woodle has Heat Resist
-    }
+    },
+    {
+        id: 5, 
+        name: "BagOh",
+        hp: 100, 
+        maxHp: 100, 
+        src: "images/BagOh.png",
+        canFlee: false,
+    },
+    {
+        id: 6, 
+        name: "Coreange",
+        hp: 70, 
+        maxHp: 70, 
+        src: "images/Coreange.png",
+        canFlee: false,
+    },
+    {
+        id: 7, 
+        name: "PanCook",
+        hp: 90, 
+        maxHp: 90, 
+        src: "images/PanCoook.png",
+        canFlee: false,
+    },
+    {
+        id: 8, 
+        name: "ChrisP",
+        hp: 135, 
+        maxHp: 135, 
+        src: "images/ChrisP.png",
+        canFlee: false,
+    },
 ]
 
 console.log(eatermon);
