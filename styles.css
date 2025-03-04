@@ -19,7 +19,10 @@ body {
 
 canvas {
     border: 1px solid black;
-
+    background-image: url(images/maps/FinalTestTiled.png);
+    /* background-position: cover; */
+    background-size: cover;
+    
 }
 
 /* Apply styles to the #console element */
