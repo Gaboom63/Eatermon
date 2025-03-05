@@ -1,3 +1,7 @@
+:root {
+ --pixel-size: 2px; 
+ --grid-cell: calc( var(var(--pixel-size) * 16));
+}
 
 * {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -18,12 +22,13 @@ body {
 }
 
 canvas {
-    border: 1px solid black;
-    background-image: url(images/maps/FinalTestTiled.png);
-    /* background-position: cover; */
-    background-size: cover;
-    
+    width: 100%;
+    height: 100%;
+    background-image: url(images/maps/officalTESTmap.png);
+    background-size: contain;  /* Ensure the image is fully contained */
+    background-repeat: no-repeat;
 }
+
 
 /* Apply styles to the #console element */
 #console {
@@ -47,7 +52,7 @@ canvas {
     position: absolute;
     width: 100%;
     height: 100%;
-    /* display: none; */
+    display: none;
     background-image: url(images/backgrounds/DemoBattle.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -573,7 +578,6 @@ canvas {
     font-size: 1.5rem;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
     #escapeMenu {
         width: 100%;
@@ -594,3 +598,119 @@ canvas {
     width: 50px;
     height: 50px;
 }
+
+.character {
+    width: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 2 );
+    position: absolute;
+    overflow:hidden;
+}
+
+.character_spritesheet {
+    position: absolute;
+    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat no-repeat;
+    background-size: 100%;
+    width: calc( var(--grid-cell)* 8 );
+    height: calc( var(--grid-cell)* 8 );
+ }
+
+ :root {
+    --pixel-size: 2px;
+    --grid-cell: calc( var(--pixel-size) * 16);
+    --bg: #9fa7e4;
+ }
+ @media( min-width: 700px ) {
+    :root {
+       --pixel-size: 3px;
+    }
+ }
+ @media( min-width: 1000px ) {
+    :root {
+       --pixel-size: 4px;
+    }
+ }
+ /* @media( min-width: 1000px ) {
+    :root {
+       --pixel-size: 5px;
+    }
+ } */
+
+ .pixel-art {
+    image-rendering: pixelated;
+ }
+ 
+ .frame {
+    /* This is just for Pen decoration */
+    width: calc(var(--pixel-size) * 160);
+    height: calc(var(--pixel-size) * 144);
+    outline: var(--pixel-size) solid #fff;
+    z-index:1; 
+    position:relative;
+ }
+ 
+ .camera {
+    width: calc(var(--pixel-size) * 160);
+    height: calc(var(--pixel-size) * 144);
+    overflow: hidden;
+    background: #61ddf7;
+    position:relative;
+ }
+ 
+ .map {
+    background-image: url("/images/Map.png");
+    background-size: 100%;
+    width: calc(13 * var(--grid-cell));
+    height: calc(13 * var(--grid-cell));
+    position: relative;
+}
+
+ 
+ .character {
+    width: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 2 );
+    position: absolute;
+    overflow:hidden;
+ }
+ 
+ .shadow {
+    width: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 2 );
+    position: absolute;
+    left:0;
+    top:0;
+    background: url("https://assets.codepen.io/21542/DemoRpgCharacterShadow.png") no-repeat no-repeat;
+    background-size: 100%;
+ }
+ 
+ .character_spritesheet {
+    position: absolute;
+    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat no-repeat;
+    background-size: 100%;
+    width: calc( var(--grid-cell)* 8 );
+    height: calc( var(--grid-cell)* 8 );
+ }
+ 
+ .character[facing="right"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -32 );
+ }
+ .character[facing="up"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -64 );
+ }
+ .character[facing="left"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -96 );
+ }
+ .character[walking="true"] .character_spritesheet {
+    animation: walkAnimation 0.6s steps(4) infinite; 
+ }
+ 
+ @keyframes walkAnimation {
+   from {
+     transform: translate3d(0%,0%,0);
+   }
+   to {
+     transform: translate3d(-100%,0%,0);
+   }
+ }
+ 
+
+
