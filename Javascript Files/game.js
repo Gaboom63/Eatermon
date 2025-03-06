@@ -57,7 +57,7 @@ const placeCharacter = () => {
     character.setAttribute("walking", held_direction ? "true" : 
     "false");
 
-    var camera_left = pixelSize * 66; 
+    var camera_left = pixelSize * 110; 
     var camera_top = pixelSize * 42; 
 
     map.style.transform = `translate3d( ${-x*pixelSize+camera_left}px, 
