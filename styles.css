@@ -52,7 +52,7 @@ canvas {
     position: absolute;
     width: 100%;
     height: 100%;
-    display: none;
+    /* display: none; */
     background-image: url(images/backgrounds/DemoBattle.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -608,8 +608,7 @@ canvas {
 
 .character_spritesheet {
     position: absolute;
-    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat no-repeat;
-    background-size: 100%;
+    background: url("images/player.png");
     width: calc( var(--grid-cell)* 8 );
     height: calc( var(--grid-cell)* 8 );
  }
@@ -643,7 +642,7 @@ canvas {
     /* This is just for Pen decoration */
     width: calc(var(--pixel-size) * 250);
     height: calc(var(--pixel-size) * 144);
-    outline: var(--pixel-size) solid #fff;
+    outline: var(--pixel-size) solid #585858;
     z-index:1; 
     position:relative;
  }
@@ -672,19 +671,19 @@ canvas {
     overflow:hidden;
  }
  
- .shadow {
+ /* .shadow {
     width: calc( var(--grid-cell)* 2 );
-    height: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 4 );
     position: absolute;
     left:0;
     top:0;
     background: url("https://assets.codepen.io/21542/DemoRpgCharacterShadow.png") no-repeat no-repeat;
     background-size: 100%;
- }
+ } */
  
  .character_spritesheet {
     position: absolute;
-    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat no-repeat;
+    background: url("images/player.png") no-repeat no-repeat;
     background-size: 100%;
     width: calc( var(--grid-cell)* 8 );
     height: calc( var(--grid-cell)* 8 );
@@ -713,4 +712,20 @@ canvas {
  }
  
 
+
+
+
+ #emblem {
+    width: 100px;
+    height: 100px;
+    left: 100px;
+ }
+
+ #enemyEmblem {
+    width: 100px;
+    height: 100px;
+    position: relative; /* Enables relative positioning */
+    left: 320px; /* Adjusts the image position */
+    display: block; /* Ensures the image is treated as a block element */
+}
 

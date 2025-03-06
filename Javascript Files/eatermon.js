@@ -1,6 +1,7 @@
 const enemyImg = document.getElementById("eatermonEnemy");
 const playerImg = document.getElementById("eatermonPlayer");
-
+const emblem = document.getElementById("emblem"); 
+const enemyEmblem = document.getElementById("enemyEmblem");
 const eatermon = [
     {
         type: eatermonTypes[2].type, 
@@ -20,6 +21,7 @@ const eatermon = [
         maxHp: 100,
         attack: 30,
         src: "images/tomadoodle.png",
+        emblem: "images/emblems/fireEmblem.png",
         canFlee: false
     },
     {
@@ -84,6 +86,16 @@ const eatermon = [
         src: "images/ChrisP.png",
         canFlee: false,
     },
+    {
+        type: eatermonTypes[0].type, 
+        id: 9,
+        name: "Protcluker",
+        hp: 200, 
+        maxHp: 200, 
+        src: "images/Protcluker.png",
+        canFlee: false,
+        emblem: "images/emblems/fireEmblem.png",
+    },
 ]
 
 console.log(eatermon);
@@ -93,7 +105,12 @@ function loadingImages() {
 
     enemyImg.src = eatermon[enemyEatermonIndex].src;  // Enemy is dynamically selected
     playerImg.src = eatermon[currentEatermonIndex].src; // Player is Tomadoodle
+    emblem.src = eatermon[currentEatermonIndex].emblem;
+    enemyEmblem.src = eatermon[enemyEatermonIndex].emblem; 
 }
 
 //  loadingImages(); 
 
+function showType() {
+    
+}

@@ -35,6 +35,44 @@ const eatermonMoves = [
             // { name: "Tears", power: 40, type: "Fire" }
         ]
     },
+    {
+        eatermon: eatermon[4], // Tomadoodle
+        moves: [
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
+    },
+    {
+        eatermon: eatermon[5], // Tomadoodle
+        moves: [
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
+    },
+    {
+        eatermon: eatermon[6], // Tomadoodle
+        moves: [
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
+    },
+    {
+        eatermon: eatermon[7], // Tomadoodle
+        moves: [
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
+    },
+    {
+        eatermon: eatermon[8], // Tomadoodle
+        moves: [
+            { name: "Tears", power: 40, type: "Fire" }
+        ]
+    },
+    {
+        eatermon: eatermon[9], // Tomadoodle
+            moves: [
+                { name: "Flamin' Chickin", power: 40, type: eatermonTypes[0].type },
+                { name: "Protien Bulk", power: 20, type: eatermonTypes[6].type },
+                { name: "Bone Recycle", power: 10, type: eatermonTypes[7].type },        
+            ]
+    },
 ];
 
 // console.log(eatermonMoves); 

@@ -83,17 +83,21 @@ const directions = {
 }
 
 const keys = {
-    38: directions.up,
-    37: directions.left,
-    39: directions.right, 
-    40: directions.down,
-}
+    38: directions.up,    // Arrow Up
+    37: directions.left,   // Arrow Left
+    39: directions.right,  // Arrow Right
+    40: directions.down,   // Arrow Down
+    27: 'escape'           // Escape key
+};
+
 
 document.addEventListener("keydown", (e) => {
     var dir = keys[e.which]; 
     if (dir && held_directions.indexOf(dir) === -1) {
         held_directions.unshift(dir)
     }
+    if (keys[event.keyCode] === 'escape') {
+        openMenu();    } 
 })
 
 
