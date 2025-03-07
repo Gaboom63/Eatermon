@@ -35,13 +35,12 @@ function attackMove(eatermonIndex, moveIndex) {
     const moveType = selectedMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
 
-    // Modify the power based on the type effectiveness
     if (typeEffectiveness === 'strong') {
-        modifiedPower *= 2;  // Double the power if the move is strong against the enemy
+        modifiedPower *= 2;  // Double the power
     } else if (typeEffectiveness === 'weak') {
-        modifiedPower *= 0.5;  // Halve the power if the move is weak against the enemy
+        modifiedPower *= 0.5;  // Halve the power
     } else if (typeEffectiveness === 'noEffect') {
-        modifiedPower *= 0;  // Halve the power if the move has no effect
+        modifiedPower = 0;  // No effect, set power to 0
     }
 
 
@@ -54,10 +53,10 @@ function attackMove(eatermonIndex, moveIndex) {
     // Apply the modified power to the enemy HP
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;
-        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
-
+    
     // Display the attack results
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
 
@@ -169,7 +168,6 @@ function enemyMove() {
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {
-    // Find the attacker's type and its strengths and weaknesses
     const attackerType = eatermonTypes.find(type => type.type === attackType);
     const defenderType = eatermonTypes.find(type => type.type === defenseType);
 
@@ -191,4 +189,5 @@ function getTypeEffectiveness(attackType, defenseType) {
 
     return 'neutral'; // No effect (neutral)
 }
+
 

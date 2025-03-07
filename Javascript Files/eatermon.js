@@ -83,12 +83,14 @@ const eatermon = [
         canFlee: false,
     },
     {
+        type: eatermonTypes[8].type, 
         id: 8, 
         name: "ChrisP",
         hp: 135, 
         maxHp: 135, 
         src: "images/ChrisP.png",
         canFlee: false,
+        emblem: "images/emblems/crispEmblem.png",
     },
     {
         type: eatermonTypes[0].type, 
