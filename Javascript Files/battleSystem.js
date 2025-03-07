@@ -22,6 +22,17 @@ function attackMove(eatermonIndex, moveIndex) {
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
 
+    // Debugging logs
+    console.log(`Attacking with move: ${selectedMove.name}`);
+    console.log(`Player Eatermon Type: ${selectedEatermon.type}`);
+    console.log(`Enemy Eatermon Type: ${enemyEatermon.type}`);
+
+    // Debug: Check move type and effectiveness
+    const moveType = selectedMove.type;
+    const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
+    console.log(`Move Type: ${moveType}, Enemy Type: ${enemyType}, Effectiveness: ${typeEffectiveness}`);
+
+    // Check if the move is Fireball
     if (selectedMove.name === "Fireball") {
         triggerFireballAnimation();
     }
@@ -31,18 +42,17 @@ function attackMove(eatermonIndex, moveIndex) {
 
     let modifiedPower = selectedMove.power;
 
-    // Check if the move is strong or weak against the enemy type
-    const moveType = selectedMove.type;
-    const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
-
+    // Handle effectiveness
     if (typeEffectiveness === 'strong') {
-        modifiedPower *= 2;  // Double the power
+        console.log("Effectiveness: Strong, doubling power");
+        modifiedPower *= 2;  // Double the power if the move is strong
     } else if (typeEffectiveness === 'weak') {
-        modifiedPower *= 0.5;  // Halve the power
+        console.log("Effectiveness: Weak, halving power");
+        modifiedPower *= 0.5;  // Halve the power if the move is weak
     } else if (typeEffectiveness === 'noEffect') {
+        console.log("Effectiveness: No effect, setting power to 0");
         modifiedPower = 0;  // No effect, set power to 0
     }
-
 
     // Check if the move is Fire-type and if the enemy has Heat Resist
     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
@@ -50,13 +60,14 @@ function attackMove(eatermonIndex, moveIndex) {
         modifiedPower = 0; // No damage dealt
     }
 
-    // Apply the modified power to the enemy HP
+    // Apply the modified power to the enemy HP (only if there's damage)
     if (modifiedPower > 0) {
+        console.log(`Dealing ${modifiedPower} damage to ${enemyEatermon.name}`);
         enemyEatermon.hp -= modifiedPower;
         enemyEatermon.hp = Math.max(0, enemyEatermon.hp);
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
-    
+
     // Display the attack results
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
 
@@ -99,6 +110,8 @@ function attackMove(eatermonIndex, moveIndex) {
 
     updateHp(); // Update HP UI after attack
 }
+
+
 
 // Enemy attack move
 function enemyMove() {
@@ -168,26 +181,37 @@ function enemyMove() {
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {
+    console.log(`Checking effectiveness between Attack Type: ${attackType} and Defense Type: ${defenseType}`);
+    
     const attackerType = eatermonTypes.find(type => type.type === attackType);
     const defenderType = eatermonTypes.find(type => type.type === defenseType);
 
     if (!attackerType || !defenderType) {
-        return 'neutral'; // If no match, return neutral
+        console.log(`Invalid types! Returning neutral.`);
+        return 'neutral';
     }
 
-    // Check if the defense type has no effect against the attack type
-    if (attackerType.noEffect.includes(defenderType.type)) {
-        return 'noEffect';  // Attack has no effect
+    // Check if the attack type has no effect on the defender's type
+    if (defenderType.noEffect.includes(attackType)) {
+        console.log(`${attackType} has no effect on ${defenderType.type}`);
+        return 'noEffect';  // No effect on the target
     }
 
-    // Check if the defense type is strong or weak against the attack type
+    // Check if the move type is strong or weak against the defender's type
     if (attackerType.strong.includes(defenderType.type)) {
+        console.log(`${attackType} is strong against ${defenderType.type}`);
         return 'strong';  // Attack is strong
     } else if (attackerType.weak.includes(defenderType.type)) {
+        console.log(`${attackType} is weak against ${defenderType.type}`);
         return 'weak';    // Attack is weak
     }
 
-    return 'neutral'; // No effect (neutral)
+    console.log(`${attackType} has a neutral effect on ${defenderType.type}`);
+    return 'neutral';  // Neutral effect
 }
+
+
+
+
 
 
