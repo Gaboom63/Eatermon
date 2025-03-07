@@ -4,13 +4,14 @@ const emblem = document.getElementById("emblem");
 const enemyEmblem = document.getElementById("enemyEmblem");
 const eatermon = [
     {
-        type: eatermonTypes[2].type, 
+        type: eatermonTypes[8].type, 
         id: 0,
         name: "Woodle",
         hp: 90,
         maxHp: 90,
         attack: 10,
         src: "images/woodle.png",
+        emblem: "images/emblems/grassEmblem.png",
         canFlee: false
     },
     {
@@ -32,6 +33,7 @@ const eatermon = [
         maxHp: 105,
         attack: 30,
         src: "images/druewl.png",
+        emblem: "images/emblems/waterEmblem.png",
         canFlee: false
     },
     {
@@ -51,6 +53,7 @@ const eatermon = [
         hp: 120, 
         maxHp: 120, 
         src: "images/Poporlation.png",
+        emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
         abilities: ["Heat Resist"],  // Woodle has Heat Resist
     },
@@ -60,6 +63,7 @@ const eatermon = [
         hp: 100, 
         maxHp: 100, 
         src: "images/BagOh.png",
+        emblem: "images/emblems/normalEmblem.png",
         canFlee: false,
     },
     {
