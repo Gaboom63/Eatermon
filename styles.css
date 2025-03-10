@@ -49,7 +49,7 @@ canvas {
     position: absolute;
     width: 100%;
     height: 100%;
-    display: none;
+    /* display: none; */
     background-image: url(images/backgrounds/DemoBattle.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -724,24 +724,11 @@ canvas {
 /* styles.css */
 
 /* Style for event markers */
-/* Style for event markers */
-/* Style for event markers */
 .event-marker {
     position: absolute;
     width: 10px;
     height: 10px;
     background-color: red;
-    border-radius: 50%;  /* Make them circular */
-    z-index: 2;  /* Ensure the event markers are above the map, but below the player */
+    border-radius: 50%;
+    z-index: 5;  /* Ensure event markers are above the background but below the player */
 }
-
-.barrier {
-    width: 50px; /* size of the barrier */
-    height: 50px;
-    background-color: green; /* color of the barrier */
-    position: absolute; /* so you can position them on the map */
-    z-index: 1; /* makes sure the barriers appear on top of other elements */
- }
- 
-
- 
