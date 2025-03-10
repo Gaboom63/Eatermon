@@ -100,7 +100,7 @@ function gameLoop() {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Calculate camera offsets based on player position
+    // Calculat e camera offsets based on player position
     // var cameraOffsetX = x * parseInt(getComputedStyle(document.documentElement).getPropertyValue(`--pixel-size`));
     // var cameraOffsetY = y * parseInt(getComputedStyle(document.documentElement).getPropertyValue(`--pixel-size`));
 

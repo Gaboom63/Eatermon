@@ -1,12 +1,15 @@
-const tileH = 48;
-const tileW = 48;
+// const canvas = document.getElementById('gameCanvas');
+// const ctx = canvas.getContext('2d');
+
+const tileH = 96; // Increase tile height for bigger tiles
+const tileW = 96; // Increase tile width for bigger tiles
 
 const tileRows = 10;
 const tileColum = 10;
 
 let playerX = tileW * 1;
 let playerY = tileH * 1;
-const playerSize = 20;
+const playerSize = 40; // Increase player size
 const playerSpeed = 5;
 
 let playerImage = new Image();
@@ -20,6 +23,13 @@ const spriteFrames = 4; // Number of frames in a row for each direction
 
 let playerDirection = 'down'; // Initial direction
 
+const keys = {
+    ArrowUp: false,
+    ArrowDown: false,
+    ArrowLeft: false,
+    ArrowRight: false
+};
+
 const updateAll = () => {
     window.requestAnimationFrame(updateAll);
     drawMap();
@@ -29,8 +39,15 @@ const updateAll = () => {
 };
 
 window.onload = () => {
+    // Adjust the canvas size based on the tile sizes
     canvas.width = tileW * tileColum;
     canvas.height = tileH * tileRows;
+
+    // Apply image-rendering: pixelated for the canvas context
+    ctx.imageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+
     window.requestAnimationFrame(updateAll);
 };
 
@@ -93,7 +110,6 @@ const drawPlayer = () => {
         playerY - playerSize, // Adjust for center
         spriteWidth * (playerSize / (spriteWidth / 2)),
         spriteHeight * (playerSize / (spriteHeight / 2)),
-
     );
 };
 
@@ -153,20 +169,17 @@ const checkCollision = (x, y) => {
     return false;
 };
 
-
-
 const checkGreenSquares = () => {
     for (let square of greenSquares) {
         if (playerX + playerSize > square.x &&
             playerX - playerSize < square.x + tileW &&
             playerY + playerSize > square.y &&
             playerY - playerSize < square.y + tileH) {
-            // console.log("Player is on a green square!");
-        }
+                encounter();
+                console.log("Hello");
+            }
     }
 };
-
-const keys = {};
 
 document.addEventListener('keydown', (event) => {
     keys[event.key] = true;

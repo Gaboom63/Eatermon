@@ -11,7 +11,7 @@ const eatermon = [
         maxHp: 90,
         attack: 10,
         src: "images/woodle.png",
-        emblem: "images/emblems/grassEmblem.png",
+            emblem: "images/emblems/grassEmblem.png",
         canFlee: false
     },
     {
@@ -44,6 +44,7 @@ const eatermon = [
         maxHp: 130,
         attack: 40, 
         src: "images/Flopper.png",
+        emblem: "images/emblems/iceEmblem.png",
         canFlee: false
     }, 
     {

@@ -9,10 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Top-Down Game Template</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Css/animations.css">
 </head>
 
 <body>
     <p id="console"></p>
+    
     <div id="battleMenu">
         <div id="playerHpBar">
             <div id="playerinnerBar"></div>
@@ -23,11 +25,24 @@
             <button id="run" onclick="Run()">Run</button> <br>
         </div>
         <div id="eatermonEnemyContainer">
-            <img id="eatermonEnemy">
+            <img id="eatermonEnemy"> <!-- Enemy Image -->
+
+          </div>
+          
+          <div id="eatermonPlayerContainer">
+            <img id="eatermonPlayer"> <!-- Player Image -->
+
+          </div>
+          <div id="coinPlayer" class="coin">
+            <div class="side-a"></div>
+            <div class="side-b"></div>
         </div>
-        <div id="eatermonPlayerContainer">
-            <img id="eatermonPlayer">
+        
+        <div id="coinEnemy" class="coin">
+            <div class="side-a"></div>
+            <div class="side-b"></div>
         </div>
+        
         <div id="fireball" class="fireball"></div>
         <div id="vineWhip" class="vineWhip"></div>
         <div id="firestar" class="firestar"></div>
@@ -58,7 +73,7 @@
         </div>
     </div>
     
-    <img id="Player">
+    <!-- <img id="Player"> -->
 
     <!-- <div class="frame">
         <div class="corner_topleft"></div>
@@ -75,11 +90,10 @@
               </div>
            </div> -->
 
-           <div style="position: relative; width: 100%; height: 100%;">
-            <canvas id="barriersCanvas" style="position: absolute; top: 0; left: 0; z-index: 0;"></canvas>
-            <canvas id="gameCanvas" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+           <!-- <div style="position: relative; width: 100%; height: 100%;"> -->
         </div>
-        
+        <canvas id="gameCanvas"></canvas>
+
     </canvas>
     <script src="Javascript Files/utils.js"></script> <!-- Then load game.js last -->
     <script src="Javascript Files/animations.js"></script> <!-- Then load game.js last -->
@@ -88,13 +102,13 @@
     <script src="Javascript Files/player.js"></script> <!-- Load player.js second -->
     <script src="Javascript Files/grass.js"></script> 
     <script src="Javascript Files/encounter.js"></script> <!-- Then load game.js last -->
+    <script src="Javascript Files/testWall.js"></script> 
     <script src="Javascript Files/eatermon.js"></script> <!-- Then load game.js last -->
     <script src="Javascript Files/eatermonAbilitys.js"></script>
     <script src="Javascript Files/eatermonMoves.js"></script> <!-- Then load game.js last -->
     <script src="Javascript Files/battleSystem.js"></script>
     <script src="Javascript Files/Menus.js"></script>
-    <!-- <script src="Javascript Files/wall.js"></script> -->
-    <script src="Javascript Files/testWall.js"></script> 
+    <!-- <script src="J avascript Files/wall.js"></script> -->
     <script src="Javascript Files/game.js"></script> <!-- Then load game.js last -->
 </body>
 
