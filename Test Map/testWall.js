@@ -48,7 +48,7 @@ class Wall {
 let walls = [];
 
 const map = [
-    1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+    2, 1, 0, 0, 0, 0, 0, 0, 0, 0,
     1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
     1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
     0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
@@ -69,6 +69,10 @@ const drawMap = () => {
             if (map[arrayIndex] === 1) {
                 ctx.fillStyle = "gray";
                 ctx.fillRect(tileW * col, tileH * row, tileW, tileH);
+            } else if(map[arrayIndex] === 2){
+                ctx.fillStyle = "green";
+                ctx.fillRect(tileW * col, tileH * row, tileW, tileH);
+
             } else {
                 ctx.fillStyle = "black";
                 ctx.fillRect(tileW * col, tileH * row, tileW, tileH);
@@ -88,7 +92,8 @@ const drawPlayer = () => {
         playerX - playerSize, // Adjust for center
         playerY - playerSize, // Adjust for center
         spriteWidth * (playerSize / (spriteWidth / 2)) ,
-        spriteHeight * (playerSize / (spriteHeight / 2))
+        spriteHeight * (playerSize / (spriteHeight / 2)),
+        
     );
 };
 
@@ -97,7 +102,7 @@ const handleInput = () => {
     if (keys.ArrowUp) {
         movePlayer(0, -playerSpeed);
         playerDirection = 'up';
-        playerFrameY = 3;
+        playerFrameY = 2;
         moving = true;
     }
     if (keys.ArrowDown) {
@@ -109,13 +114,13 @@ const handleInput = () => {
     if (keys.ArrowLeft) {
         movePlayer(-playerSpeed, 0);
         playerDirection = 'left';
-        playerFrameY = 1;
+        playerFrameY = 3;
         moving = true;
     }
     if (keys.ArrowRight) {
         movePlayer(playerSpeed, 0);
         playerDirection = 'right';
-        playerFrameY = 2;
+        playerFrameY = 1;
         moving = true;
     }
 
