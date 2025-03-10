@@ -724,11 +724,14 @@ canvas {
 /* styles.css */
 
 /* Style for event markers */
+/* Style for event markers */
+/* Style for event markers */
 .event-marker {
     position: absolute;
     width: 10px;
     height: 10px;
     background-color: red;
-    border-radius: 50%;
-    z-index: 5;  /* Ensure event markers are above the background but below the player */
+    border-radius: 50%;  /* Make them circular */
+    z-index: 2;  /* Ensure the event markers are above the map, but below the player */
 }
+

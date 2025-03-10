@@ -75,7 +75,10 @@
               </div>
            </div>
 
-    <canvas id="gameCanvas">
+           <div style="position: relative; width: 100%; height: 100%;">
+            <canvas id="barriersCanvas" style="position: absolute; top: 0; left: 0; z-index: 0;"></canvas>
+            <canvas id="gameCanvas" style="position: absolute; top: 0; left: 0; z-index: 1;"></canvas>
+        </div>
         
     </canvas>
     <script src="Javascript Files/animations.js"></script> <!-- Then load game.js last -->
@@ -89,7 +92,6 @@
     <script src="Javascript Files/eatermonMoves.js"></script> <!-- Then load game.js last -->
     <script src="Javascript Files/battleSystem.js"></script>
     <script src="Javascript Files/Menus.js"></script>
-    <script src="Javascript Files/overworld.js"></script> <!-- Then load game.js last -->
     <script src="Javascript Files/game.js"></script> <!-- Then load game.js last -->
 </body>
 

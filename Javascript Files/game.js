@@ -19,23 +19,7 @@ const player = {
     width: 50,
     height: 50,
     speed: 5,
-    src: 'images/player.png'
 };
-
-// Assuming you have an image element with id "Player" in your HTML
-const playerImage = new Image();
-playerImage.src = player.src;
-
-playerImage.onload = function() {
-    drawPlayer();
-};
-
-// Function to draw player on canvas
-function drawPlayer() {
-    if (playerImage.complete) {
-        ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-    }
-}
 
 // Function to place character on screen
 const placeCharacter = () => {
@@ -59,7 +43,6 @@ const placeCharacter = () => {
     character.style.transform = `translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`;
 
     // Check if the player is stepping on an event tile
-    checkForEvent(x, y);  // Pass player's current position to check for events
 }
 
 const step = () => {
@@ -110,9 +93,6 @@ canvas.height = window.innerHeight;
 function gameLoop() {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Update and draw the player
-    drawPlayer();
 
     if (!inBattle) {
         encounter();  // Function already defined in your game
