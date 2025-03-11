@@ -697,3 +697,7 @@ body {
     border-radius: 50%;
     z-index: 5;  /* Ensure event markers are above the background but below the player */
 }
+.wall {
+    position: absolute;
+    border: 1px solid yellow; /* Add a yellow border */
+}

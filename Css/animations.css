@@ -40,7 +40,7 @@
 
 /* Coin Appearance Animation */
 #coin {
-    animation: coinAppear 1.5s ease-out forwards;
+    animation: coinAppear 2s ease-out forwards;
 }
 
 /* Animation when coin flips heads */

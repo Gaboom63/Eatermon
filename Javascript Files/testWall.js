@@ -1,5 +1,5 @@
-// const canvas = document.getElementById('gameCanvas');
-// const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
 const tileH = 96; // Increase tile height for bigger tiles
 const tileW = 96; // Increase tile width for bigger tiles
@@ -176,6 +176,7 @@ const checkGreenSquares = () => {
             playerY + playerSize > square.y &&
             playerY - playerSize < square.y + tileH) {
                 encounter();
+                console.log("Hello");
             }
     }
 };
