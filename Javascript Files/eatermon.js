@@ -4,14 +4,16 @@ const emblem = document.getElementById("emblem");
 const enemyEmblem = document.getElementById("enemyEmblem");
 const eatermon = [
     {
-        type: eatermonTypes[8].type, 
+        type: eatermonTypes[8].type,  
         id: 0,
         name: "Woodle",
         hp: 90,
         maxHp: 90,
-        attack: 10,
+        attack: eatermonStats[0].attack,
+        defense: eatermonStats[0].defense,
+        speed: eatermonStats[0].speed, 
         src: "images/woodle.png",
-            emblem: "images/emblems/grassEmblem.png",
+        emblem: "images/emblems/grassEmblem.png",
         canFlee: false
     },
     {
@@ -20,7 +22,9 @@ const eatermon = [
         name: "Tomadoodle",
         hp: 100,
         maxHp: 100,
-        attack: 30,
+        attack: eatermonStats[1].attack,
+        defense: eatermonStats[1].defense,
+        speed: eatermonStats[1].speed, 
         src: "images/tomadoodle.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false
@@ -31,7 +35,9 @@ const eatermon = [
         name: "Druewl",
         hp: 105,
         maxHp: 105,
-        attack: 30,
+        attack: eatermonStats[2].attack,
+        defense: eatermonStats[2].defense,
+        speed: eatermonStats[2].speed,
         src: "images/druewl.png",
         emblem: "images/emblems/waterEmblem.png",
         canFlee: false
@@ -73,6 +79,7 @@ const eatermon = [
         hp: 70, 
         maxHp: 70, 
         src: "images/Coreange.png",
+        emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
     },
     {
@@ -81,6 +88,7 @@ const eatermon = [
         hp: 90, 
         maxHp: 90, 
         src: "images/PanCoook.png",
+        emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
     },
     {
