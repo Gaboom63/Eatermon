@@ -10,40 +10,43 @@ let enemyHpInner = document.getElementById('enemyinnerBar');
 let playerHpInner = document.getElementById('playerinnerBar');
 
 // Modified encounter function to trigger coin flip animation
-const encounter = () => {
-    for (let square of greenSquares) {
-        let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
+function encounter() {
+    // For each grass area, check if player is inside
+    for (let i = 0; i < grass.length; i++) {
+        let pickNum = Math.random() * (10000 - 1) + 1;
+        const currentGrass = grass[i];
 
         if (
-            playerX + playerSize > square.x &&
-            playerX - playerSize < square.x + tileW &&
-            playerY + playerSize > square.y &&
-            playerY - playerSize < square.y + tileH &&
-            pickNum < 50 && !inBattle
+            player.x >= currentGrass.x &&  // Player's left edge is to the right of grass left edge
+            player.x + player.width <= currentGrass.x + currentGrass.width && // Player's right edge is to the left of grass right edge
+            player.y >= currentGrass.y &&  // Player's top edge is below grass top edge
+            player.y + player.height <= currentGrass.y + currentGrass.height &&  // Player's bottom edge is above grass bottom edge
+            pickNum < 50 && !inBattle // 10% encounter chance
         ) {
+            // consolep.innerHTML = `Hello: ${pickNum}`;
             hasEncounted = true;
             inBattle = true;
-
-            // Randomly choose an enemy Eatermon
-            do {
-                enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
-            } while (enemyEatermonIndex === currentEatermonIndex);
-
-            console.log(`Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`);
-
-            // Initialize the battle state
-            restoreEnemyHp();
-            updateHp();
-
-            // Trigger the coin flip animation and set up the emblem
-            loadingImagess(); // Load the emblems before starting the animation
-            startBattleAnimation(); // Trigger the battle animation
-
-            battleMenuScript.style.display = 'block';
-            break;
+            break; // If we encounter, exit the loop
         }
     }
-};
+
+    if (inBattle) {  // If an encounter happened, proceed to battle
+        // Select a random enemy Eatermon
+        do {
+            enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
+        } while (enemyEatermonIndex === currentEatermonIndex); // Ensure it's not the same as the player's
+
+        // consolep.innerHTML = `Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`;
+
+        // Initialize the battle
+        restoreEnemyHp(); // Restore enemy HP to max
+        updateHp(); // Update HP UI
+        // Trigger the coin flip animation and set up the emblem
+        loadingImagess(); // Load the emblems before starting the animation
+        startBattleAnimation(); // Trigger the battle animation
+        battleMenuScript.style.display = 'block'; // Show battle menu
+    }
+}
 
 // Function to dynamically set the images of the coin sides (Player and Enemy)
 function loadingImagess() {
@@ -116,7 +119,7 @@ function startBattleAnimation() {
 function showEmblems() {
     const playerEmblem = document.getElementById('emblem');
     const enemyEmblem = document.getElementById('enemyEmblem');
-    
+
     playerEmblem.classList.add("show");
     enemyEmblem.classList.add("show");
 }

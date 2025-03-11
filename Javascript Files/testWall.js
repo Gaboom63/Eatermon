@@ -176,7 +176,6 @@ const checkGreenSquares = () => {
             playerY + playerSize > square.y &&
             playerY - playerSize < square.y + tileH) {
                 encounter();
-                console.log("Hello");
             }
     }
 };

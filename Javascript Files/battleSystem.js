@@ -15,8 +15,16 @@ function updateHp() {
     playerHpText.innerHTML = `<b>${eatermon[currentEatermonIndex].name}'s HP: ${eatermon[currentEatermonIndex].hp} / ${eatermon[currentEatermonIndex].maxHp }</b>`;
 }
 
+let playerTurn = true;  // Set it to true initially, so it's the player's turn at the start
+
+// Handle player's attack with type matchups
 // Handle player's attack with type matchups
 function attackMove(eatermonIndex, moveIndex) {
+    if (!playerTurn) {
+        console.log("It's not your turn! Wait for the enemy to finish.");
+        return;  // If it's not the player's turn, don't proceed with the attack
+    }
+
     const selectedEatermon = eatermon[eatermonIndex];
     const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
     const enemyEatermon = eatermon[enemyEatermonIndex];
@@ -24,83 +32,47 @@ function attackMove(eatermonIndex, moveIndex) {
 
     // Debugging logs
     console.log(`Attacking with move: ${selectedMove.name}`);
-    console.log(`Player Eatermon Type: ${selectedEatermon.type}`);
-    console.log(`Enemy Eatermon Type: ${enemyEatermon.type}`);
 
-    // Debug: Check move type and effectiveness
+    // Handle type effectiveness
     const moveType = selectedMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
-    console.log(`Move Type: ${moveType}, Enemy Type: ${enemyType}, Effectiveness: ${typeEffectiveness}`);
-
-    // Check if the move is Fireball
-    if (selectedMove.name === "Fireball") {
-        triggerFireballAnimation();
-    }
-    if (selectedMove.name === "Flame Burst") {
-        triggerFireStarAnimation();
-    }
 
     let modifiedPower = selectedMove.power;
 
     // Handle effectiveness
     if (typeEffectiveness === 'strong') {
-        console.log("Effectiveness: Strong, doubling power");
-        modifiedPower *= 2;  // Double the power if the move is strong
+        modifiedPower *= 2;
     } else if (typeEffectiveness === 'weak') {
-        console.log("Effectiveness: Weak, halving power");
-        modifiedPower *= 0.5;  // Halve the power if the move is weak
+        modifiedPower *= 0.5;
     } else if (typeEffectiveness === 'noEffect') {
-        console.log("Effectiveness: No effect, setting power to 0");
-        modifiedPower = 0;  // No effect, set power to 0
+        modifiedPower = 0;
     }
 
-    // Check if the move is Fire-type and if the enemy has Heat Resist
-    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
-        console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
-        modifiedPower = 0; // No damage dealt
-    }
-
-    // Apply the modified power to the enemy HP (only if there's damage)
+    // Apply damage to the enemy
     if (modifiedPower > 0) {
-        console.log(`Dealing ${modifiedPower} damage to ${enemyEatermon.name}`);
         enemyEatermon.hp -= modifiedPower;
         enemyEatermon.hp = Math.max(0, enemyEatermon.hp);
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
 
-    // Display the attack results
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
 
-    // Check if enemy is defeated
+    // Check if the enemy is defeated
     if (enemyEatermon.hp <= 0) {
         enemyHpInner.style.width = `0%`;
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
             enemyHpInner.style.display = `none`;
             setTimeout(() => {
-                battleMenuScript.style.display = 'none'; // End the battle
-            }, 1000);
-        }, 1000);
-        setTimeout(() => {
-            inBattle = false; // Set battle to false to end the battle
-        }, 3000);
-    } else if (selectedEatermon.hp <= 0) { // Check if player is dead
-        playerHpInner.style.width = `0%`;
-        setTimeout(() => {
-            battleText.innerHTML = `You Lost Against ${enemyEatermon.name}!`;
-            enemyHpInner.style.display = `none`;
-            setTimeout(() => {
-                battleMenuScript.style.display = 'none'; // End the battle
+                battleMenuScript.style.display = 'none';
             }, 1000);
         }, 1000);
         setTimeout(() => {
             inBattle = false;
-            console.log("Player has died, exiting battle...");
         }, 3000);
-    }
-
-    // Trigger enemy's move after a delay
-    if (selectedEatermon.hp > 0) { // Ensure player is still alive before enemy moves
+    } else {
+        // If the enemy is not defeated, switch to the enemy's turn
+        playerTurn = false;
         setTimeout(() => {
             if (enemyEatermon.hp > 0) {
                 enemyMove(); // Enemy attacks
@@ -108,8 +80,9 @@ function attackMove(eatermonIndex, moveIndex) {
         }, 1000);
     }
 
-    updateHp(); // Update HP UI after attack
+    updateHp(); // Update the UI after the attack
 }
+
 
 
 
@@ -134,23 +107,17 @@ function enemyMove() {
 
     // Modify the power based on the type effectiveness
     if (typeEffectiveness === 'strong') {
-        modifiedPower *= 2;  // Double the power if the move is strong against the player
+        modifiedPower *= 2;
     } else if (typeEffectiveness === 'weak') {
-        modifiedPower *= 0.5;  // Halve the power if the move is weak against the player
+        modifiedPower *= 0.5;
     } else if (typeEffectiveness === 'noEffect') {
-        modifiedPower *= 0;  // Halve the power if the move is weak against the player
-    }
-
-    // Check if the move is Fire-type and if the player has Heat Resist
-    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(playerEatermon) && playerEatermon.type === "Fire") {
-        console.log(`${playerEatermon.name} resists Fire-type damage due to Heat Resist!`);
-        modifiedPower = 0; // No damage dealt
+        modifiedPower *= 0;
     }
 
     // Apply the modified power to the player's HP
     if (modifiedPower > 0) {
         playerEatermon.hp -= modifiedPower;
-        playerEatermon.hp = Math.max(0, playerEatermon.hp); // Ensure player's HP doesn't go below 0
+        playerEatermon.hp = Math.max(0, playerEatermon.hp);
         const playerHpInner = document.getElementById('playerinnerBar');
         playerHpInner.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
     }
@@ -167,7 +134,6 @@ function enemyMove() {
         setTimeout(() => {
             inBattle = false; // End the battle if the player is dead
             battleMenuScript.style.display = 'none'; // End the battle
-            console.log("Player has died, exiting battle...");
             alert("You Died (Debug So Reloading)");
             location.reload(); 
         }, 3000);
@@ -176,6 +142,9 @@ function enemyMove() {
     updateHp(); // Update HP UI after attack
 
     battleText.innerHTML = `${enemyEatermon.name} used ${selectedEnemyMove.name}! <br><b>${playerEatermon.name}'s HP: ${playerEatermon.hp}</b>`;
+
+    // End the enemy's turn, and it's now the player's turn again
+    playerTurn = true;
 }
 
 

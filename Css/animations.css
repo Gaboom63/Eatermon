@@ -159,11 +159,11 @@
 }
 
 /* Show the emblems after the coin flip animation */
-#emblem.show, #enemyEmblem.show {
+/* #emblem.show, #enemyEmblem.show {
     visibility: visible;
     opacity: 1;
     animation: emblemReveal 1s ease-out forwards;
-}
+} */
 
 /* Emblem Reveal Animation */
 @keyframes emblemReveal {
