@@ -46,7 +46,10 @@ function attackMove(eatermonIndex, moveIndex) {
     } else if (typeEffectiveness === 'noEffect') {
         modifiedPower = 0;
     }
-
+    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
+        console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
+        modifiedPower = 0; // No damage dealt
+    }
     // Apply damage to the enemy
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;

@@ -74,8 +74,9 @@ const map = [
     0, 0, 0, 0, 0, 1, 1, 1, 1, 0,
     0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
     0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-    0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
-];
+    0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+  ];
+  
 
 const drawMap = () => {
     walls = [];
@@ -141,7 +142,7 @@ const handleInput = () => {
         moving = true;
     }
     if (keys.Escape) {
-        openEscapeMenu(); // Show the escape menu when Escape is pressed
+        openEscapeMenu();
     }
 
     if (moving) {

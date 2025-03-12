@@ -11,9 +11,3 @@ const eatermonAbilitys = [
         name: "Sticky Splurge"
     }
 ] 
-
-function heatResist () {
-
-}
-
-heatResist(); 

@@ -165,14 +165,24 @@ function showSwitchMenu() {
 function showResultsOfMenuBag() {
     let bag = document.getElementById('escapeMenu');
     bag.innerHTML = `
+    <h1>Bag Contents</h1>
+    <br>
+    <button onclick="showParty()">Your Party</button>
+    `;
+}
+
+function showParty() {
+    let bag = document.getElementById('escapeMenu');
+    bag.innerHTML = `
     <h1>Your Eatermon Party</h1>
     <br>
     ${playerParty.map((eatermon, index) => `${index + 1}. ${eatermon.name}`).join('<br>')}
     <br>
     <button onclick="showSwitchMenu()">Switch Eatermon</button> <!-- Button to switch Eatermon -->
-    <button id="bagItemsBack" onclick="backEsacpe()">Back</button>
+    <button class="menu-btn" id="bagItemsBack" onclick="backEsacpe()">Back</button>
     `;
 }
+
 
 // Switches back to the game menu
 function backEsacpe() {
@@ -194,9 +204,9 @@ function openEscapeMenu() {
     escapeMenu.classList.add('active');  // This adds the 'active' class to display the menu
     document.body.style.overflow = 'hidden';  // Prevent scrolling while the menu is open
 }
-
+// Example function to close the escape menu
 function closeEscapeMenu() {
-    let escape = document.getElementById('escapeMenu');
-    escape.style.display = 'none'; // Hide the menu
-    document.body.style.overflow = 'auto'; // Allow scrolling again when the menu is closed
+    const escapeMenu = document.getElementById('escapeMenu');
+    escapeMenu.classList.remove('active');  // This removes the 'active' class to hide the menu
+    document.body.style.overflow = 'auto';  // Allow scrolling again when the menu is closed
 }
