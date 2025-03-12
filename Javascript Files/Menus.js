@@ -112,31 +112,29 @@ playerParty.push(eatermon[currentEatermonIndex]);
 // Function to catch the enemy Eatermon and add it to the player's party
 // Function to catch the enemy Eatermon and add it to the player's party
 function catchThatMon() {
-    enemyImg.src = plates[0].src; // Show the plate image
-    catching = true; // Start the catching process
+    catching = true; // Start catching
+    console.log("Catching started");
+    enemyImg.src = plates[0].src; // Update enemy image to plate image
     
-    // Simulate a catch success rate (you can adjust this value)
-    let catchChance = Math.random(); // Random number between 0 and 1
+    let catchChance = Math.random();
 
-    // If the catch chance is higher than a threshold (let's say 0.5 for 50%)
     if (catchChance > 0.5) {
         caught = true;
-        playerParty.push(eatermon[enemyEatermonIndex]); // Add the captured Eatermon to the player's party
-        console.log(`${eatermon[enemyEatermonIndex].name} has been caught and added to your party!`);
-        console.log(playerParty); // Show the player's party after catching
-        
+        playerParty.push(eatermon[enemyEatermonIndex]);
+        console.log(`${eatermon[enemyEatermonIndex].name} has been caught!`);
         battleText.innerHTML = `${eatermon[enemyEatermonIndex].name} has been added to your party!`;
     } else {
         caught = false;
-        console.log("The capture attempt failed.");
         battleText.innerHTML = "The capture attempt failed.";
     }
 
     // Reset catching after a brief moment
     setTimeout(() => {
         catching = false;
+        console.log("Catching reset");
     }, 1000);
 }
+
 
 // Function to show the switch menu and switch between Eatermon
 function showSwitchMenu() {
@@ -190,4 +188,15 @@ function backEsacpe() {
             <button class="menu-btn""><span class="icon">&#x1F6AB;</span> Quit Game</button>
         </div>
    `;
+}
+function openEscapeMenu() {
+    const escapeMenu = document.getElementById('escapeMenu');
+    escapeMenu.classList.add('active');  // This adds the 'active' class to display the menu
+    document.body.style.overflow = 'hidden';  // Prevent scrolling while the menu is open
+}
+
+function closeEscapeMenu() {
+    let escape = document.getElementById('escapeMenu');
+    escape.style.display = 'none'; // Hide the menu
+    document.body.style.overflow = 'auto'; // Allow scrolling again when the menu is closed
 }

@@ -11,6 +11,9 @@ let playerHpInner = document.getElementById('playerinnerBar');
 
 // Modified encounter function to trigger coin flip animation
 const encounter = () => {
+    // List of encountered Eatermon indexes (could be stored globally or in localStorage if persistent)
+    let encounteredEatermons = [];
+
     for (let square of greenSquares) {
         let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
 
@@ -24,10 +27,13 @@ const encounter = () => {
             hasEncounted = true;
             inBattle = true;
 
-            // Randomly choose an enemy Eatermon
+            // Randomly choose an enemy Eatermon, ensuring it hasn't been encountered before
             do {
                 enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
-            } while (enemyEatermonIndex === currentEatermonIndex);
+            } while (enemyEatermonIndex === currentEatermonIndex || encounteredEatermons.includes(enemyEatermonIndex));
+
+            // Add the enemy Eatermon index to the list of encountered Eatermons
+            encounteredEatermons.push(enemyEatermonIndex);
 
             console.log(`Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`);
 
@@ -44,6 +50,7 @@ const encounter = () => {
         }
     }
 };
+
 
 // Function to dynamically set the images of the coin sides (Player and Enemy)
 function loadingImagess() {

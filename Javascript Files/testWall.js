@@ -27,7 +27,8 @@ const keys = {
     ArrowUp: false,
     ArrowDown: false,
     ArrowLeft: false,
-    ArrowRight: false
+    ArrowRight: false,
+    Escape: false
 };
 
 const updateAll = () => {
@@ -139,6 +140,9 @@ const handleInput = () => {
         playerFrameY = 1;
         moving = true;
     }
+    if (keys.Escape) {
+        openEscapeMenu(); // Show the escape menu when Escape is pressed
+    }
 
     if (moving) {
         playerFrameX = (playerFrameX + 1) % spriteFrames;
@@ -146,6 +150,7 @@ const handleInput = () => {
         playerFrameX = 0; // Reset to the first frame when not moving
     }
 };
+
 
 const movePlayer = (dx, dy) => {
     const newX = playerX + dx;

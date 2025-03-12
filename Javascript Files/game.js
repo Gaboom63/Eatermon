@@ -115,7 +115,12 @@ function gameLoop() {
         encounter();  // Function already defined in your game
     }
 
-    loadingImages();
+    if(catching) {
+        enemyImg.src = plates[0].src; // Make sure this is inside the condition where the image should update
+    } else {
+        loadingImages();
+    }
+
     updateHp(); // Update UI with the new enemy's HP
 
     // Call the next frame

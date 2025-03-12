@@ -18,7 +18,6 @@ function updateHp() {
 let playerTurn = true;  // Set it to true initially, so it's the player's turn at the start
 
 // Handle player's attack with type matchups
-// Handle player's attack with type matchups
 function attackMove(eatermonIndex, moveIndex) {
     if (!playerTurn) {
         console.log("It's not your turn! Wait for the enemy to finish.");
