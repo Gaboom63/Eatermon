@@ -162,3 +162,36 @@
     left: 320px; /* Adjusts the image position */
     display: block; /* Ensures the image is treated as a block element */
 }
+
+#xpBarContainer {
+    width: 300px; /* Match the width of the battle options menu */
+    margin-bottom: 10px; /* Space between XP bar and battle options */
+    position: absolute;
+    bottom: 370px; /* Distance from the bottom to position it above the battle options menu */
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+#xpText, #xpLevel {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+#xpBar {
+    width: 80%; /* Adjust the width of the XP bar */
+    height: 20px;
+    background-color: #333; /* Dark background for the bar */
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+#xpProgress {
+    width: 45%; /* Adjust this to show the current XP progress */
+    height: 100%;
+    background-color: #4CAF50; /* Green progress */
+    border-radius: 10px;
+}

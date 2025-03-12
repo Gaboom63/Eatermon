@@ -23,10 +23,19 @@
 <body>
     <p id="console"></p>
     
+
     <div id="battleMenu">
         <div id="playerHpBar">
             <div id="playerinnerBar"></div>
         </div>
+        <div id="xpBarContainer">
+            <p id="xpLevel">Level: 1 </p>
+            <p id="xpText">XP: 45/100</p>
+            <div id="xpBar">
+                <div id="xpProgress"></div>
+            </div>
+        </div>
+        
         <div id="battleOptionsMenu">
             <button id="attack" onclick="Attack()">Attack!</button> <br>
             <button id="bag" onclick="Bag()">Bag</button> <br>
@@ -69,12 +78,13 @@
         </div>
 
     </div>
+    
     <div id="escapeMenu">
         <div class="menu-header">
             <h2>Game Menu</h2>
         </div>
         <div class="menu-options" id="menu-options">
-            <button class="menu-btn" onclick="closeMenu()"><span class="icon">&#x2190;</span> Return to Game</button>
+            <button class="menu-btn" onclick="closeEscapeMenu()"><span class="icon">&#x2190;</span> Return to Game</button>
             <button class="menu-btn" id="menuBag" onclick="showResultsOfMenuBag()"><span class="icon">&#x01F4BC;</span> Bag</button>
             <button class="menu-btn"><span class="icon">&#x1F3A5;</span> Settings</button>
             <button class="menu-btn""><span class="icon">&#x1F6AB;</span> Quit Game</button>

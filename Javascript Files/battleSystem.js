@@ -70,6 +70,9 @@ function attackMove(eatermonIndex, moveIndex) {
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
             enemyHpInner.style.display = `none`;
+            eatermon[currentEatermonIndex].xp =  eatermon[currentEatermonIndex].xp + 100; 
+            updateXpBarDisplay();
+            checkIfXpIsFull(); 
             setTimeout(() => {
                 battleMenuScript.style.display = 'none';
             }, 1000);
