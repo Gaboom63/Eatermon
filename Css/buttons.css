@@ -1,0 +1,76 @@
+#attackButton1, #bagItems1 {
+    width: 150px;
+    height: 100px;
+    background-color: gray;
+    border: none;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Hide the arrow initially */
+    /* transition: width 0.5s ease-in-out; */
+}
+
+#attackButton2, #bagItems2 {
+    width: 140px;
+    height: 100px;
+    background-color: gray;
+    border: none;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Hide the arrow initially */
+    /* transition: width 0.5s ease-in-out; */
+}
+
+#attackButton3, #bagItems3 {
+    width: 150px;
+    height: 100px;
+    background-color: gray;
+    border: none;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Hide the arrow initially */
+    /* transition: width 0.5s ease-in-out; */
+}
+
+#attackButton4, #bagItems4 {
+    width: 140px;
+    height: 100px;
+    background-color: gray;
+    border: none;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+    /* Hide the arrow initially */
+    /* transition: width 0.5s ease-in-out; */
+}
+
+#backButton, #bagItemsBack {
+    background-color: gray;
+    border: none;
+    width: 150px;
+    height: 100px;
+    align-self: left;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    /* Hide the arrow initially */
+    transition: width 0.5s ease-in-out;
+}
+
+
+/* On hover, extend the button to the right and show the arrow */
+#attackButton1:hover,
+#attackButton2:hover,
+#attackButton3:hover,
+#attackButton4:hover,
+#bagItems1:hover,
+#bagItems2:hover,
+#bagItems3:hover,
+#bagItems4:hover,
+#bagItemsBack:hover,
+#backButton:hover {
+    background-color: rgb(89, 89, 89);
+    border: 2px white dotted;
+}

@@ -34,7 +34,7 @@ const player = {
 //             if (held_direction === directions.down) { y += speed; }
 //             if (held_direction === directions.up) { y -= speed; }
 //         } else {
-//             console.log('Blocked by wall');
+//             //console.log('Blocked by wall');
 //         }
 
 //         character.setAttribute("facing", held_direction);
@@ -105,7 +105,7 @@ function gameLoop() {
     // var cameraOffsetY = y * parseInt(getComputedStyle(document.documentElement).getPropertyValue(`--pixel-size`));
 
     // Debugging: Log camera offsets to see if they're correct
-    // console.log(`Camera Offset - X: ${cameraOffsetX}, Y: ${cameraOffsetY}`);
+    // //console.log(`Camera Offset - X: ${cameraOffsetX}, Y: ${cameraOffsetY}`);
 
     // Draw walls with the camera offset applied
     // var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue(`--pixel-size`));

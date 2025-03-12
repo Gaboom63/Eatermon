@@ -13,6 +13,9 @@ const eatermon = [
         defense: eatermonStats[0].defense,
         speed: eatermonStats[0].speed, 
         evasiveness: eatermonStats[0].evasiveness, 
+        xp: eatermonExp[0].xp,
+        // maxXp: ,
+        level: eatermonExp[0].level,  
         src: "images/woodle.png",
         emblem: "images/emblems/grassEmblem.png",
         canFlee: false
@@ -143,7 +146,7 @@ const eatermon = [
     },
 ]
 
-console.log(eatermon);
+//console.log(eatermon);
 
 
 function loadingImages() {

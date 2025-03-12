@@ -24,4 +24,4 @@ function drawGrass() {
     });
 }
 
-console.log(grass);
+//console.log(grass);

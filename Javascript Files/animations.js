@@ -155,23 +155,3 @@ function triggerFireStarAnimation() {
 }
 
 
-//Coins 
-document.addEventListener('DOMContentLoaded', function() {
-    const coin = document.getElementById('coin');
-  
-    coin.addEventListener('click', function() {
-      const flipResult = Math.random();
-      coin.classList.remove('heads', 'tails'); // Remove any previous class to reset the animation
-  
-      setTimeout(function() {
-        if (flipResult <= 0.5) {
-          console.log('It is heads');
-          coin.classList.add('heads'); // Add heads class to trigger animation
-        } else {
-          console.log('It is tails');
-          coin.classList.add('tails'); // Add tails class to trigger animation
-        }
-      }, 100);
-    });
-  });
-  

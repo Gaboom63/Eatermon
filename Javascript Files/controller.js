@@ -25,7 +25,7 @@
 //     if (e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
 // });
 
-// console.log(keys); 
+// //console.log(keys); 
 
 function openMenu() {
     const escMenu = document.getElementById('escapeMenu');

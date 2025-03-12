@@ -15,12 +15,17 @@ function updateHp() {
     playerHpText.innerHTML = `<b>${eatermon[currentEatermonIndex].name}'s HP: ${eatermon[currentEatermonIndex].hp} / ${eatermon[currentEatermonIndex].maxHp }</b>`;
 }
 
+function restorePlayerHp() {
+    let playerHpInner = document.getElementById('playerinnerBar');
+    playerHpInner.style.width = `${eatermon[currentEatermonIndex].hp}%`; 
+}
+
 let playerTurn = true;  // Set it to true initially, so it's the player's turn at the start
 
 // Handle player's attack with type matchups
 function attackMove(eatermonIndex, moveIndex) {
     if (!playerTurn) {
-        console.log("It's not your turn! Wait for the enemy to finish.");
+        //console.log("It's not your turn! Wait for the enemy to finish.");
         return;  // If it's not the player's turn, don't proceed with the attack
     }
 
@@ -30,7 +35,7 @@ function attackMove(eatermonIndex, moveIndex) {
     const enemyType = enemyEatermon.type;
 
     // Debugging logs
-    console.log(`Attacking with move: ${selectedMove.name}`);
+    //console.log(`Attacking with move: ${selectedMove.name}`);
 
     // Handle type effectiveness
     const moveType = selectedMove.type;
@@ -47,7 +52,7 @@ function attackMove(eatermonIndex, moveIndex) {
         modifiedPower = 0;
     }
     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
-        console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
+        //console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
         modifiedPower = 0; // No damage dealt
     }
     // Apply damage to the enemy
@@ -152,32 +157,32 @@ function enemyMove() {
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {
-    console.log(`Checking effectiveness between Attack Type: ${attackType} and Defense Type: ${defenseType}`);
+    //console.log(`Checking effectiveness between Attack Type: ${attackType} and Defense Type: ${defenseType}`);
     
     const attackerType = eatermonTypes.find(type => type.type === attackType);
     const defenderType = eatermonTypes.find(type => type.type === defenseType);
 
     if (!attackerType || !defenderType) {
-        console.log(`Invalid types! Returning neutral.`);
+        //console.log(`Invalid types! Returning neutral.`);
         return 'neutral';
     }
 
     // Check if the attack type has no effect on the defender's type
     if (defenderType.noEffect.includes(attackType)) {
-        console.log(`${attackType} has no effect on ${defenderType.type}`);
+        //console.log(`${attackType} has no effect on ${defenderType.type}`);
         return 'noEffect';  // No effect on the target
     }
 
     // Check if the move type is strong or weak against the defender's type
     if (attackerType.strong.includes(defenderType.type)) {
-        console.log(`${attackType} is strong against ${defenderType.type}`);
+        //console.log(`${attackType} is strong against ${defenderType.type}`);
         return 'strong';  // Attack is strong
     } else if (attackerType.weak.includes(defenderType.type)) {
-        console.log(`${attackType} is weak against ${defenderType.type}`);
+        //console.log(`${attackType} is weak against ${defenderType.type}`);
         return 'weak';    // Attack is weak
     }
 
-    console.log(`${attackType} has a neutral effect on ${defenderType.type}`);
+    //console.log(`${attackType} has a neutral effect on ${defenderType.type}`);
     return 'neutral';  // Neutral effect
 }
 

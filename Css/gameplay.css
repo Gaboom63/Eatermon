@@ -1,0 +1,30 @@
+#eatermonEnemy, #eatermonPlayer {
+    image-rendering: pixelated;
+    width: 600px;
+    height: 600px;
+}
+
+#eatermonEnemy {
+    left: 100%;
+    float: right;
+}
+
+#eatermonPlayer {
+    position: absolute;
+    top: 39%;
+    left: 15%;
+}
+
+.event-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.wall {
+    position: absolute;
+    border: 1px solid yellow;
+}

@@ -35,7 +35,7 @@ const encounter = () => {
             // Add the enemy Eatermon index to the list of encountered Eatermons
             encounteredEatermons.push(enemyEatermonIndex);
 
-            console.log(`Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`);
+            //console.log(`Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`);
 
             // Initialize the battle state
             restoreEnemyHp();
@@ -66,8 +66,8 @@ function loadingImagess() {
     const sideBEnemy = document.querySelector('#coinEnemy .side-b');
 
     // Debugging to check if images are being set
-    console.log("Player Emblem:", playerEmblem);
-    console.log("Enemy Emblem:", enemyEmblem);
+    //console.log("Player Emblem:", playerEmblem);
+    //console.log("Enemy Emblem:", enemyEmblem);
 
     // Check if the elements exist
     if (sideAPlayer && sideBPlayer && sideAEnemy && sideBEnemy) {
