@@ -38,7 +38,7 @@ function attackMove(eatermonIndex, moveIndex) {
     const moveType = selectedMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
 
-    let modifiedPower = selectedMove.power;
+    let modifiedPower = selectedMove.power;  // Now we're using the power from the move object
 
     // Handle effectiveness
     if (typeEffectiveness === 'strong') {
@@ -48,6 +48,8 @@ function attackMove(eatermonIndex, moveIndex) {
     } else if (typeEffectiveness === 'noEffect') {
         modifiedPower = 0;
     }
+
+    // If it's a Fire-type move and the enemy has an ability that negates it, set power to 0
     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
         modifiedPower = 0; // No damage dealt
     }
@@ -55,7 +57,7 @@ function attackMove(eatermonIndex, moveIndex) {
     // Apply damage to the enemy
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;
-        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);
+        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
 
@@ -69,15 +71,14 @@ function attackMove(eatermonIndex, moveIndex) {
             enemyHpInner.style.display = `none`;
             // Add XP to the current eatermon instead of resetting it
             const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
-            // eatermon[currentEatermonIndex].xp += xpGained; // Add XP gained
-            eatermon[currentEatermonIndex].xp += 100; 
+            eatermon[currentEatermonIndex].xp += 100;  // Add XP
             updateXpBarDisplay();  // Update the XP bar display
             checkIfXpIsFull();     // Check if it's time to level up
-           if(normal) {
-            setTimeout(() => {
-                battleMenuScript.style.display = 'none';
-            }, 1000);
-           }
+            if (normal) {
+                setTimeout(() => {
+                    battleMenuScript.style.display = 'none';
+                }, 1000);
+            }
         }, 1000);
         setTimeout(() => {
             inBattle = false;
@@ -87,13 +88,14 @@ function attackMove(eatermonIndex, moveIndex) {
         playerTurn = false;
         setTimeout(() => {
             if (enemyEatermon.hp > 0) {
-                enemyMove(); // Enemy attacks
+                enemyMove();  // Enemy attacks
             }
         }, 1000);
     }
 
-    updateHp(); // Update the UI after the attack
+    updateHp();  // Update the UI after the attack
 }
+
 
 
 
@@ -190,69 +192,102 @@ function getTypeEffectiveness(attackType, defenseType) {
     //console.log(`${attackType} has a neutral effect on ${defenderType.type}`);
     return 'neutral';  // Neutral effect
 }
-
 function handleLearnNewMove(eatermonIndex) {
-    // Log the current eatermon object and learnable moves
-    // console.log("eatermon object:", eatermon);
-    // console.log("Looking for eatermon with name:", eatermon[currentEatermonIndex].name);
-    // console.log("eatermonLearnableMoves:", eatermonLearnableMoves);
+    // Early exit if eatermonIndex is invalid
+    if (eatermonIndex === undefined || eatermonIndex < 0 || eatermonIndex >= eatermonMoves.length) {
+        console.error("Invalid eatermonIndex:", eatermonIndex);
+        return;
+    }
 
-    const foundEatermon = eatermonLearnableMoves.find(e => e.eatermon.name === eatermon[currentEatermonIndex].name);
-    // console.log("Found eatermon:", foundEatermon); // Log the found result
+    console.log("eatermonIndex before array check:", eatermonIndex);
 
+    // Ensure the eatermonIndex is not an array and is a valid index
+    if (Array.isArray(eatermonIndex)) {
+        eatermonIndex = eatermonIndex[0];
+    }
+
+    console.log("Corrected eatermonIndex:", eatermonIndex);
+
+    // Validate if eatermonMoves[eatermonIndex] and its moves are properly set
+    if (!eatermonMoves[eatermonIndex] || !Array.isArray(eatermonMoves[eatermonIndex].moves)) {
+        console.error("Invalid eatermonMoves or moves array is missing for index:", eatermonIndex);
+        console.log("eatermonMoves:", eatermonMoves);  // Log the entire eatermonMoves for debugging
+        return;
+    }
+
+    const foundEatermon = eatermonLearnableMoves.find(e => e.eatermon.name === eatermon[eatermonIndex].name);
     const learnableMoves = foundEatermon?.learnableMoves;
-    // console.log("Learnable moves:", learnableMoves); // Log learnableMoves
-    
+
     if (!learnableMoves) {
         console.error("No learnable moves found for this eatermon.");
         return;
     }
 
-    // Log eatermonMoves and check if the specific eatermonIndex is valid
-    // console.log("eatermonMoves:", eatermonMoves);
-    // console.log("eatermonMoves[eatermonIndex]:", eatermonMoves[eatermonIndex]);
-    
-    if (!eatermonMoves[eatermonIndex] || !eatermonMoves[eatermonIndex].moves) {
-        console.error("Invalid eatermonMoves or moves array is missing.");
+    // Get the eatermon's current level
+    const eatermonLevel = eatermon[eatermonIndex].level;
+    console.log(`Eatermon's current level: ${eatermonLevel}`);
+
+    // Log the available moves for the current level
+    console.log(`Available moves at level ${eatermonLevel}:`, learnableMoves[eatermonLevel]);
+
+    // Ensure the learnableMoves array has enough levels
+    if (!learnableMoves[eatermonLevel]) {
+        console.log(`${eatermon[eatermonIndex].name} has no available moves to learn at level ${eatermonLevel}.`);
         return;
     }
 
-    // Ensure that the eatermonIndex is valid
-    if (eatermonIndex < 0 || eatermonIndex >= eatermonMoves.length) {
-        console.error("Invalid eatermonIndex:", eatermonIndex);
+    const availableMovesAtLevel = learnableMoves[eatermonLevel];
+    console.log(`Moves at level ${eatermonLevel}:`, availableMovesAtLevel);
+
+    if (!availableMovesAtLevel || availableMovesAtLevel.length === 0) {
+        console.log(`${eatermon[eatermonIndex].name} has no available moves to learn at level ${eatermonLevel}.`);
         return;
     }
 
-    // console.log(eatermon[currentEatermonIndex].level); // Check level
-    
-    // Check if the eatermon is eligible for learning a new move (based on level)
-    if (eatermon[currentEatermonIndex].level >= 1) {
-        const newMove = learnableMoves.find(move => !eatermonMoves[eatermonIndex].moves.some(existingMove => existingMove.name === move.name));
-        if (newMove) {
-            const moveHolder = document.getElementById('moveLearnText');
-            moveHolder.innerHTML = `${newMove.name}.`;
+    // Find a move that the eatermon doesn't already know
+    const newMove = availableMovesAtLevel.find(move =>
+        !eatermonMoves[eatermonIndex].moves.some(existingMove => existingMove.name === move.name)
+    );
 
-            const forgetButton = document.getElementById('moveText');
-            forgetButton.style.display = 'block'; // Make the "Forget Move?" button visible
+    console.log("New move found:", newMove);  // Debug the value of newMove
 
-            forgetButton.onclick = function() {
-                const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove);
-                if (moveToReplaceIndex !== null) {
-                    eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
-                    finalMovesLearned.innerHTML = `${eatermon[currentEatermonIndex].name} learned ${newMove.name} and replaced ${eatermonMoves[eatermonIndex].moves[moveToReplaceIndex].name}!`;
-                    generateAttackButtons();
-                    setTimeout(() => {
-                        returnToNormal(); 
-                    }, 2000);
-                }
-            };
-        }
+    // If newMove is a string (like "Quick Attack"), handle it properly
+    if (typeof newMove === 'object' && newMove !== null) {
+        console.log("New move details:", newMove);
+
+        finalMovesLearned.innerHTML = ``;  // Clear any previous messages
+
+        // Display the move the eatermon will learn
+        const moveHolder = document.getElementById('moveLearnText');
+        moveHolder.innerHTML = `${newMove.name}.`;  // Display the move name
+
+        const forgetButton = document.getElementById('moveText');
+        forgetButton.style.display = 'block';  // Make the "Forget Move?" button visible
+
+        forgetButton.onclick = function() {
+            const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove.name);
+            if (moveToReplaceIndex !== null) {
+                const oldMove = eatermonMoves[eatermonIndex].moves[moveToReplaceIndex];
+                eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
+                finalMovesLearned.innerHTML = `${eatermon[eatermonIndex].name} learned ${newMove.name} and replaced ${oldMove.name}!`;
+
+                // Refresh the attack buttons (this might depend on your specific implementation)
+                generateAttackButtons();
+
+                // Reset back to normal view after a short delay
+                setTimeout(() => {
+                    returnToNormal(); 
+                }, 2000);
+            }
+        };
+    } else {
+        console.error("New move is undefined or missing a name:", newMove);
     }
 }
 
 
 
-
+// Prompt the user to choose which move to replace
 function promptForMoveReplacement(eatermonIndex, newMove) {
     const eatermonMovesList = eatermonMoves[eatermonIndex].moves;
     const moveNames = eatermonMovesList.map((move, index) => `${index + 1}: ${move.name}`).join('\n');
@@ -264,11 +299,11 @@ function promptForMoveReplacement(eatermonIndex, newMove) {
     if (moveToReplaceIndex && !isNaN(moveToReplaceIndex) && moveToReplaceIndex >= 1 && moveToReplaceIndex <= eatermonMovesList.length) {
         const moveIndex = parseInt(moveToReplaceIndex) - 1; // Convert to 0-based index
 
-        // Update the innerHTML with the selected move to forget
-        const moveLearnText = document.getElementById('moveLearnText');
-
-        return moveIndex; // Return the index of the move to replace
+        // Return the index of the move to replace
+        return moveIndex;
     } else {
+        console.log("Invalid move selection, no move replaced.");
         return null; // If no valid choice, return null
     }
 }
+

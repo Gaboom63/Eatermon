@@ -81,27 +81,27 @@ const eatermonMoves = [
 const eatermonLearnableMoves = [
     {
         eatermon: eatermon[0], // Woodle
-        learnableMoves: [
-            { name: "Leaf Slash", power: 20, type: eatermonTypes[2].type },
-            { name: "Vine Whip", power: 25, type: eatermonTypes[2].type },
-            { name: "Quick Attack", power: 15, type: eatermonTypes[4].type },
-            { name: "Growth", power: 0, type: eatermonTypes[2].type },
-            { name: "Tackle", power: 10, type: eatermonTypes[4].type },
-            { name: "Razor Leaf", power: 40, type: eatermonTypes[2].type },
-            { name: "Nature's Blessing", power: 0, type: eatermonTypes[2].type },
-        ]
+        learnableMoves: {
+            1: ["Tackle"],
+            5: ["Quick Attack"],
+            7: ["Growth"],
+            10: ["Leaf Slash"],
+            15: ["Vine Whip"],
+            20: ["Razor Leaf"],
+            25: ["Nature's Blessing"]
+        }
     },
     {
         eatermon: eatermon[1], // Tomadoodle (Fire Type)
-        learnableMoves: [
-            { name: "Fireball", power: 30, type: eatermonTypes[0].type },
-            { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
-            { name: "Scratch", power: 10, type: eatermonTypes[4].type },
-            { name: "Debug Ember", power: 2500, type: eatermonTypes[4].type },
-            { name: "Fire Spin", power: 20, type: eatermonTypes[0].type },
-            { name: "Heat Wave", power: 45, type: eatermonTypes[0].type },
-        ]
-    },
+        learnableMoves: {
+            2: [{ name: "Quick Attack", power: 10, type: "Normal" }],
+            5: [{ name: "Fireball", power: 25, type: "Fire" }],
+            10: [{ name: "Flame Burst", power: 40, type: "Fire" }],
+            15: [{ name: "Fire Spin", power: 50, type: "Fire" }],
+            20: [{ name: "Heat Wave", power: 60, type: "Fire" }],
+            50: [{ name: "Debug Ember", power: 100, type: "Fire" }]
+        }
+    },    
     {
         eatermon: eatermon[2], // Tomadoodle (Slime Type)
         learnableMoves: [
