@@ -5,6 +5,7 @@ const enemyEmblem = document.getElementById("enemyEmblem");
 let eatermonXpText = document.getElementById('xpText');
 let eatermonXpLevel = document.getElementById('xpLevel');
 let eatermonXpInnerBar = document.getElementById('xpProgress');
+let normal = true; 
 
 const eatermon = [
     {
@@ -38,7 +39,6 @@ const eatermon = [
         level: eatermonExp[1].level,
         xp: eatermonExp[1].xp,
         maxXp: eatermonExp[1].maxXp,
-        deathXp: eatermonExp[1].level^3/5,
         src: "images/tomadoodle.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false
@@ -191,10 +191,21 @@ updateXpBarDisplay();
 
 function checkIfXpIsFull() {
     if (eatermon[currentEatermonIndex].xp >= eatermon[currentEatermonIndex].maxHp) {
+        const levelDiv = document.getElementById("textContainer");
+        normal = false; 
+        console.log(levelDiv); // Log to check if element is found
         eatermon[currentEatermonIndex].level = eatermon[currentEatermonIndex].level + 1; 
         eatermon[currentEatermonIndex].xp = 0; 
-        eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp/5
+        eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp / 5;
+        levelDiv.style.display = 'block'; 
         updateXpBarDisplay(); 
     }
+}
 
+function returnToNormal() {
+    normal = true; 
+    levelDiv.style.display = 'none'; 
+    battleMenuScript.style.display = 'none';
+
+    //NOT CALLED!!! FIX
 }

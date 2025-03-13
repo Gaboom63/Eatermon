@@ -63,3 +63,72 @@
     right: 10px;
     opacity: 1;
 }
+
+#textContainer {
+    width: 400px;
+    height: 300px;
+    border: 2px solid white;
+    z-index: 1000;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    right: 40%;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);  
+    border-radius: 10px;
+    display: none;
+}
+
+#Ptext {
+    position: absolute;
+    display: flex;
+    left: 25%;
+    bottom: 200px;
+}
+
+
+
+#textContainer {
+    width: 400px;
+    height: 300px;
+    border: 2px solid white;
+    z-index: 1000;
+    position: absolute;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center;
+    align-items: center;
+    top: 50%; /* Center it vertically */
+    left: 50%; /* Center it horizontally */
+    transform: translate(-50%, -50%); /* Precise centering */
+    /* background-color: 'rgba(0, 0, 0, 0.7); Semi-transparent background */
+    -webkit-backdrop-filter: blur(5px); /* Apply blur */
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    overflow: hidden; /* Prevent overflow */
+    display: none;
+}
+
+#h1Text {
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+}
+
+#moveText {
+    position: absolute;
+    display: flex;
+    width: auto;
+    height: auto;
+    top: 40%;
+    left: 36%;
+}
+
+#moveTextNo {
+    position: absolute;
+    display: flex;
+    width: auto;
+    height: auto;
+    top: 50%;
+    left: 45%;
+}
