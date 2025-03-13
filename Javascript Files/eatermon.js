@@ -18,7 +18,8 @@ const eatermon = [
         speed: eatermonStats[0].speed,
         evasiveness: eatermonStats[0].evasiveness,
         xp: eatermonExp[0].xp,
-        // maxXp: ,
+        maxXp: 100,
+        deathXp: eatermonStats[0].level^3/5,
         level: eatermonExp[0].level,
         src: "images/woodle.png",
         emblem: "images/emblems/grassEmblem.png",
@@ -37,6 +38,7 @@ const eatermon = [
         level: eatermonExp[1].level,
         xp: eatermonExp[1].xp,
         maxXp: eatermonExp[1].maxXp,
+        deathXp: eatermonExp[1].level^3/5,
         src: "images/tomadoodle.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false
@@ -51,6 +53,9 @@ const eatermon = [
         defense: eatermonStats[2].defense,
         speed: eatermonStats[2].speed,
         evasiveness: eatermonStats[2].evasiveness,
+        xp: eatermonExp[2].xp,
+        maxXp: eatermonExp[2].maxXp,
+        deathXp: eatermonExp[2].level^3/5,
         src: "images/druewl.png",
         emblem: "images/emblems/waterEmblem.png",
         canFlee: false

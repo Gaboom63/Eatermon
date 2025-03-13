@@ -70,6 +70,11 @@ function loadPlates() {
 
 const plates = [{ src: "images/plates/blankPlate.png" }];
 
+function updateEatermonPartyInt() {
+    playerParty.push(eatermon[currentEatermonIndex])
+}
+updateEatermonPartyInt(); 
+
 function catchThatMon() {
     catching = true;
     //console.log("Catching started");

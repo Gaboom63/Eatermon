@@ -14,7 +14,7 @@ const eatermonMoves = [
             { name: "Fireball", power: 30, type: eatermonTypes[0].type },
             { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
             { name: "Scratch", power: 10, type: eatermonTypes[4].type },
-            { name: "Ember", power: 25, type: eatermonTypes[0].type }
+            { name: "Debug Ember", power: 2500, type: eatermonTypes[0].type }
         ]
     },
     {

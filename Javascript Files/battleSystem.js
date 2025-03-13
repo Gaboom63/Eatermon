@@ -25,7 +25,6 @@ let playerTurn = true;  // Set it to true initially, so it's the player's turn a
 // Handle player's attack with type matchups
 function attackMove(eatermonIndex, moveIndex) {
     if (!playerTurn) {
-        //console.log("It's not your turn! Wait for the enemy to finish.");
         return;  // If it's not the player's turn, don't proceed with the attack
     }
 
@@ -33,9 +32,6 @@ function attackMove(eatermonIndex, moveIndex) {
     const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
-
-    // Debugging logs
-    //console.log(`Attacking with move: ${selectedMove.name}`);
 
     // Handle type effectiveness
     const moveType = selectedMove.type;
@@ -52,9 +48,9 @@ function attackMove(eatermonIndex, moveIndex) {
         modifiedPower = 0;
     }
     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
-        //console.log(`${enemyEatermon.name} resists Fire-type damage due to Heat Resist!`);
         modifiedPower = 0; // No damage dealt
     }
+
     // Apply damage to the enemy
     if (modifiedPower > 0) {
         enemyEatermon.hp -= modifiedPower;
@@ -70,9 +66,11 @@ function attackMove(eatermonIndex, moveIndex) {
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
             enemyHpInner.style.display = `none`;
-            eatermon[currentEatermonIndex].xp =  eatermon[currentEatermonIndex].xp + 100; 
-            updateXpBarDisplay();
-            checkIfXpIsFull(); 
+            // Add XP to the current eatermon instead of resetting it
+            const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
+            eatermon[currentEatermonIndex].xp += xpGained; // Add XP gained
+            updateXpBarDisplay();  // Update the XP bar display
+            checkIfXpIsFull();     // Check if it's time to level up
             setTimeout(() => {
                 battleMenuScript.style.display = 'none';
             }, 1000);
