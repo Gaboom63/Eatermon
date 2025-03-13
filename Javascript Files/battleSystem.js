@@ -1,4 +1,6 @@
+let forgetButton = document.getElementById('moveText');
 let finalMovesLearned = document.getElementById('finalMovesLearned'); 
+let noButton = document.getElementById('moveTextNo'); 
 // Restore enemy HP at the beginning of battle
 function restoreEnemyHp() {
     if (hasEncounted) {
@@ -220,6 +222,13 @@ function handleLearnNewMove(eatermonIndex) {
 
     if (!learnableMoves) {
         console.error("No learnable moves found for this eatermon.");
+        finalMovesLearned.innerHTML = ``;  // Clear any previous messages
+        learnNewMoveText.innerHTML = `No Moves To Learn Right Now!`;   
+        forgetButton.style.display = 'none'; 
+        noButton.style.display = 'none';    
+        setTimeout(() => {
+            returnToNormal();
+        }, 2000); 
         return;
     }
 
@@ -231,18 +240,20 @@ function handleLearnNewMove(eatermonIndex) {
     console.log(`Available moves at level ${eatermonLevel}:`, learnableMoves[eatermonLevel]);
 
     // Ensure the learnableMoves array has enough levels
-    if (!learnableMoves[eatermonLevel]) {
+    if (!learnableMoves[eatermonLevel] || learnableMoves[eatermonLevel].length === 0) {
         console.log(`${eatermon[eatermonIndex].name} has no available moves to learn at level ${eatermonLevel}.`);
+        finalMovesLearned.innerHTML = ``;  // Clear any previous messages
+        learnNewMoveText.innerHTML = `No Moves To Learn Right Now!`;
+        forgetButton.style.display = 'none';          
+        noButton.style.display = 'none'; 
+        setTimeout(() => {
+            returnToNormal();
+        }, 2000); 
         return;
     }
 
     const availableMovesAtLevel = learnableMoves[eatermonLevel];
     console.log(`Moves at level ${eatermonLevel}:`, availableMovesAtLevel);
-
-    if (!availableMovesAtLevel || availableMovesAtLevel.length === 0) {
-        console.log(`${eatermon[eatermonIndex].name} has no available moves to learn at level ${eatermonLevel}.`);
-        return;
-    }
 
     // Find a move that the eatermon doesn't already know
     const newMove = availableMovesAtLevel.find(move =>
@@ -251,8 +262,21 @@ function handleLearnNewMove(eatermonIndex) {
 
     console.log("New move found:", newMove);  // Debug the value of newMove
 
-    // If newMove is a string (like "Quick Attack"), handle it properly
-    if (typeof newMove === 'object' && newMove !== null) {
+    // If no new move is found, handle the case where all moves are already learned
+    if (!newMove) {
+        console.log("Eatermon already knows all available moves at level", eatermonLevel);
+        finalMovesLearned.innerHTML = ``;  // Clear any previous messages
+        learnNewMoveText.innerHTML = `No Moves To Learn Right Now!`;   
+        forgetButton.style.display = 'none'; 
+        noButton.style.display = 'none';    
+        setTimeout(() => {
+            returnToNormal();
+        }, 2000); 
+        return;
+    }
+
+    // If newMove is valid (has a name), proceed with the move learning process
+    if (typeof newMove === 'object' && newMove !== null && newMove.name) {
         console.log("New move details:", newMove);
 
         finalMovesLearned.innerHTML = ``;  // Clear any previous messages
@@ -261,8 +285,8 @@ function handleLearnNewMove(eatermonIndex) {
         const moveHolder = document.getElementById('moveLearnText');
         moveHolder.innerHTML = `${newMove.name}.`;  // Display the move name
 
-        const forgetButton = document.getElementById('moveText');
         forgetButton.style.display = 'block';  // Make the "Forget Move?" button visible
+        noButton.style.display = 'block'; 
 
         forgetButton.onclick = function() {
             const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove.name);

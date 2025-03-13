@@ -95,13 +95,13 @@ const eatermonLearnableMoves = [
         eatermon: eatermon[1], // Tomadoodle (Fire Type)
         learnableMoves: {
             2: [{ name: "Quick Attack", power: 10, type: "Normal" }],
-            5: [{ name: "Fireball", power: 25, type: "Fire" }],
+            4: [{ name: "Heat Wave", power: 25, type: "Fire" }],
             10: [{ name: "Flame Burst", power: 40, type: "Fire" }],
             15: [{ name: "Fire Spin", power: 50, type: "Fire" }],
             20: [{ name: "Heat Wave", power: 60, type: "Fire" }],
             50: [{ name: "Debug Ember", power: 100, type: "Fire" }]
         }
-    },    
+    },      
     {
         eatermon: eatermon[2], // Tomadoodle (Slime Type)
         learnableMoves: [
