@@ -224,5 +224,5 @@ function openEscapeMenu() {
 function closeEscapeMenu() {
     const escapeMenu = document.getElementById('escapeMenu');
     escapeMenu.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = 'hidden';
 }

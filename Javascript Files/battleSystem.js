@@ -190,8 +190,82 @@ function getTypeEffectiveness(attackType, defenseType) {
     return 'neutral';  // Neutral effect
 }
 
+function handleLearnNewMove(eatermonIndex) {
+    // Log the current eatermon object and learnable moves
+    // console.log("eatermon object:", eatermon);
+    // console.log("Looking for eatermon with name:", eatermon[currentEatermonIndex].name);
+    // console.log("eatermonLearnableMoves:", eatermonLearnableMoves);
+
+    const foundEatermon = eatermonLearnableMoves.find(e => e.eatermon.name === eatermon[currentEatermonIndex].name);
+    // console.log("Found eatermon:", foundEatermon); // Log the found result
+
+    const learnableMoves = foundEatermon?.learnableMoves;
+    // console.log("Learnable moves:", learnableMoves); // Log learnableMoves
+    
+    if (!learnableMoves) {
+        console.error("No learnable moves found for this eatermon.");
+        return;
+    }
+
+    // Log eatermonMoves and check if the specific eatermonIndex is valid
+    // console.log("eatermonMoves:", eatermonMoves);
+    // console.log("eatermonMoves[eatermonIndex]:", eatermonMoves[eatermonIndex]);
+    
+    if (!eatermonMoves[eatermonIndex] || !eatermonMoves[eatermonIndex].moves) {
+        console.error("Invalid eatermonMoves or moves array is missing.");
+        return;
+    }
+
+    // Ensure that the eatermonIndex is valid
+    if (eatermonIndex < 0 || eatermonIndex >= eatermonMoves.length) {
+        console.error("Invalid eatermonIndex:", eatermonIndex);
+        return;
+    }
+
+    // console.log(eatermon[currentEatermonIndex].level); // Check level
+    
+    // Check if the eatermon is eligible for learning a new move (based on level)
+    if (eatermon[currentEatermonIndex].level >= 1) {
+        const newMove = learnableMoves.find(move => !eatermonMoves[eatermonIndex].moves.some(existingMove => existingMove.name === move.name));
+        if (newMove) {
+            const moveHolder = document.getElementById('moveLearnText');
+            moveHolder.innerHTML = `You can learn ${newMove.name}.`;
+
+            const forgetButton = document.getElementById('moveText');
+            forgetButton.style.display = 'block'; // Make the "Forget Move?" button visible
+
+            forgetButton.onclick = function() {
+                const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove);
+                if (moveToReplaceIndex !== null) {
+                    eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
+                    battleText.innerHTML = `${eatermon.name} learned ${newMove.name} and replaced ${eatermonMoves[eatermonIndex].moves[moveToReplaceIndex].name}!`;
+                    generateAttackButtons();
+                }
+            };
+        }
+    }
+}
 
 
 
 
+function promptForMoveReplacement(eatermonIndex, newMove) {
+    const eatermonMovesList = eatermonMoves[eatermonIndex].moves;
+    const moveNames = eatermonMovesList.map((move, index) => `${index + 1}: ${move.name}`).join('\n');
 
+    // Prompt the user to choose a move to replace
+    const moveToReplaceIndex = prompt(`Choose a move to replace:\n${moveNames}`);
+    
+    // Check if the user made a valid selection
+    if (moveToReplaceIndex && !isNaN(moveToReplaceIndex) && moveToReplaceIndex >= 1 && moveToReplaceIndex <= eatermonMovesList.length) {
+        const moveIndex = parseInt(moveToReplaceIndex) - 1; // Convert to 0-based index
+
+        // Update the innerHTML with the selected move to forget
+        const moveLearnText = document.getElementById('moveLearnText');
+        moveLearnText.innerHTML = `You have chosen to forget ${eatermonMovesList[moveIndex].name} and replace it with ${newMove.name}.`;
+
+        return moveIndex; // Return the index of the move to replace
+    } else {
+        return null; // If no valid choice, return null
+    }
+}

@@ -16,7 +16,7 @@ const encounter = () => {
      let encounteredEatermons = [];
 
      for (let square of greenSquares) {
-         let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
+         let pickNum = Math.random() * (50000 - 1) + 1; // Random number for encounter chance
  
          if (
              playerX + playerSize > square.x &&

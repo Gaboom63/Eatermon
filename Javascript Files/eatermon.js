@@ -5,7 +5,12 @@ const enemyEmblem = document.getElementById("enemyEmblem");
 let eatermonXpText = document.getElementById('xpText');
 let eatermonXpLevel = document.getElementById('xpLevel');
 let eatermonXpInnerBar = document.getElementById('xpProgress');
+let eatermonLevelUpText = document.getElementById('h1Text'); 
+let eatermonPtext = document.getElementById('Ptext'); 
+let levelDiv = document.getElementById("textContainer");
+let learnNewMoveText = document.getElementById('moveLearnText');
 let normal = true; 
+
 
 const eatermon = [
     {
@@ -20,7 +25,7 @@ const eatermon = [
         evasiveness: eatermonStats[0].evasiveness,
         xp: eatermonExp[0].xp,
         maxXp: 100,
-        deathXp: eatermonStats[0].level^3/5,
+        // deathXp: eatermonStats[0].level^3/5,
         level: eatermonExp[0].level,
         src: "images/woodle.png",
         emblem: "images/emblems/grassEmblem.png",
@@ -191,14 +196,27 @@ updateXpBarDisplay();
 
 function checkIfXpIsFull() {
     if (eatermon[currentEatermonIndex].xp >= eatermon[currentEatermonIndex].maxHp) {
-        const levelDiv = document.getElementById("textContainer");
-        normal = false; 
-        console.log(levelDiv); // Log to check if element is found
+        normal = false;
+        
+        // Level up logic
         eatermon[currentEatermonIndex].level = eatermon[currentEatermonIndex].level + 1; 
         eatermon[currentEatermonIndex].xp = 0; 
         eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp / 5;
+
+        // Show level up UI
         levelDiv.style.display = 'block'; 
+        eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
+        eatermonPtext.innerHTML = `${eatermon[currentEatermonIndex].name} Wants To Learn:`;
+
+        // Update the move learning text
+        // learnNewMoveText.innerHTML = `You can learn a new move!`;
+
+        // Update the XP bar UI
+        handleLearnNewMove(); 
         updateXpBarDisplay(); 
+
+        // Trigger the learning of a new move (if applicable)
+        handleLearnNewMove(currentEatermonIndex); // Call to handle move learning after level up
     }
 }
 
@@ -206,6 +224,4 @@ function returnToNormal() {
     normal = true; 
     levelDiv.style.display = 'none'; 
     battleMenuScript.style.display = 'none';
-
-    //NOT CALLED!!! FIX
 }
