@@ -1,3 +1,4 @@
+let finalMovesLearned = document.getElementById('finalMovesLearned'); 
 // Restore enemy HP at the beginning of battle
 function restoreEnemyHp() {
     if (hasEncounted) {
@@ -229,7 +230,7 @@ function handleLearnNewMove(eatermonIndex) {
         const newMove = learnableMoves.find(move => !eatermonMoves[eatermonIndex].moves.some(existingMove => existingMove.name === move.name));
         if (newMove) {
             const moveHolder = document.getElementById('moveLearnText');
-            moveHolder.innerHTML = `You can learn ${newMove.name}.`;
+            moveHolder.innerHTML = `${newMove.name}.`;
 
             const forgetButton = document.getElementById('moveText');
             forgetButton.style.display = 'block'; // Make the "Forget Move?" button visible
@@ -238,8 +239,11 @@ function handleLearnNewMove(eatermonIndex) {
                 const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove);
                 if (moveToReplaceIndex !== null) {
                     eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
-                    battleText.innerHTML = `${eatermon.name} learned ${newMove.name} and replaced ${eatermonMoves[eatermonIndex].moves[moveToReplaceIndex].name}!`;
+                    finalMovesLearned.innerHTML = `${eatermon[currentEatermonIndex].name} learned ${newMove.name} and replaced ${eatermonMoves[eatermonIndex].moves[moveToReplaceIndex].name}!`;
                     generateAttackButtons();
+                    setTimeout(() => {
+                        returnToNormal(); 
+                    }, 2000);
                 }
             };
         }
@@ -262,7 +266,6 @@ function promptForMoveReplacement(eatermonIndex, newMove) {
 
         // Update the innerHTML with the selected move to forget
         const moveLearnText = document.getElementById('moveLearnText');
-        moveLearnText.innerHTML = `You have chosen to forget ${eatermonMovesList[moveIndex].name} and replace it with ${newMove.name}.`;
 
         return moveIndex; // Return the index of the move to replace
     } else {
