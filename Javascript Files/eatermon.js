@@ -25,7 +25,6 @@ const eatermon = [
         evasiveness: eatermonStats[0].evasiveness,
         xp: eatermonExp[0].xp,
         maxXp: 100,
-        // deathXp: eatermonStats[0].level^3/5,
         level: eatermonExp[0].level,
         src: "images/woodle.png",
         emblem: "images/emblems/grassEmblem.png",
@@ -161,9 +160,8 @@ const eatermon = [
         canFlee: false,
         emblem: "images/emblems/fireEmblem.png",
     },
+    
 ]
-
-//console.log(eatermon);
 
 
 function loadingImages() {
@@ -225,3 +223,4 @@ function returnToNormal() {
     levelDiv.style.display = 'none'; 
     battleMenuScript.style.display = 'none';
 }
+

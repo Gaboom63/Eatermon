@@ -74,6 +74,7 @@ function attackMove(eatermonIndex, moveIndex) {
             // Add XP to the current eatermon instead of resetting it
             const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
             eatermon[currentEatermonIndex].xp += 100;  // Add XP
+            evolve();
             updateXpBarDisplay();  // Update the XP bar display
             checkIfXpIsFull();     // Check if it's time to level up
             if (normal) {
