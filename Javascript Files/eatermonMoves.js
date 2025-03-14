@@ -73,6 +73,15 @@ const eatermonMoves = [
                 { name: "Bone Recycle", power: 10, type: eatermonTypes[7].type },        
             ]
     },
+    {
+        eatermon: eatermon[10], // ChocolateBar
+            moves: [
+                { name: "Crunch", power: 50, type: eatermonTypes[8].type }, // Crisp
+                { name: "Crisp Fury", power: 80, type: eatermonTypes[8].type }, // Crisp
+                { name: "Fry", power: 60, type: eatermonTypes[1].type }, // Fire
+                { name: "Chip Toss", power: 40, type: eatermonTypes[7].type }, // Flying
+            ]
+    },
 ];
 
 // //console.log(eatermonMoves); 

@@ -10,7 +10,7 @@ let eatermonPtext = document.getElementById('Ptext');
 let levelDiv = document.getElementById("textContainer");
 let learnNewMoveText = document.getElementById('moveLearnText');
 let normal = true; 
-
+let levelUpMenu = false; 
 
 const eatermon = [
     {
@@ -160,6 +160,32 @@ const eatermon = [
         canFlee: false,
         emblem: "images/emblems/fireEmblem.png",
     },
+    {
+        type: eatermonTypes[5],
+        id: 10, 
+        name: "Hhocolate",
+        hp: 110,
+        maxHp: 110, 
+        src: "images/Hhocolate.png",
+        xp: eatermonExp[10].xp,
+        level: eatermonExp[10].level,
+        maxXp: 100,
+        canFlee: false,
+        emblem: "images/emblems/fightingEmblem.png",
+    },
+    {
+        type: eatermonTypes[1],
+        id: 10, 
+        name: "Pastmala",
+        hp: 110,
+        maxHp: 110, 
+        src: "images/Pastmala.png",
+        xp: eatermonExp[10].xp,
+        level: eatermonExp[10].level,
+        maxXp: 100,
+        canFlee: false,
+        emblem: "images/emblems/waterEmblem.png",
+    }
     
 ]
 
@@ -200,16 +226,37 @@ function checkIfXpIsFull() {
         eatermon[currentEatermonIndex].level = eatermon[currentEatermonIndex].level + 1; 
         eatermon[currentEatermonIndex].xp = 0; 
         eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp / 5;
+        eatermon[currentEatermonIndex].maxHp = eatermon[currentEatermonIndex].maxHp + 10; 
+        eatermon[currentEatermonIndex].hp = eatermon[currentEatermonIndex].hp + 10; 
 
-        // Show level up UI
-        levelDiv.style.display = 'block'; 
-        eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
-        eatermonPtext.innerHTML = `${eatermon[currentEatermonIndex].name} Wants To Learn:`;
-
+       
         // Update the move learning text
         // learnNewMoveText.innerHTML = `You can learn a new move!`;
 
         // Update the XP bar UI
+        evolve(); 
+
+        if(firstEvolving && !levelUpMenu) {
+            levelDiv.style.display = 'block'; 
+            eatermonLevelUpText.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
+            eatermonPtext.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Wants To Learn:`;
+   
+        } else if (levelUpMenu){
+            levelDiv.style.display = 'block'; 
+            eatermonLevelUpText.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
+            eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Evolved To ${eatermonEvolutions[currentEatermonIndex].name}!`;
+            setTimeout(() => {
+                levelUpMenu = false; 
+            }, 1000)
+
+        } else if(!firstEvolving && !levelUpMenu){
+            levelDiv.style.display = 'block'; 
+            eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
+            eatermonPtext.innerHTML = `${eatermon[currentEatermonIndex].name} Wants To Learn:`;
+   
+        }
+         // Show level up UI
+    
         handleLearnNewMove(); 
         updateXpBarDisplay(); 
 

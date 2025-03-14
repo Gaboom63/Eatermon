@@ -59,6 +59,12 @@ const eatermonExp = [
         maxXp: 100, 
         deathXp: 10,
     },
+    {
+        level: 1, 
+        xp: 10,
+        maxXp: 100, 
+        deathXp: 10,
+    },
 ]
 
 function generateXpForLevel(level) {

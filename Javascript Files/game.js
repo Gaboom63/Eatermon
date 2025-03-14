@@ -42,6 +42,7 @@ function gameLoop() {
 function evolve() {
     if(eatermon[currentEatermonIndex].level == eatermonEvolutions[currentEatermonIndex].levelRequried) {
         firstEvolving = true; 
+        levelUpMenu = true; 
     }
     // else if(eatermon[currentEatermonIndex].level == eatermonFinalEvolutions[currentEatermonIndex].levelRequried){
     //     firstEvolving = false;
