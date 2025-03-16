@@ -82,6 +82,43 @@ const eatermonMoves = [
                 { name: "Chip Toss", power: 40, type: eatermonTypes[7].type }, // Flying
             ]
     },
+    {
+        eatermon: eatermon[11],
+        moves: [
+            { name: "Macaroni Bash", power: 65, type: eatermonTypes[3].type }, // Fighting-type move
+            { name: "Ravioli Return", power: 55, type: eatermonTypes[4].type }, // Normal-type move
+            { name: "Baked Ziti", power: 90, type: eatermonTypes[0].type }, // Fire-type move (baked in the oven)
+            { name: "Fusilli Twist", power: 50, type: eatermonTypes[1].type }, // Water-type move (spinning in water)
+        ]
+    
+    },
+    {
+        eatermon: eatermon[12],
+        moves: [
+            { name: "Crumb Storm", power: 50, type: eatermonTypes[4].type }, // Normal-type move (cookie crumbs flying around)
+            { name: "Sweet Crumble", power: 65, type: eatermonTypes[5].type }, // Fairy-type move (the sweet magic of cookies)
+            { name: "Choco Chip Attack", power: 75, type: eatermonTypes[8].type }, // Crisp-type (chocolate chip shards flying out)
+            { name: "Half-Baked Blast", power: 85, type: eatermonTypes[0].type }, // Fire-type move (still half-baked, fiery energy)    
+        ]
+    },
+    {
+        eatermon: eatermon[13],
+        moves: [
+            { name: "Melted Surge", power: 60, type: eatermonTypes[2].type }, // Water-type move (melting, smooth wave of chocolate)
+            { name: "Shake Up", power: 55, type: eatermonTypes[3].type }, // Electric-type move (vibrations of the shake)
+            { name: "Fudge Rush", power: 40, type: eatermonTypes[1].type }, // Ice-type move (fudgy ice cream rush)
+            { name: "Choco Blizzard", power: 50, type: eatermonTypes[6].type }, // Ice-type move (chocolate snowstorm)
+        ]
+    },
+    {
+        eatermon: eatermon[14],
+        moves: [
+            { name: "Peel Slam", power: 60, type: eatermonTypes[2].type }, // Water-type move (melting, smooth wave of chocolate)
+            { name: "Split 'n' Smash", power: 550, type: eatermonTypes[3].type }, // Electric-type move (vibrations of the shake)
+            { name: "Banana Peel Barrage", power: 40, type: eatermonTypes[1].type }, // Ice-type move (fudgy ice cream rush)
+            { name: "Peel Armor", power: 0, type: eatermonTypes[6].type }, // Ice-type move (chocolate snowstorm)
+        ]
+    }
 ];
 
 // //console.log(eatermonMoves); 

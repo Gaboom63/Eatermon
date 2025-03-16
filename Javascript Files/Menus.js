@@ -2,6 +2,7 @@ let items = ["Heal Potion"];
 let playerParty = [];
 let catching  = false; 
 
+
 function backButton() {
     battleMenuOptions.innerHTML = `
         <button id="attack" onclick="Attack()">Attack!</button> <br>
@@ -10,32 +11,43 @@ function backButton() {
     `;
 }
 
-function generateAttackButtons() {
+function clearMenu() {
+    battleOptionsMenu.style.innerHTML = ``; 
+}
+
+function generateAttackButtons(disableButtons = false) {
     let selectedEatermon = eatermon[currentEatermonIndex];
     let moves = eatermonMoves.find(e => e.eatermon.name === selectedEatermon.name)?.moves;
 
+    // Generate attack buttons based on available moves
+    let attackButtonsHtml = '';
+
     if (moves && moves.length >= 4) {
-        battleMenuOptions.innerHTML = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)">${moves[0].name || 'Attack 1'}</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)">${moves[1].name || 'Attack 2'}</button>
+        attackButtonsHtml = `
+            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
             <br><br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)">${moves[2].name || 'Attack 3'}</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)">${moves[3].name || 'Attack 4'}</button>
+            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
             <br>
-            <button id="backButton" onclick="backButton()">Back</button>
+            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
         `;
     } else {
-        battleMenuOptions.innerHTML = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)">Attack 1</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)">Attack 2</button>
+        attackButtonsHtml = `
+            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
+            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
             <br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)">Attack 3</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)">Attack 4</button>
+            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
+            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
             <br>
-            <button id="backButton" onclick="backButton()">Back</button>
+            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
         `;
     }
+
+    // Add the generated buttons to the battle menu
+    battleMenuOptions.innerHTML = attackButtonsHtml;
 }
+
 
 function Attack() {
     generateAttackButtons();

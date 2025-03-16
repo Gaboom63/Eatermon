@@ -155,3 +155,14 @@ function triggerFireStarAnimation() {
 }
 
 
+function triggerBlinkingAnimation() {
+    const targetElement = document.getElementById('eatermonPlayer'); // The element you want to blink
+    targetElement.classList.add('blinking');
+
+    // Optionally, you can stop the animation after a certain time
+    setTimeout(() => {
+        targetElement.classList.remove('blinking');
+    }, 5000); // Stop blinking after 5 seconds (adjust as needed)
+}
+
+// triggerBlinkingAnimation();

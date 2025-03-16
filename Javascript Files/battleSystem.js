@@ -194,6 +194,9 @@ function getTypeEffectiveness(attackType, defenseType) {
     //console.log(`${attackType} has a neutral effect on ${defenderType.type}`);
     return 'neutral';  // Neutral effect
 }
+
+let something = false; 
+
 function handleLearnNewMove(eatermonIndex) {
     // Early exit if eatermonIndex is invalid
     if (eatermonIndex === undefined || eatermonIndex < 0 || eatermonIndex >= eatermonMoves.length) {
@@ -278,7 +281,7 @@ function handleLearnNewMove(eatermonIndex) {
     // If newMove is valid (has a name), proceed with the move learning process
     if (typeof newMove === 'object' && newMove !== null && newMove.name) {
         console.log("New move details:", newMove);
-
+        something = true; 
         finalMovesLearned.innerHTML = ``;  // Clear any previous messages
 
         // Display the move the eatermon will learn
@@ -287,6 +290,8 @@ function handleLearnNewMove(eatermonIndex) {
 
         forgetButton.style.display = 'block';  // Make the "Forget Move?" button visible
         noButton.style.display = 'block'; 
+        moveTextNoButton.removeAttribute('disabled');
+        moveTextButton.removeAttribute('disabled');
 
         forgetButton.onclick = function() {
             const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove.name);
@@ -297,10 +302,13 @@ function handleLearnNewMove(eatermonIndex) {
 
                 // Refresh the attack buttons (this might depend on your specific implementation)
                 generateAttackButtons();
+                generateAttackButtons(true);
 
                 // Reset back to normal view after a short delay
                 setTimeout(() => {
                     returnToNormal(); 
+                    generateAttackButtons();
+                    something = false; 
                 }, 2000);
             }
         };

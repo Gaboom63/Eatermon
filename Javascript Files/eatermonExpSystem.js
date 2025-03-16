@@ -19,12 +19,6 @@ const eatermonExp = [
     },
     {
         level: 1, 
-        xp: 10,
-        maxXp: 100, 
-        deathXp: 10,
-    },
-    {
-        level: 1, 
         xp: 0, 
         maxXp: 100, 
         deathXp: 10,
@@ -50,6 +44,24 @@ const eatermonExp = [
     {
         level: 1, 
         xp: 0, 
+        maxXp: 100, 
+        deathXp: 10,
+    },
+    {
+        level: 1, 
+        xp: 10,
+        maxXp: 100, 
+        deathXp: 10,
+    },
+    {
+        level: 1, 
+        xp: 0, 
+        maxXp: 100, 
+        deathXp: 10,
+    },
+    {
+        level: 1, 
+        xp: 10,
         maxXp: 100, 
         deathXp: 10,
     },
@@ -81,7 +93,7 @@ function generateXpForLevel(level) {
         minXp = 100;
         maxXp = 300;  // Range for levels 21 and higher
     }
-
+ 
     // Generate a random XP within the determined range
     return Math.floor(Math.random() * (maxXp - minXp + 1)) + minXp;
 }

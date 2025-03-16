@@ -1,11 +1,8 @@
 let inBattle = false;
+let runAnimation = false; 
+let closeMenu = false; 
 
 const player = {
-    x: 200,
-    y: 0,
-    width: 50,
-    height: 50,
-    speed: 5,
 };
 
 // Game loop function
@@ -13,14 +10,16 @@ function gameLoop() {
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if(firstEvolving) {
-        eatermon[currentEatermonIndex].src = eatermonEvolutions[currentEatermonIndex].src
-        eatermon[currentEatermonIndex].name = eatermonEvolutions[currentEatermonIndex].name
+    if(firstEvolving && runAnimation === false) {
+            eatermon[currentEatermonIndex].src = eatermonEvolutions[currentEatermonIndex].src
+            eatermon[currentEatermonIndex].name = eatermonEvolutions[currentEatermonIndex].name    
     }
-    if(finalEvolving) {
-        eatermon[currentEatermonIndex].src = eatermonFinalEvolutions[currentEatermonIndex].src
-        eatermon[currentEatermonIndex].name = eatermonFinalEvolutions[currentEatermonIndex].name
+    if(finalEvolving && runAnimation === false) {
+            eatermon[currentEatermonIndex].src = eatermonFinalEvolutions[currentEatermonIndex].src
+            eatermon[currentEatermonIndex].name = eatermonFinalEvolutions[currentEatermonIndex].name    
     }
+
+   
 
     if (!inBattle) {
         encounter();  // Function already defined in your game
@@ -43,6 +42,18 @@ function evolve() {
     if(eatermon[currentEatermonIndex].level == eatermonEvolutions[currentEatermonIndex].levelRequried) {
         firstEvolving = true; 
         levelUpMenu = true; 
+        triggerBlinkingAnimation(); 
+        runAnimation = true; 
+        setTimeout(() => {
+            runAnimation = false; 
+        }, 3100); 
+        setTimeout(() => {
+            firstEvolving = false; 
+            levelUpMenu = false;  
+            if(!something) {
+                returnToNormal(); 
+            }  
+        }, 7000); 
     }
     // else if(eatermon[currentEatermonIndex].level == eatermonFinalEvolutions[currentEatermonIndex].levelRequried){
     //     firstEvolving = false;
@@ -52,4 +63,6 @@ function evolve() {
         firstEvolving = false; 
     }
 }
+
 gameLoop(); 
+

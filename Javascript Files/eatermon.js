@@ -5,12 +5,15 @@ const enemyEmblem = document.getElementById("enemyEmblem");
 let eatermonXpText = document.getElementById('xpText');
 let eatermonXpLevel = document.getElementById('xpLevel');
 let eatermonXpInnerBar = document.getElementById('xpProgress');
-let eatermonLevelUpText = document.getElementById('h1Text'); 
-let eatermonPtext = document.getElementById('Ptext'); 
+let eatermonLevelUpText = document.getElementById('h1Text');
+let eatermonPtext = document.getElementById('Ptext');
 let levelDiv = document.getElementById("textContainer");
 let learnNewMoveText = document.getElementById('moveLearnText');
-let normal = true; 
-let levelUpMenu = false; 
+let normal = true;
+let levelUpMenu = false;
+let moveTextButton = document.getElementById('moveText');
+let moveTextNoButton = document.getElementById('moveTextNo');
+let battleOptionsMenu = document.getElementById('battleOptionsMenu');
 
 const eatermon = [
     {
@@ -26,7 +29,7 @@ const eatermon = [
         xp: eatermonExp[0].xp,
         maxXp: 100,
         level: eatermonExp[0].level,
-        src: "images/woodle.png",
+        src: "images/Eatermons/woodle.png",
         emblem: "images/emblems/grassEmblem.png",
         canFlee: false
     },
@@ -43,7 +46,7 @@ const eatermon = [
         level: eatermonExp[1].level,
         xp: eatermonExp[1].xp,
         maxXp: eatermonExp[1].maxXp,
-        src: "images/tomadoodle.png",
+        src: "images/Eatermons/tomadoodle.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false
     },
@@ -59,8 +62,8 @@ const eatermon = [
         evasiveness: eatermonStats[2].evasiveness,
         xp: eatermonExp[2].xp,
         maxXp: eatermonExp[2].maxXp,
-        deathXp: eatermonExp[2].level^3/5,
-        src: "images/druewl.png",
+        deathXp: eatermonExp[2].level ^ 3 / 5,
+        src: "images/Eatermons/druewl.png",
         emblem: "images/emblems/waterEmblem.png",
         canFlee: false
     },
@@ -74,7 +77,7 @@ const eatermon = [
         defense: eatermonStats[3].defense,
         speed: eatermonStats[3].speed,
         evasiveness: eatermonStats[3].evasiveness,
-        src: "images/Flopper.png",
+        src: "images/Eatermons/Flopper.png",
         emblem: "images/emblems/iceEmblem.png",
         canFlee: false
     },
@@ -88,7 +91,7 @@ const eatermon = [
         defense: eatermonStats[4].defense,
         speed: eatermonStats[4].speed,
         evasiveness: eatermonStats[4].evasiveness,
-        src: "images/Poporlation.png",
+        src: "images/Eatermons/Poporlation.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
         abilities: ["Heat Resist"],  // Woodle has Heat Resist
@@ -102,7 +105,7 @@ const eatermon = [
         defense: eatermonStats[5].defense,
         speed: eatermonStats[5].speed,
         evasiveness: eatermonStats[5].evasiveness,
-        src: "images/BagOh.png",
+        src: "images/Eatermons/BagOh.png",
         emblem: "images/emblems/normalEmblem.png",
         canFlee: false,
     },
@@ -115,7 +118,7 @@ const eatermon = [
         defense: eatermonStats[6].defense,
         speed: eatermonStats[6].speed,
         evasiveness: eatermonStats[6].evasiveness,
-        src: "images/Coreange.png",
+        src: "images/Eatermons/Coreange.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
     },
@@ -128,7 +131,7 @@ const eatermon = [
         defense: eatermonStats[7].defense,
         speed: eatermonStats[7].speed,
         evasiveness: eatermonStats[7].evasiveness,
-        src: "images/PanCoook.png",
+        src: "images/Eatermons/PanCoook.png",
         emblem: "images/emblems/fireEmblem.png",
         canFlee: false,
     },
@@ -142,7 +145,7 @@ const eatermon = [
         speed: eatermonStats[8].speed,
         evasiveness: eatermonStats[8].evasiveness,
         maxHp: 135,
-        src: "images/ChrisP.png",
+        src: "images/Eatermons/ChrisP.png",
         canFlee: false,
         emblem: "images/emblems/crispEmblem.png",
     },
@@ -156,17 +159,17 @@ const eatermon = [
         defense: eatermonStats[9].defense,
         speed: eatermonStats[9].speed,
         evasiveness: eatermonStats[9].evasiveness,
-        src: "images/Protcluker.png",
+        src: "images/Eatermons/Protcluker.png",
         canFlee: false,
         emblem: "images/emblems/fireEmblem.png",
     },
     {
         type: eatermonTypes[5],
-        id: 10, 
+        id: 10,
         name: "Hhocolate",
         hp: 110,
-        maxHp: 110, 
-        src: "images/Hhocolate.png",
+        maxHp: 110,
+        src: "images/Eatermons/Hhocolate.png",
         xp: eatermonExp[10].xp,
         level: eatermonExp[10].level,
         maxXp: 100,
@@ -175,18 +178,58 @@ const eatermon = [
     },
     {
         type: eatermonTypes[1],
-        id: 10, 
+        id: 10,
         name: "Pastmala",
         hp: 110,
-        maxHp: 110, 
-        src: "images/Pastmala.png",
+        maxHp: 110,
+        src: "images/Eatermons/Pastmala.png",
         xp: eatermonExp[10].xp,
         level: eatermonExp[10].level,
         maxXp: 100,
         canFlee: false,
         emblem: "images/emblems/waterEmblem.png",
+    },
+    {
+        type: eatermonTypes[4],
+        id: 11,
+        name: "WaffItOff",
+        hp: 120,
+        maxHp: 120,
+        src: "images/Eatermons/WaffItOff.png",
+        xp: eatermonExp[11].xp,
+        level: eatermonExp[11].level,
+        maxXp: 100,
+        canFlee: false,
+        emblem: "images/emblems/normalEmblem.png",
+    },
+    {
+        type: eatermonTypes[4],
+        id: 12,
+        name: "Meaty Malt",
+        hp: 100,
+        maxHp: 100,
+        src: "images/Eatermons/Meaty Malt.png",
+        xp: eatermonExp[11].xp,
+        level: eatermonExp[11].level,
+        maxXp: 100,
+        canFlee: false,
+        emblem: "images/emblems/normalEmblem.png",
+    },
+    {
+        type: eatermonTypes[4],
+        id: 13,
+        name: "Bannano",
+        hp: 80,
+        maxHp: 80,
+        src: "images/Eatermons/Bannano.png",
+        xp: eatermonExp[12].xp,
+        level: eatermonExp[12].level,
+        maxXp: 50,
+        canFlee: false,
+        emblem: "images/emblems/normalEmblem.png",
     }
-    
+
+
 ]
 
 
@@ -203,7 +246,7 @@ function updateXpBarDisplay() {
     eatermonXpLevel.innerHTML = `
         Level: ${eatermon[currentEatermonIndex].level}
     `
-   
+
     if (eatermon[currentEatermonIndex].xp >= eatermon[currentEatermonIndex].maxXp) {
         eatermonXpText.innerHTML = `
         XP: ${eatermon[currentEatermonIndex].maxXp} 
@@ -219,46 +262,43 @@ function updateXpBarDisplay() {
 updateXpBarDisplay();
 
 function checkIfXpIsFull() {
+    if(eatermon[currentEatermonIndex].hp > 100) {
+        let xpProgressGreen = document.getElementById('xpProgress');
+        xpProgressGreen.style.width = `90%`; 
+    }
     if (eatermon[currentEatermonIndex].xp >= eatermon[currentEatermonIndex].maxHp) {
         normal = false;
-        
-        // Level up logic
-        eatermon[currentEatermonIndex].level = eatermon[currentEatermonIndex].level + 1; 
-        eatermon[currentEatermonIndex].xp = 0; 
-        eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp / 5;
-        eatermon[currentEatermonIndex].maxHp = eatermon[currentEatermonIndex].maxHp + 10; 
-        eatermon[currentEatermonIndex].hp = eatermon[currentEatermonIndex].hp + 10; 
 
-       
+        // Level up logic
+        eatermon[currentEatermonIndex].level = eatermon[currentEatermonIndex].level + 1;
+        eatermon[currentEatermonIndex].xp = 0;
+        eatermon[currentEatermonIndex].maxXp = eatermon[currentEatermonIndex].maxXp + eatermon[currentEatermonIndex].maxXp / 5;
+        eatermon[currentEatermonIndex].maxHp = eatermon[currentEatermonIndex].maxHp + 10;
+        eatermon[currentEatermonIndex].hp = eatermon[currentEatermonIndex].hp + 10;
+
+
         // Update the move learning text
         // learnNewMoveText.innerHTML = `You can learn a new move!`;
+        evolve();
 
-        // Update the XP bar UI
-        evolve(); 
 
-        if(firstEvolving && !levelUpMenu) {
+        if(!firstEvolving && !levelUpMenu) {
             levelDiv.style.display = 'block'; 
             eatermonLevelUpText.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
             eatermonPtext.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Wants To Learn:`;
-   
-        } else if (levelUpMenu){
-            levelDiv.style.display = 'block'; 
-            eatermonLevelUpText.innerHTML = `${eatermonEvolutions[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
-            eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Evolved To ${eatermonEvolutions[currentEatermonIndex].name}!`;
-            setTimeout(() => {
-                levelUpMenu = false; 
-            }, 1000)
 
-        } else if(!firstEvolving && !levelUpMenu){
-            levelDiv.style.display = 'block'; 
-            eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Leveled Up To: ${eatermon[currentEatermonIndex].level}!`;
-            eatermonPtext.innerHTML = `${eatermon[currentEatermonIndex].name} Wants To Learn:`;
-   
+        } else if (firstEvolving && levelUpMenu) {
+            moveTextNoButton.setAttribute('disabled', true);
+            moveTextButton.setAttribute('disabled', true);
+            levelDiv.style.display = 'block';
+            eatermonLevelUpText.innerHTML = `${eatermon[currentEatermonIndex].name} Evolved To ${eatermonEvolutions[currentEatermonIndex].name}!`;
+
+            generateAttackButtons(true);
+
+            
         }
-         // Show level up UI
-    
-        handleLearnNewMove(); 
-        updateXpBarDisplay(); 
+        // Show level up UI
+        updateXpBarDisplay();
 
         // Trigger the learning of a new move (if applicable)
         handleLearnNewMove(currentEatermonIndex); // Call to handle move learning after level up
@@ -266,8 +306,8 @@ function checkIfXpIsFull() {
 }
 
 function returnToNormal() {
-    normal = true; 
-    levelDiv.style.display = 'none'; 
+    normal = true;
+    levelDiv.style.display = 'none';
     battleMenuScript.style.display = 'none';
 }
 

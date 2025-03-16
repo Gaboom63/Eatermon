@@ -110,13 +110,17 @@ const drawPlayer = () => {
         spriteHeight,
         playerX - playerSize, // Adjust for center
         playerY - playerSize, // Adjust for center
-        spriteWidth * (playerSize / (spriteWidth / 2)),
-        spriteHeight * (playerSize / (spriteHeight / 2)),
+        spriteWidth * (playerSize / (spriteWidth / 4)),
+        spriteHeight * (playerSize / (spriteHeight / 4)),
     );
 };
 
+let frameCounter = 0; // Keeps track of the number of frames
+const frameRate = 6; // The number of frames to wait before changing the sprite frame (higher number = slower animation)
+
 const handleInput = () => {
     let moving = false;
+    
     if (keys.ArrowUp) {
         movePlayer(0, -playerSpeed);
         playerDirection = 'up';
@@ -146,11 +150,19 @@ const handleInput = () => {
     }
 
     if (moving) {
-        playerFrameX = (playerFrameX + 1) % spriteFrames;
+        // Increment the frame counter
+        frameCounter++;
+        
+        // Change the sprite frame every 'frameRate' frames
+        if (frameCounter >= frameRate) {
+            playerFrameX = (playerFrameX + 1) % spriteFrames;
+            frameCounter = 0; // Reset the counter
+        }
     } else {
         playerFrameX = 0; // Reset to the first frame when not moving
     }
 };
+
 
 
 const movePlayer = (dx, dy) => {
