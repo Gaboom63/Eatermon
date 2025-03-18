@@ -98,8 +98,8 @@ body {
     font-size: 1.5rem;
 }
 
-   /* Remove default margin and padding */
-   body, html {
+
+body, html {
     margin: 0;
     padding: 0;
     height: 100%;  /* Ensure the body and html fill the entire viewport */

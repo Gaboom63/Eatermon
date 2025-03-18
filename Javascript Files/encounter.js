@@ -11,47 +11,45 @@ let playerHpInner = document.getElementById('playerinnerBar');
 
 // Modified encounter function to trigger coin flip animation
 const encounter = () => {
-   if(!normal) {
-     // List of encountered Eatermon indexes (could be stored globally or in localStorage if persistent)
-     let encounteredEatermons = [];
+    // Check if the player is on a green square
+    const playerTileX = Math.floor(playerX);
+    const playerTileY = Math.floor(playerY);
 
-     for (let square of greenSquares) {
-         let pickNum = Math.random() * (50000 - 1) + 1; // Random number for encounter chance
- 
-         if (
-             playerX + playerSize > square.x &&
-             playerX - playerSize < square.x + tileW &&
-             playerY + playerSize > square.y &&
-             playerY - playerSize < square.y + tileH &&
-             pickNum < 50 && !inBattle
-         ) {
-             hasEncounted = true;
-             inBattle = true;
- 
-             // Randomly choose an enemy Eatermon, ensuring it hasn't been encountered before
-             do {
-                 enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
-             } while (enemyEatermonIndex === currentEatermonIndex || encounteredEatermons.includes(enemyEatermonIndex));
- 
-             // Add the enemy Eatermon index to the list of encountered Eatermons
-             encounteredEatermons.push(enemyEatermonIndex);
- 
-             //console.log(`Battle Time! You encountered a ${eatermon[enemyEatermonIndex].name}!`);
- 
-             // Initialize the battle state
-             restoreEnemyHp();
-             updateHp();
- 
-             // Trigger the coin flip animation and set up the emblem
-             loadingImagess(); // Load the emblems before starting the animation
-             startBattleAnimation(); // Trigger the battle animation
- 
-             battleMenuScript.style.display = 'block';
-             break;
-         }
-     }
-   }
+    // Look for green square overlap (event tiles)
+    const greenSquare = greenSquares.find(square => square.x === playerTileX && square.y === playerTileY);
+    if (greenSquare) {
+        let pickNum = Math.random() * (50000 - 1) + 1; // Random number for encounter chance
+
+        // Check if the encounter chance is met and if the player isn't already in a battle
+        if (pickNum < 50 && !inBattle) {
+            hasEncounted = true;
+            inBattle = true;
+
+            // List of encountered Eatermons indexes (could be stored globally or in localStorage if persistent)
+            let encounteredEatermons = [];
+
+            // Randomly choose an enemy Eatermon, ensuring it hasn't been encountered before
+            do {
+                enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
+            } while (enemyEatermonIndex === currentEatermonIndex || encounteredEatermons.includes(enemyEatermonIndex));
+
+            // Add the enemy Eatermon index to the list of encountered Eatermons
+            encounteredEatermons.push(enemyEatermonIndex);
+
+            // Initialize the battle state
+            restoreEnemyHp();
+            updateHp();
+
+            // Trigger the coin flip animation and set up the emblem
+            loadingImagess(); // Load the emblems before starting the animation
+            startBattleAnimation(); // Trigger the battle animation
+
+            battleMenuScript.style.display = 'block'; // Show battle menu
+        }
+    }
 };
+
+
 
 
 // Function to dynamically set the images of the coin sides (Player and Enemy)

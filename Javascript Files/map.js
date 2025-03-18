@@ -3,17 +3,18 @@ const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const TILE_SIZE = 16;  // Size of one tile (16x16)
 const ZOOM_FACTOR = 3;  // Zoom in factor (e.g., 2 for 2x zoom, 1 for normal size)
 
-// Load the PNG image
 const img = new Image();
 img.src = 'images/maps/officalTESTmap.png';
 
-let tileMap = [];  // Initialize an empty tile map
-let cameraX = 0;   // Horizontal offset of the camera
-let cameraY = 0;   // Vertical offset of the camera
+let tileMap = [];
+let cameraX = 0;
+let cameraY = 0;
 
 let showGrid = true; // Toggle grid visibility (true = show grid, false = hide grid)
 
-// Define the walls (positions the player cannot walk through)
+let playerX = 10;
+let playerY = 10;
+
 const walls = [
     { x: 5, y: 5 },
     { x: 6, y: 5 },
@@ -22,56 +23,52 @@ const walls = [
     { x: 5, y: 6 },
     { x: 5, y: 7 },
     { x: 5, y: 8 },
-    {x: 26, y: 20},
-    {x: 27, y: 20},
-    {x: 27, y: 21},
-    {x: 26, y: 21},
-
-    // Add more walls as needed...
+    { x: 26, y: 20 },
+    { x: 27, y: 20 },
+    { x: 27, y: 21 },
+    { x: 26, y: 21 },
 ];
 
-// Wait for the image to load before setting up everything
-img.onload = () => {
-    const mapWidth = Math.floor(img.width / TILE_SIZE);  // Number of tiles horizontally
-    const mapHeight = Math.floor(img.height / TILE_SIZE);  // Number of tiles vertically
+let tileSelectionEnabled = false; // Toggle tile selection on/off
+let selectedTiles = []; // Array to hold selected tile coordinates
 
-    // Set the canvas size based on the zoom factor
+img.onload = () => {
+    const mapWidth = Math.floor(img.width / TILE_SIZE);
+    const mapHeight = Math.floor(img.height / TILE_SIZE);
+
     const canvasWidth = window.innerWidth;
     const canvasHeight = window.innerHeight;
 
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    // Generate the tile map based on the visible portion of the image
-    tileMap = getTileData(mapWidth, mapHeight);  // Only generate the tile map after the image is loaded
+    tileMap = getTileData(mapWidth, mapHeight);
 
     console.log(`Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
-    
-    // Start the game or move the player now that the map is available
-    console.log('Image loaded, tile map is ready.');
 
-    // Draw the initial map and player
     drawMap();
     drawPlayer();
     drawCoordinates();
 };
 
-// Extract tiles from the image
+function drawPlayer() {
+    ctx.fillStyle = 'red';  // Color for the player
+    ctx.fillRect(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX, playerY * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+}
+
 function getTileData(mapWidth, mapHeight) {
     const tileMap = [];
 
     for (let y = 0; y < mapHeight; y++) {
         const row = [];
         for (let x = 0; x < mapWidth; x++) {
-            // Get pixel data for the current tile (16x16)
             const imageData = ctx.getImageData(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             const color = imageData.data;
 
-            // Example: map color to tile types (green = event tile)
             if (color[0] === 0 && color[1] === 255 && color[2] === 0) {
-                row.push(1);  // Event tile
+                row.push(1);
             } else {
-                row.push(0);  // Walkable tile
+                row.push(0);
             }
         }
         tileMap.push(row);
@@ -80,44 +77,37 @@ function getTileData(mapWidth, mapHeight) {
     return tileMap;
 }
 
-// Initial player position
-let playerX = 10;
-let playerY = 10;
-
-// Draw the player on the canvas (scaled by zoom factor)
-function drawPlayer() {
-    ctx.fillStyle = 'red';  // Color for the player
-    ctx.fillRect(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX, playerY * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
-}
-
-// Draw the map, zoomed in and moving the camera
 function drawMap() {
-    // Clear the canvas before redrawing
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the visible portion of the map, zoomed in (scaled by zoom factor)
     ctx.drawImage(
         img,
-        cameraX / ZOOM_FACTOR, cameraY / ZOOM_FACTOR, // Source X, Y (to create a viewport)
-        canvas.width / ZOOM_FACTOR, canvas.height / ZOOM_FACTOR, // Source Width, Height
-        0, 0, // Destination X, Y
-        canvas.width, canvas.height // Destination Width, Height
+        cameraX / ZOOM_FACTOR, cameraY / ZOOM_FACTOR,
+        canvas.width / ZOOM_FACTOR, canvas.height / ZOOM_FACTOR,
+        0, 0,
+        canvas.width, canvas.height
     );
 
-    // Draw the walls in blue
-
-    // Draw the grid if enabled
     if (showGrid) {
         drawGrid();
         drawWalls();
+        drawGreenSquares();
     }
 }
 
-// Draw the walls as red rectangles
-function drawWalls() {
-    ctx.fillStyle = 'blue'; // Set color to red
+function drawGreenSquares() {
+    ctx.fillStyle = 'green';
 
-    // Loop through each wall and draw a red rectangle at the correct position
+    greenSquares.forEach(square => {
+        const squareX = square.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+        const squareY = square.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+        ctx.fillRect(squareX, squareY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+}
+
+function drawWalls() {
+    ctx.fillStyle = 'blue';
+
     walls.forEach(wall => {
         const wallX = wall.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const wallY = wall.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
@@ -125,14 +115,12 @@ function drawWalls() {
     });
 }
 
-// Draw the grid over the map
 function drawGrid() {
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)'; // Grid line color
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.lineWidth = 1;
 
     const gridSize = TILE_SIZE * ZOOM_FACTOR;
 
-    // Draw vertical grid lines
     for (let x = 0; x < canvas.width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -140,7 +128,6 @@ function drawGrid() {
         ctx.stroke();
     }
 
-    // Draw horizontal grid lines
     for (let y = 0; y < canvas.height; y += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
@@ -149,76 +136,137 @@ function drawGrid() {
     }
 }
 
-// Draw the player's coordinates in the top-right corner
 function drawCoordinates() {
-    ctx.fillStyle = 'white'; // Text color
+    ctx.fillStyle = 'white';
     ctx.font = '16px Arial';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'top';
 
-    // Display player coordinates in the top-right corner
     ctx.fillText(`Player X: ${playerX}, Y: ${playerY}`, canvas.width - 10, 10);
 }
 
-// Check if the player is trying to move into a wall
 function isWall(x, y) {
     return walls.some(wall => wall.x === x && wall.y === y);
 }
 
-// Move player and adjust the camera
 function movePlayer(dx, dy) {
     const newX = playerX + dx;
     const newY = playerY + dy;
 
-    // Ensure tileMap is available before proceeding
     if (tileMap.length === 0) {
         console.log('Tile map is not yet ready.');
-        return;  // Stop movement until tile map is loaded
+        return;
     }
 
-    // Check if the new position is valid (within bounds) and not a wall
     if (newX >= 0 && newX < tileMap[0].length && newY >= 0 && newY < tileMap.length && !isWall(newX, newY)) {
         playerX = newX;
         playerY = newY;
 
-        // Adjust the camera position horizontally
         cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, img.width * ZOOM_FACTOR - canvas.width));
-
-        // Adjust the camera position vertically
         cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, img.height * ZOOM_FACTOR - canvas.height));
 
-        // Trigger events if on event tiles
-        if (tileMap[playerY][playerX] === 1) {
-            triggerEvent();
-        }
+        drawMap();
+        drawPlayer();
+        drawCoordinates();
     }
-
-    // Redraw the map and player after movement
-    drawMap();
-    drawPlayer();
-    drawCoordinates(); // Redraw the coordinates display
 }
 
-// Example of an event trigger
-function triggerEvent() {
-    console.log('Event triggered at position:', playerX, playerY);
-    // You can trigger dialogues, battles, or any other game logic here.
+
+// Function to download selected tiles as a text file
+function downloadSelectedTiles() {
+    // Format the data as {x: NUMBER, y: NUMBER} instead of JSON
+    let dataStr = '';
+    selectedTiles.forEach(tile => {
+        dataStr += `{x: ${tile.x}, y: ${tile.y}},\n`;
+    });
+
+    const blob = new Blob([dataStr], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'selectedTiles.txt';
+    link.click();
 }
 
-// Listen for keyboard input after the image is loaded and the tile map is ready
 document.addEventListener('keydown', (e) => {
     switch (e.key) {
         case 'ArrowUp':
-            movePlayer(0, -1); // Move up
+        case 'w':  // WASD control for up
+            movePlayer(0, -1);
             break;
         case 'ArrowDown':
-            movePlayer(0, 1);  // Move down
+        case 's':  // WASD control for down
+            movePlayer(0, 1);
             break;
         case 'ArrowLeft':
-            movePlayer(-1, 0); // Move left
+        case 'a':  // WASD control for left
+            movePlayer(-1, 0);
             break;
         case 'ArrowRight':
-            movePlayer(1, 0);  // Move right
+        case 'd':  // WASD control for right
+            movePlayer(1, 0);
+            break;
+        case '[': // Toggle tile selection (true/false)
+            tileSelectionEnabled = !tileSelectionEnabled;
+            console.log(`Tile selection ${tileSelectionEnabled ? 'enabled' : 'disabled'}`);
+            break;
+        case ']': // Save the selected tiles to a file
+            downloadSelectedTiles();
+            break;
+        case 'Escape': 
+        openEscapeMenu(); 
             break;
     }
 });
+
+
+
+// Add this to your existing code
+
+canvas.addEventListener('click', (e) => {
+    if (!tileSelectionEnabled || !showGrid) return;
+
+    // Get mouse position relative to the canvas
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Convert the mouse position to tile coordinates
+    const tileX = Math.floor((mouseX + cameraX) / (TILE_SIZE * ZOOM_FACTOR));
+    const tileY = Math.floor((mouseY + cameraY) / (TILE_SIZE * ZOOM_FACTOR));
+
+    // Highlight the selected tile
+    highlightTile(tileX, tileY);
+
+    // Add the tile to selected tiles array (if not already added)
+    if (!selectedTiles.some(tile => tile.x === tileX && tile.y === tileY)) {
+        selectedTiles.push({ x: tileX, y: tileY });
+    }
+});
+
+// Function to highlight the selected tiles
+function highlightTile(x, y) {
+    drawMap(); // Redraw the map first
+
+    // Highlight all selected tiles (iterate over the selected tiles array)
+    selectedTiles.forEach(tile => {
+        ctx.strokeStyle = 'yellow';  // Highlight color
+        ctx.lineWidth = 2;
+        ctx.strokeRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+
+        // Optionally, fill the tile with a semi-transparent color for better visibility
+        ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+        ctx.fillRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+
+    // Highlight the most recently clicked tile with a slightly different effect
+    ctx.strokeStyle = 'orange';  // You can change the color for the most recent tile if you'd like
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+
+    // Optionally, fill the most recently clicked tile with a semi-transparent color for visibility
+    ctx.fillStyle = 'rgba(255, 165, 0, 0.3)';
+    ctx.fillRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+
+    drawPlayer(); // Redraw the player so it stays on top
+    drawCoordinates(); // Redraw coordinates
+}
