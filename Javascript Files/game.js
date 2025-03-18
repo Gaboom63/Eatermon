@@ -8,7 +8,7 @@ const player = {
 // Game loop function
 function gameLoop() {
     // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if(firstEvolving && runAnimation === false) {
             eatermon[currentEatermonIndex].src = eatermonEvolutions[currentEatermonIndex].src

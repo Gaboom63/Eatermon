@@ -11,7 +11,7 @@ let playerHpInner = document.getElementById('playerinnerBar');
 
 // Modified encounter function to trigger coin flip animation
 const encounter = () => {
-   if(normal) {
+   if(!normal) {
      // List of encountered Eatermon indexes (could be stored globally or in localStorage if persistent)
      let encounteredEatermons = [];
 

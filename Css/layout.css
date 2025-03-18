@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-.camera {
+/* .camera {
     width: calc(var(--pixel-size) * 250);
     height: calc(var(--pixel-size) * 144);
     overflow: hidden;
@@ -30,7 +30,7 @@ body {
     width: calc(13 * var(--grid-cell));
     height: calc(13 * var(--grid-cell));
     position: relative;
-}
+} */
 
 #escapeMenu {
     position: absolute;
@@ -96,4 +96,19 @@ body {
 .icon {
     margin-right: 10px;
     font-size: 1.5rem;
+}
+
+   /* Remove default margin and padding */
+   body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;  /* Ensure the body and html fill the entire viewport */
+    overflow: hidden;  /* Prevent scrolling */
+}
+
+/* Make the canvas fullscreen */
+canvas {
+    display: block;  /* Removes any extra space below the canvas */
+    width: 100%;
+    height: 100%;
 }
