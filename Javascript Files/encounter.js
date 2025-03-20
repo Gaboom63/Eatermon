@@ -21,7 +21,7 @@ const encounter = () => {
         let pickNum = Math.random() * (50000 - 1) + 1; // Random number for encounter chance
 
         // Check if the encounter chance is met and if the player isn't already in a battle
-        if (pickNum < 50 && !inBattle) {
+        if (pickNum < 50 && !inBattle && eatermon[enemyEatermonIndex] != eatermon[currentEatermonIndex]) {
             hasEncounted = true;
             inBattle = true;
 

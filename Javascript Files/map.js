@@ -137,8 +137,8 @@ function drawGrid() {
 }
 
 function drawCoordinates() {
-    ctx.fillStyle = 'white';
-    ctx.font = '16px Arial';
+    ctx.fillStyle = 'black';
+    ctx.font = '30px Arial';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'top';
 

@@ -38,6 +38,9 @@ const eatermonMoves = [
     {
         eatermon: eatermon[4], // Tomadoodle
         moves: [
+            { name: "Tears", power: 40, type: "Fire" },
+            { name: "Tears", power: 40, type: "Fire" },
+            { name: "Tears", power: 40, type: "Fire" },
             { name: "Tears", power: 40, type: "Fire" }
         ]
     },

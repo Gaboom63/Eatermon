@@ -36,6 +36,8 @@ function attackMove(eatermonIndex, moveIndex) {
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
 
+    console.log(selectedMove); 
+
     // Handle type effectiveness
     const moveType = selectedMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);

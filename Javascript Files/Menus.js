@@ -18,7 +18,7 @@ function clearMenu() {
 function generateAttackButtons(disableButtons = false) {
     let selectedEatermon = eatermon[currentEatermonIndex];
     let moves = eatermonMoves.find(e => e.eatermon.name === selectedEatermon.name)?.moves;
-
+    console.log(selectedEatermon)
     // Generate attack buttons based on available moves
     let attackButtonsHtml = '';
 
@@ -85,6 +85,7 @@ const plates = [{ src: "images/plates/blankPlate.png" }];
 function updateEatermonPartyInt() {
     playerParty.push(eatermon[currentEatermonIndex])
 }
+
 updateEatermonPartyInt(); 
 
 function catchThatMon() {
@@ -96,9 +97,11 @@ function catchThatMon() {
 
     if (catchChance > 0.5) {
         caught = true;
-        playerParty.push(eatermon[enemyEatermonIndex]);
-        //console.log(`${eatermon[enemyEatermonIndex].name} has been caught!`);
+        playerParty.push(eatermon[enemyEatermonIndex]);  // Add the caught Eatermon to the party
         battleText.innerHTML = `${eatermon[enemyEatermonIndex].name} has been added to your party!`;
+
+        console.log("Player's Party after catching:", playerParty);  // Verify the catch
+
     } else {
         caught = false;
         battleText.innerHTML = "The capture attempt failed.";
@@ -113,23 +116,53 @@ function catchThatMon() {
 function showSwitchMenu() {
     let switchMenuText = "Select a new Eatermon to switch in battle:\n";
 
+    // Display all the eatermons in the player's party
     playerParty.forEach((eatermon, index) => {
-        switchMenuText += `${index + 1}. ${eatermon.name}\n`;
+        switchMenuText += `${index + 1}. ${eatermon.name} (ID: ${eatermon.id})\n`;
     });
 
-    switchMenuText += `Enter the number of the Eatermon you want to switch to:`;
+    switchMenuText += `Enter the number of the Eatermon you want to switch to (by its position):`;
 
+    // Get player input
     let playerChoice = parseInt(prompt(switchMenuText));
+    console.log("Player choice input:", playerChoice);  // Debugging the player input
 
+    // Check if the player input is within a valid range
     if (playerChoice >= 1 && playerChoice <= playerParty.length) {
-        currentEatermonIndex = playerChoice - 1;
-        //console.log(`Switched to ${playerParty[currentEatermonIndex].name}`);
-        battleText.innerHTML = `Switched to ${playerParty[currentEatermonIndex].name}`;
+        console.log("Valid player choice:", playerChoice);  // Debugging valid range check
+
+        // Access the selected Eatermon from the player's party
+        let selectedEatermon = playerParty[playerChoice - 1];  // Adjust to 0-based index
+        console.log("Selected Eatermon from playerParty:", selectedEatermon);  // Debugging selected Eatermon
+
+        let selectedEatermonId = selectedEatermon.id;
+        console.log("Selected Eatermon ID:", selectedEatermonId);  // Debugging the selected Eatermon ID
+
+        // Update currentEatermonIndex based on the selected Eatermon's position in the party array
+        currentEatermonIndex = playerParty.findIndex(eatermon => eatermon.id === selectedEatermonId);
+        console.log("Updated currentEatermonIndex:", currentEatermonIndex);  // Debugging currentEatermonIndex update
+
+        // Update the currentEatermon ID
+        currentEatermonId = selectedEatermonId;
+        currentEatermonIndex = selectedEatermonId;
+        console.log("Updated currentEatermonId:", currentEatermonId);  // Debugging currentEatermonId update
+
+        // Update the battle text with the new Eatermon's name and ID
+        battleText.innerHTML = `Switched to ${selectedEatermon.name} (ID: ${selectedEatermon.id})`;
+        console.log("Battle text updated:", battleText.innerHTML);  // Debugging battle text update
+
+        // Update the sprite (if applicable)
+        generateAttackButtons();  // This should now reflect the new currentEatermonIndex
+        console.log("Attack buttons regenerated for the correct Eatermon.");  // Debugging attack button regeneration
+        console.log(eatermon[currentEatermonIndex])
     } else {
-        //console.log("Invalid choice, no switch made.");
         battleText.innerHTML = "Invalid choice, no switch made.";
+        console.log("Invalid choice made, no switch performed.");
     }
 }
+
+
+
 
 function showResultsOfMenuBag() {
     let bag = document.getElementById('escapeMenu');
