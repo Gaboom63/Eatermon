@@ -11,9 +11,11 @@ let cameraX = 0;
 let cameraY = 0;
 
 let showGrid = true; // Toggle grid visibility (true = show grid, false = hide grid)
-
+let currentNPC = 0;
+let talkingToNPC = false;
 let playerX = 10;
 let playerY = 10;
+
 
 const walls = [
     { x: 5, y: 5 },
@@ -93,6 +95,7 @@ function drawMap() {
         drawWalls();
         drawGreenSquares();
     }
+    drawNPC();
 }
 
 function drawGreenSquares() {
@@ -104,6 +107,84 @@ function drawGreenSquares() {
         ctx.fillRect(squareX, squareY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
     });
 }
+
+let npc = [
+    {
+        name: "Tod",
+        message: "Hello!",
+        x: 10,
+        y: 10,
+        canTalkAgain: false
+    },
+    {
+        name: "Blodoof",
+        message: "Bloted? Me too...",
+        x: 15,
+        y: 15, 
+        canTalkAgain: false
+    }
+]
+
+let npcX = npc[currentNPC].x;
+let npcY = npc[currentNPC].y;
+
+
+function NPCtext() {
+    let npcText = document.getElementById('npcP');
+    let npcTextContainer = document.getElementById('npcTextContainer');
+    let npcName = document.getElementById('npcName');
+
+    // Check if the player is interacting with an NPC
+    const currentNPC = npc.find(n => n.x === playerX && n.y === playerY); 
+
+    if (currentNPC) {
+        talkingToNPC = true;
+        npcName.innerHTML = `${currentNPC.name} Says: `;
+        npcText.innerHTML = `${currentNPC.message}`;
+
+        // Optionally update the NPC's state to prevent immediate re-interaction
+        if (currentNPC.canTalkAgain) {
+            currentNPC.canTalkAgain = false;  // Disable talking again for this NPC
+            // Set a timer or another mechanism to allow talking again after some time (if desired)
+        }
+    } else {
+        talkingToNPC = false;
+        npcTextContainer.style.display = 'none'; // Hide the dialogue box
+    }
+
+    // Show the NPC dialogue box when talking to an NPC
+    if (talkingToNPC) {
+        npcTextContainer.style.display = 'block';
+    }
+}
+
+
+
+
+function drawNPC() {
+    // Draw all NPCs on the map
+    npc.forEach(npc => {
+        ctx.fillStyle = 'purple';
+        const npcX = npc.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+        const npcY = npc.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+        ctx.fillRect(npcX, npcY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+}
+
+function checkNPCInteraction() {
+    npc.forEach(npc => {
+        if (playerX === npc.x && playerY === npc.y && npc.canTalkAgain) {
+            talkingToNPC = true;
+            currentNPC = npc;
+            NPCtext(); // Show NPC text when the player is at NPC's tile
+        } else if (playerX !== npc.x || playerY !== npc.y) {
+            talkingToNPC = false;
+            npcTextContainer.style.display = 'none';
+        }
+    });
+}
+
+
 
 function drawWalls() {
     ctx.fillStyle = 'blue';
@@ -165,11 +246,15 @@ function movePlayer(dx, dy) {
         cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, img.width * ZOOM_FACTOR - canvas.width));
         cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, img.height * ZOOM_FACTOR - canvas.height));
 
+        // Check for NPC interaction each time the player moves
+        checkNPCInteraction();
+
         drawMap();
         drawPlayer();
         drawCoordinates();
     }
 }
+
 
 
 // Function to download selected tiles as a text file
@@ -212,11 +297,26 @@ document.addEventListener('keydown', (e) => {
         case ']': // Save the selected tiles to a file
             downloadSelectedTiles();
             break;
-        case 'Escape': 
-        openEscapeMenu(); 
+        case 'Escape':
+            openEscapeMenu();
             break;
     }
 });
+
+// Add an NPC text function that checks if the player is near any NPCs
+function checkNPCProximity() {
+    npc.forEach(npc => {
+        if (playerX === npc.x && playerY === npc.y) {
+            // Optionally, you can also allow toggling to prevent over-clicking on NPCs
+            if (!npc.canTalkAgain) {
+                npc.message = "I've already spoken to you!";
+            } else {
+                npc.message = "Hello, welcome!";
+            }
+            npcText(); // Update the dialogue box with the NPC's message
+        }
+    });
+}
 
 
 

@@ -23,6 +23,14 @@ function gameLoop() {
         encounter();  // Function already defined in your game
     }
 
+    if (playerX === npcX && playerY === npcY) {
+        talkingToNPC = true;
+        NPCtext(); 
+    } else if (playerX !== npcX || playerY !== npcY) {
+        talkingToNPC = false; 
+        NPCtext(); 
+    }
+    
     if(catching) {
         enemyImg.src = plates[0].src; // Make sure this is inside the condition where the image should update
     } else {
