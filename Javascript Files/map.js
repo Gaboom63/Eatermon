@@ -13,7 +13,7 @@ let cameraY = 0;
 let showGrid = true; // Toggle grid visibility (true = show grid, false = hide grid)
 let currentNPC = 0;
 let talkingToNPC = false;
-let playerX = 10;
+let playerX = 11;
 let playerY = 10;
 
 
@@ -134,29 +134,22 @@ function NPCtext() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     let npcName = document.getElementById('npcName');
 
-    // Check if the player is interacting with an NPC
-    const currentNPC = npc.find(n => n.x === playerX && n.y === playerY); 
-
     if (currentNPC) {
-        talkingToNPC = true;
+        console.log('Showing NPC dialogue:', currentNPC.message);  // Debugging line
         npcName.innerHTML = `${currentNPC.name} Says: `;
         npcText.innerHTML = `${currentNPC.message}`;
-
-        // Optionally update the NPC's state to prevent immediate re-interaction
-        if (currentNPC.canTalkAgain) {
-            currentNPC.canTalkAgain = false;  // Disable talking again for this NPC
-            // Set a timer or another mechanism to allow talking again after some time (if desired)
-        }
-    } else {
-        talkingToNPC = false;
-        npcTextContainer.style.display = 'none'; // Hide the dialogue box
     }
 
     // Show the NPC dialogue box when talking to an NPC
     if (talkingToNPC) {
         npcTextContainer.style.display = 'block';
+    } else {
+        npcTextContainer.style.display = 'none';
     }
 }
+
+
+
 
 
 
@@ -239,19 +232,25 @@ function movePlayer(dx, dy) {
         return;
     }
 
+    // Check if the new position is valid (not out of bounds and not a wall)
     if (newX >= 0 && newX < tileMap[0].length && newY >= 0 && newY < tileMap.length && !isWall(newX, newY)) {
-        playerX = newX;
-        playerY = newY;
+        // Allow movement if the player is not moving into an NPC
+        const npcAtDestination = npc.some(n => n.x === newX && n.y === newY);
+        if (!npcAtDestination) {
+            playerX = newX;
+            playerY = newY;
 
-        cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, img.width * ZOOM_FACTOR - canvas.width));
-        cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, img.height * ZOOM_FACTOR - canvas.height));
+            // Update camera position
+            cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, img.width * ZOOM_FACTOR - canvas.width));
+            cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, img.height * ZOOM_FACTOR - canvas.height));
 
-        // Check for NPC interaction each time the player moves
-        checkNPCInteraction();
+            // Check for NPC interaction each time the player moves
+            checkNPCInteraction();
 
-        drawMap();
-        drawPlayer();
-        drawCoordinates();
+            drawMap();
+            drawPlayer();
+            drawCoordinates();
+        }
     }
 }
 
@@ -290,6 +289,10 @@ document.addEventListener('keydown', (e) => {
         case 'd':  // WASD control for right
             movePlayer(1, 0);
             break;
+        case 'Enter':  // Interact with NPC when player is in front of them
+            console.log('Enter key pressed');  // Debugging line
+            interactWithNPC();
+            break;
         case '[': // Toggle tile selection (true/false)
             tileSelectionEnabled = !tileSelectionEnabled;
             console.log(`Tile selection ${tileSelectionEnabled ? 'enabled' : 'disabled'}`);
@@ -302,6 +305,25 @@ document.addEventListener('keydown', (e) => {
             break;
     }
 });
+
+
+function interactWithNPC() {
+    // Check if the player is close enough to an NPC (one tile away in any direction)
+    const npcAtPlayerPosition = npc.find(n => 
+        Math.abs(n.x - playerX) <= 1 && Math.abs(n.y - playerY) <= 1
+    );
+
+    if (npcAtPlayerPosition) {
+        console.log('Interacting with NPC:', npcAtPlayerPosition.name);  // Debugging line
+        talkingToNPC = true;
+        currentNPC = npcAtPlayerPosition;  // Set the current NPC
+        NPCtext();  // Show the NPC dialogue
+    } else {
+        console.log('No NPC found at player position');  // Debugging line
+    }
+}
+
+
 
 // Add an NPC text function that checks if the player is near any NPCs
 function checkNPCProximity() {

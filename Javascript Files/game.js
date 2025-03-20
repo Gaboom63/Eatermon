@@ -23,13 +23,26 @@ function gameLoop() {
         encounter();  // Function already defined in your game
     }
 
-    if (playerX === npcX && playerY === npcY) {
-        talkingToNPC = true;
-        NPCtext(); 
-    } else if (playerX !== npcX || playerY !== npcY) {
-        talkingToNPC = false; 
-        NPCtext(); 
-    }
+ // Check for interaction with any NPC in the npc array
+function checkNPCInteraction() {
+    // Iterate through all NPCs in the npc array
+    npc.forEach(npc => {
+        // Check if the player is within one tile of the NPC (in any direction)
+        if (Math.abs(playerX - npc.x) <= 1 && Math.abs(playerY - npc.y) <= 1) {
+            // If the player is near the NPC, set talkingToNPC to true
+            talkingToNPC = true;
+            currentNPC = npc;  // Set the current NPC to the one the player is close to
+            NPCtext();  // Display the NPC's dialogue
+        } else {
+            // If the player is not near the NPC, set talkingToNPC to false
+            if (currentNPC === npc) {
+                talkingToNPC = false;
+                NPCtext();  // Hide or reset the NPC's dialogue
+            }
+        }
+    });
+}
+
     
     if(catching) {
         enemyImg.src = plates[0].src; // Make sure this is inside the condition where the image should update
