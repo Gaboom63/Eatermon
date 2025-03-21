@@ -2,7 +2,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const TILE_SIZE = 16;  // Tile size
-const ZOOM_FACTOR = 3;  // Zoom factor
+const ZOOM_FACTOR = 4;  // Zoom factor
 const spriteWidth = 32;
 const spriteHeight = 32;
 const spriteSheetCols = 4;
@@ -13,7 +13,7 @@ let scaleFactor = 1;
 let tileMap = [];
 let cameraX = 0;
 let cameraY = 0;
-let showGrid = false; // Toggle grid visibility
+let showGrid = true; // Toggle grid visibility
 let talkingToNPC = false;
 let playerX = 7;
 let playerY = 2;
@@ -22,15 +22,261 @@ let currentNPC = 0;
 const mainPlayer = document.getElementById("player");
 const img = new Image();
 const mainplayerImg = new Image();
-img.src = 'images/maps/officalTESTmap.png';
+img.src = 'images/maps/startingMap.png';
 mainplayerImg.src = 'images/player.png';
 
 // Walls and NPC data
 const walls = [
-    { x: 5, y: 5 }, { x: 6, y: 5 }, { x: 7, y: 5 }, { x: 8, y: 5 },
-    { x: 5, y: 6 }, { x: 5, y: 7 }, { x: 5, y: 8 },
-    { x: 26, y: 20 }, { x: 27, y: 20 }, { x: 27, y: 21 }, { x: 26, y: 21 },
+    { x: 21, y: 26 },
+    { x: 21, y: 27 },
+    { x: 21, y: 16 },
+    { x: 21, y: 17 },
+    { x: 21, y: 18 },
+    { x: 21, y: 19 },
+    { x: 21, y: 20 },
+    { x: 21, y: 21 },
+    { x: 21, y: 22 },
+    { x: 21, y: 23 },
+    { x: 21, y: 24 },
+    { x: 21, y: 25 },
+    { x: 22, y: 16 },
+    { x: 22, y: 17 },
+    { x: 22, y: 18 },
+    { x: 22, y: 19 },
+    { x: 22, y: 20 },
+    { x: 22, y: 21 },
+    { x: 22, y: 22 },
+    { x: 22, y: 23 },
+    { x: 22, y: 24 },
+    { x: 22, y: 25 },
+    { x: 22, y: 26 },
+    { x: 23, y: 16 },
+    { x: 23, y: 17 },
+    { x: 23, y: 18 },
+    { x: 23, y: 19 },
+    { x: 23, y: 20 },
+    { x: 23, y: 21 },
+    { x: 23, y: 22 },
+    { x: 23, y: 23 },
+    { x: 23, y: 24 },
+    { x: 23, y: 25 },
+    { x: 23, y: 26 },
+    { x: 24, y: 16 },
+    { x: 24, y: 17 },
+    { x: 24, y: 18 },
+    { x: 24, y: 19 },
+    { x: 24, y: 20 },
+    { x: 24, y: 21 },
+    { x: 24, y: 22 },
+    { x: 24, y: 23 },
+    { x: 24, y: 24 },
+    { x: 24, y: 25 },
+    { x: 24, y: 26 },
+    { x: 25, y: 16 },
+    { x: 25, y: 17 },
+    { x: 25, y: 18 },
+    { x: 25, y: 19 },
+    { x: 25, y: 20 },
+    { x: 25, y: 21 },
+    { x: 25, y: 22 },
+    { x: 25, y: 23 },
+    { x: 25, y: 24 },
+    { x: 25, y: 25 },
+    { x: 25, y: 26 },
+    { x: 26, y: 16 },
+    { x: 26, y: 17 },
+    { x: 26, y: 18 },
+    { x: 26, y: 19 },
+    { x: 26, y: 20 },
+    { x: 26, y: 21 },
+    { x: 26, y: 22 },
+    { x: 26, y: 23 },
+    { x: 26, y: 24 },
+    { x: 26, y: 25 },
+    { x: 26, y: 26 },
+    { x: 27, y: 16 },
+    { x: 27, y: 17 },
+    { x: 27, y: 18 },
+    { x: 27, y: 19 },
+    { x: 27, y: 20 },
+    { x: 27, y: 21 },
+    { x: 27, y: 22 },
+    { x: 27, y: 23 },
+    { x: 27, y: 24 },
+    { x: 27, y: 25 },
+    { x: 27, y: 26 },
+    { x: 28, y: 16 },
+    { x: 28, y: 17 },
+    { x: 28, y: 18 },
+    { x: 28, y: 19 },
+    { x: 28, y: 20 },
+    { x: 28, y: 21 },
+    { x: 28, y: 22 },
+    { x: 28, y: 23 },
+    { x: 28, y: 24 },
+    { x: 28, y: 25 },
+    { x: 28, y: 26 },
+    { x: 29, y: 16 },
+    { x: 29, y: 17 },
+    { x: 29, y: 18 },
+    { x: 29, y: 19 },
+    { x: 29, y: 20 },
+    { x: 29, y: 21 },
+    { x: 29, y: 22 },
+    { x: 29, y: 23 },
+    { x: 29, y: 24 },
+    { x: 29, y: 25 },
+    { x: 29, y: 26 },
+    { x: 21, y: 15 },
+    { x: 22, y: 15 },
+    { x: 23, y: 15 },
+    { x: 24, y: 15 },
+    { x: 25, y: 15 },
+    { x: 26, y: 15 },
+    { x: 27, y: 15 },
+    { x: 28, y: 15 },
+    { x: 29, y: 15 },
+    { x: 22, y: 27 },
+    { x: 23, y: 27 },
+    { x: 24, y: 27 },
+    { x: 25, y: 27 },
+    { x: 26, y: 27 },
+    { x: 27, y: 27 },
+    { x: 28, y: 27 },
+    { x: 29, y: 27 },
+
+    { x: 9, y: 27 },
+    { x: 1, y: 15 },
+    { x: 1, y: 16 },
+    { x: 1, y: 17 },
+    { x: 1, y: 18 },
+    { x: 1, y: 19 },
+    { x: 1, y: 20 },
+    { x: 1, y: 21 },
+    { x: 1, y: 22 },
+    { x: 1, y: 23 },
+    { x: 1, y: 24 },
+    { x: 1, y: 25 },
+    { x: 1, y: 26 },
+    { x: 1, y: 27 },
+    { x: 2, y: 15 },
+    { x: 2, y: 16 },
+    { x: 2, y: 17 },
+    { x: 2, y: 18 },
+    { x: 2, y: 19 },
+    { x: 2, y: 20 },
+    { x: 2, y: 21 },
+    { x: 2, y: 22 },
+    { x: 2, y: 23 },
+    { x: 2, y: 24 },
+    { x: 2, y: 25 },
+    { x: 2, y: 26 },
+    { x: 2, y: 27 },
+    { x: 3, y: 15 },
+    { x: 3, y: 16 },
+    { x: 3, y: 17 },
+    { x: 3, y: 18 },
+    { x: 3, y: 19 },
+    { x: 3, y: 20 },
+    { x: 3, y: 21 },
+    { x: 3, y: 22 },
+    { x: 3, y: 23 },
+    { x: 3, y: 24 },
+    { x: 3, y: 25 },
+    { x: 3, y: 26 },
+    { x: 3, y: 27 },
+    { x: 4, y: 15 },
+    { x: 4, y: 16 },
+    { x: 4, y: 17 },
+    { x: 4, y: 18 },
+    { x: 4, y: 19 },
+    { x: 4, y: 20 },
+    { x: 4, y: 21 },
+    { x: 4, y: 22 },
+    { x: 4, y: 23 },
+    { x: 4, y: 24 },
+    { x: 4, y: 25 },
+    { x: 4, y: 26 },
+    { x: 4, y: 27 },
+    { x: 5, y: 15 },
+    { x: 5, y: 16 },
+    { x: 5, y: 17 },
+    { x: 5, y: 18 },
+    { x: 5, y: 19 },
+    { x: 5, y: 20 },
+    { x: 5, y: 21 },
+    { x: 5, y: 22 },
+    { x: 5, y: 23 },
+    { x: 5, y: 24 },
+    { x: 5, y: 25 },
+    { x: 5, y: 26 },
+    { x: 5, y: 27 },
+    { x: 6, y: 15 },
+    { x: 6, y: 16 },
+    { x: 6, y: 17 },
+    { x: 6, y: 18 },
+    { x: 6, y: 19 },
+    { x: 6, y: 20 },
+    { x: 6, y: 21 },
+    { x: 6, y: 22 },
+    { x: 6, y: 23 },
+    { x: 6, y: 24 },
+    { x: 6, y: 25 },
+    { x: 6, y: 26 },
+    { x: 6, y: 27 },
+    { x: 7, y: 15 },
+    { x: 7, y: 16 },
+    { x: 7, y: 17 },
+    { x: 7, y: 18 },
+    { x: 7, y: 19 },
+    { x: 7, y: 20 },
+    { x: 7, y: 21 },
+    { x: 7, y: 22 },
+    { x: 7, y: 23 },
+    { x: 7, y: 24 },
+    { x: 7, y: 25 },
+    { x: 7, y: 26 },
+    { x: 7, y: 27 },
+    { x: 8, y: 15 },
+    { x: 8, y: 16 },
+    { x: 8, y: 17 },
+    { x: 8, y: 18 },
+    { x: 8, y: 19 },
+    { x: 8, y: 20 },
+    { x: 8, y: 21 },
+    { x: 8, y: 22 },
+    { x: 8, y: 23 },
+    { x: 8, y: 24 },
+    { x: 8, y: 25 },
+    { x: 8, y: 26 },
+    { x: 8, y: 27 },
+    { x: 9, y: 15 },
+    { x: 9, y: 16 },
+    { x: 9, y: 17 },
+    { x: 9, y: 18 },
+    { x: 9, y: 19 },
+    { x: 9, y: 20 },
+    { x: 9, y: 21 },
+    { x: 9, y: 22 },
+    { x: 9, y: 23 },
+    { x: 9, y: 24 },
+    { x: 9, y: 25 },
+    { x: 9, y: 26 },
+    //End Of Two Houses
 ];
+
+const treasures = [
+    {
+        treauseType: "Chest",
+        x: 9,
+        y: 10, 
+        opened: false 
+    }
+]
+
+const lakes = [
+
+]
 
 let npc = [
     {
@@ -48,12 +294,45 @@ let npc = [
         y: 15,
         src: 'images/NPCS/Jake.png',
         canTalkAgain: false
+    },
+    {
+        name: "Debbie", 
+        message: "I'm You're Mom!",
+        x: 10,
+        y: 15, 
+        src: 'images/NPCS/Debbie.png',
+        canTalkAgain: false, 
     }
 ];
 
 let selectedTiles = []; // For selected tiles
 let tileSelectionEnabled = false;
+let isShiftPressed = false;  // Track if the Shift key is pressed
+let firstTile = null;  // Store the first tile clicked when Shift is pressed
 
+function drawLake() {
+    ctx.fillStyle = 'blue';
+    lakes.forEach(lake => {
+        const lakeX = lake.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+        const lakeY = lake.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+        ctx.fillRect(lakeX, lakeY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+}
+
+
+function downloadSelectedTiles() {
+    // Format the data as {x: NUMBER, y: NUMBER} instead of JSON
+    let dataStr = '';
+    selectedTiles.forEach(tile => {
+        dataStr += `{x: ${tile.x}, y: ${tile.y}},\n`;
+    });
+
+    const blob = new Blob([dataStr], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'selectedTiles.txt';
+    link.click();
+}
 // Image Loading and Initialization
 img.onload = () => {
     const mapWidth = Math.floor(img.width / TILE_SIZE);
@@ -112,11 +391,12 @@ function drawMap() {
         drawGrid();
         drawWalls();
         drawGreenSquares();
+        drawLake();
     }
 }
 
 function drawWalls() {
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'red';
     walls.forEach(wall => {
         const wallX = wall.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const wallY = wall.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
@@ -160,6 +440,9 @@ function drawNPC() {
     });
 }
 
+function drawTreasure() {
+  
+}
 
 // Preload NPC images
 const npcImages = {};
@@ -248,6 +531,9 @@ function NPCtext() {
 
 // Event Listeners
 document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+        isShiftPressed = true;  // Shift is being held down
+    }
     switch (e.key) {
         case 'ArrowUp':
         case 'w':
@@ -272,12 +558,70 @@ document.addEventListener('keydown', (e) => {
         case 'Enter':
             interactWithNPC();
             break;
+        case '[': // Toggle tile selection (true/false)
+            tileSelectionEnabled = !tileSelectionEnabled;
+            console.log(`Tile selection ${tileSelectionEnabled ? 'enabled' : 'disabled'}`);
+            break;
+        case ']': // Save the selected tiles to a file
+            if (showGrid) {
+                downloadSelectedTiles();
+            }
+            break;
         case 'Escape':
             openEscapeMenu();
             break;
     }
-    // updatePlayerPosition();
 });
+
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') {
+        isShiftPressed = false;  // Shift is released
+        firstTile = null;  // Reset the first tile after Shift is released
+    }
+});
+
+canvas.addEventListener('click', (e) => {
+    if (!tileSelectionEnabled || !showGrid) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const tileX = Math.floor((mouseX + cameraX) / (TILE_SIZE * ZOOM_FACTOR));
+    const tileY = Math.floor((mouseY + cameraY) / (TILE_SIZE * ZOOM_FACTOR));
+
+    // If Shift is pressed, select all tiles in between
+    if (isShiftPressed && firstTile) {
+        const startX = Math.min(firstTile.x, tileX);
+        const endX = Math.max(firstTile.x, tileX);
+        const startY = Math.min(firstTile.y, tileY);
+        const endY = Math.max(firstTile.y, tileY);
+
+        // Select all tiles in between the two clicked positions
+        for (let x = startX; x <= endX; x++) {
+            for (let y = startY; y <= endY; y++) {
+                if (!selectedTiles.some(tile => tile.x === x && tile.y === y)) {
+                    selectedTiles.push({ x, y });
+                }
+            }
+        }
+
+        console.log(`Selected tiles between (${firstTile.x}, ${firstTile.y}) and (${tileX}, ${tileY})`);
+    } else {
+        // Normal click behavior (no Shift), just add the clicked tile
+        if (!selectedTiles.some(tile => tile.x === tileX && tile.y === tileY)) {
+            selectedTiles.push({ x: tileX, y: tileY });
+        }
+
+        // If Shift is pressed for the first time, store the first tile
+        if (isShiftPressed && !firstTile) {
+            firstTile = { x: tileX, y: tileY };
+        }
+    }
+
+    highlightSelectedTiles();
+});
+
 
 // NPC Interaction
 function interactWithNPC() {
