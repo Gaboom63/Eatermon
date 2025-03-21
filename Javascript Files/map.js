@@ -13,7 +13,7 @@ let scaleFactor = 1;
 let tileMap = [];
 let cameraX = 0;
 let cameraY = 0;
-let showGrid = true; // Toggle grid visibility
+let showGrid = false; // Toggle grid visibility
 let talkingToNPC = false;
 let playerX = 7;
 let playerY = 2;
@@ -33,8 +33,22 @@ const walls = [
 ];
 
 let npc = [
-    { name: "Tod", message: "Hello!", x: 10, y: 10, canTalkAgain: false },
-    { name: "Blodoof", message: "Bloted? Me too...", x: 15, y: 15, canTalkAgain: false }
+    {
+        name: "George",
+        message: "Hello!",
+        x: 10,
+        y: 10,
+        src: 'images/NPCS/George.png',
+        canTalkAgain: false
+    },
+    {
+        name: "Blodoof",
+        message: "Bloted? Me too...",
+        x: 15,
+        y: 15,
+        src: 'images/NPCS/Jake.png',
+        canTalkAgain: false
+    }
 ];
 
 let selectedTiles = []; // For selected tiles
@@ -99,7 +113,6 @@ function drawMap() {
         drawWalls();
         drawGreenSquares();
     }
-    drawNPC();
 }
 
 function drawWalls() {
@@ -131,12 +144,32 @@ function drawGrid() {
 
 function drawNPC() {
     npc.forEach(npc => {
-        ctx.fillStyle = 'purple';
-        const npcX = npc.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
-        const npcY = npc.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
-        ctx.fillRect(npcX, npcY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+        const npcImage = npcImages[npc.name]; // Use the preloaded image
+
+        if (npcImage) {
+            // Scale the NPC image to fit within one tile
+            const scaledSize = TILE_SIZE * ZOOM_FACTOR * 2.5; // Scale factor to ensure NPC fits within the tile size
+
+            // Calculate the position on the canvas with camera offset
+            const npcX = npc.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+            const npcY = npc.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+
+            // Draw the NPC image ensuring it's centered within the tile
+            ctx.drawImage(npcImage, npcX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, npcY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, scaledSize, scaledSize);
+        }
     });
 }
+
+
+// Preload NPC images
+const npcImages = {};
+
+npc.forEach(npc => {
+    const img = new Image();
+    img.src = npc.src;
+    npcImages[npc.name] = img;
+});
+
 
 function drawCoordinates() {
     ctx.fillStyle = 'black';
@@ -156,19 +189,24 @@ function movePlayer(dx, dy) {
         playerX = newX;
         playerY = newY;
 
+        // Update the camera only if the player has moved
         cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, img.width * ZOOM_FACTOR - canvas.width));
         cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, img.height * ZOOM_FACTOR - canvas.height));
 
+        // Adjust camera Y to keep the player centered if necessary
         if (playerY * TILE_SIZE * ZOOM_FACTOR - cameraY < 0 || playerY * TILE_SIZE * ZOOM_FACTOR - cameraY > canvas.height) {
             cameraY = playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2;
         }
 
         checkNPCInteraction();
-        drawMap();
-        drawPlayer();
-        drawCoordinates();
     }
+
+    // Drawing functions are only called after successful movement
+    drawMap();
+    drawPlayer();
+    drawCoordinates();
 }
+
 
 // Function to check if the position is occupied by an NPC
 function isNPC(x, y) {
@@ -234,8 +272,11 @@ document.addEventListener('keydown', (e) => {
         case 'Enter':
             interactWithNPC();
             break;
+        case 'Escape':
+            openEscapeMenu();
+            break;
     }
-    updatePlayerPosition();
+    // updatePlayerPosition();
 });
 
 // NPC Interaction

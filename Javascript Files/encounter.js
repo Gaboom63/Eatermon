@@ -2,7 +2,7 @@ let consolep = document.getElementById('console');
 let hasEncounted = false;
 let battleMenuScript = document.getElementById('battleMenu');
 let battleMenuOptions = document.getElementById('battleOptionsMenu');
-let currentEatermonIndex = [1]; // Default to Tomadoodle, you can dynamically change this based on the encounter
+let currentEatermonIndex = 1; // Default to Tomadoodle, you can dynamically change this based on the encounter
 let enemyEatermonIndex = 4; // Default to Woodle as the enemy
 let battleText = document.getElementById('battleTextContainer');
 let enemyHP = document.getElementById("enemyHP");
@@ -18,8 +18,8 @@ const encounter = () => {
     // Look for green square overlap (event tiles)
     const greenSquare = greenSquares.find(square => square.x === playerTileX && square.y === playerTileY);
     if (greenSquare) {
-        let pickNum = Math.random() * (50000 - 1) + 1; // Random number for encounter chance
-
+        let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
+        console.log(`Number: ${pickNum}`); 
         // Check if the encounter chance is met and if the player isn't already in a battle
         if (pickNum < 50 && !inBattle && eatermon[enemyEatermonIndex] != eatermon[currentEatermonIndex]) {
             hasEncounted = true;

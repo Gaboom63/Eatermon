@@ -17,7 +17,8 @@ function gameLoop() {
             eatermon[currentEatermonIndex].name = eatermonFinalEvolutions[currentEatermonIndex].name    
     }
 
-   
+    drawNPC();
+
 
     if (!inBattle) {
         encounter();  // Function already defined in your game
