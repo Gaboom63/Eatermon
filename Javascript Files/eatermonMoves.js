@@ -1,4 +1,4 @@
-const eatermonMoves = [
+let eatermonMoves = [
     {
         eatermon: eatermon[0], // Woodle
         moves: [

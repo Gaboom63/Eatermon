@@ -19,7 +19,7 @@ let playerX = 7;
 let playerY = 2;
 let currentNPC = 0;
 let currentNPCEatermon;
-let waitingForEnter = false;
+let waitingForEnter = true;
 let npcNormal = true;
 let npcText = document.getElementById('npcP');
 
@@ -312,10 +312,18 @@ let npc = [
         y: 15,
         src: 'images/NPCS/Debbie.png',
         party: npcParty[2].party,
-        canBattle: false,
         canTalkAgain: true,
     },
-    
+    {
+        name: "Elijah",
+        message: `Nice To Meet you! I'm Elijah, But You Can Call Me EJ! I'm What Some Would Say Your <b>Rival</b>!`,
+        x: 20,
+        y: 10,
+        src: 'images/NPCS/Rival.png',
+        party: npcParty[3].party,
+        canBattle: true,
+        canTalkAgain: true, 
+    }
     
 ];
 
@@ -519,16 +527,21 @@ function checkNPCInteraction() {
         const proximity = 1;  // Interaction range
         if (Math.abs(playerX - npc.x) <= proximity && Math.abs(playerY - npc.y) <= proximity) {
             if (!waitingForEnter) {
-                // When near the NPC and not waiting for Enter
+                // When near the NPC but not waiting for Enter
                 talkingToNPC = true;
                 currentNPC = npc;
-                currentNPCEatermon = npc.party;  // Set the current NPC's party (to use in battle)
-                NPCtext();  // Show the NPC's message
+                document.getElementById('npcTextContainer').style.display = 'none'; // Ensure it's hidden initially
+            }
 
-                // Set to wait for Enter key to proceed
-                waitingForEnter = true;
+            // Show NPC message and prompt to press Enter
+            if (talkingToNPC && !waitingForEnter) {
+                // If we are near the NPC and waiting for Enter
+                document.getElementById('npcTextContainer').style.display = 'block';  // Show the text box
+                NPCtext(); // Display NPC message
+                waitingForEnter = true;  // Now wait for Enter key
             }
         } else {
+            // If the player is not close to the NPC, hide the text box
             talkingToNPC = false;
             document.getElementById('npcTextContainer').style.display = 'none';
         }
@@ -546,24 +559,40 @@ function NPCtext() {
     let npcName = document.getElementById('npcName');
 
     if (currentNPC) {
-        if (currentNPC.canTalkAgain && waitingForEnter) {
+        if (currentNPC.canTalkAgain) {
+            
             npcName.innerHTML = `${currentNPC.name} Says: `;
             npcText.innerHTML = `${currentNPC.message}`;
-            npcTextContainer.style.display = 'block';  // Make sure text box is visible
-        } else if (!currentNPC.canTalkAgain) {
+            waitingForEnter = true;   // Set the flag to wait for Enter key
+        } else {
             npcName.innerHTML = `${currentNPC.name} Says: `;
             npcText.innerHTML = `We Already Talked!`;
             setTimeout(() => {
                 npcNormal = true; 
-            }, 1000);
-            npcTextContainer.style.display = 'block'; // Show the already talked message
-            waitingForEnter = true;   // Wait for Enter again after this message
+            }, 1000); 
+            waitingForEnter = true;   // Set the flag to wait for Enter key
+
         }
     }
+    npcTextContainer.style.display = talkingToNPC ? 'block' : 'none';
 }
 
 
+document.addEventListener('keydown', (event) => {
+    if (waitingForEnter && event.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
+        // Update the enemy index when Enter is pressed
+        currentNPCEatermon = currentNPC.party;  // Set the current NPC's party (to use in battle)
+        updateEatermonNpc();
+        // Call a function to start the battle or show other relevant details
+        npcBattle();
 
+        // Hide the NPC text container once the battle starts or interaction ends
+        document.getElementById('npcTextContainer').style.display = 'none';
+
+        // Reset the state for waiting for Enter to false
+        waitingForEnter = false;
+    }
+});
 
 // Event Listeners
 document.addEventListener('keydown', (e) => {
@@ -571,14 +600,7 @@ document.addEventListener('keydown', (e) => {
         if (e.key === 'Shift') {
             isShiftPressed = true;  // Shift is being held down
         }
-        if (waitingForEnter && e.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
-            npcBattle();  // Start the battle with the current NPC's party
-            waitingForEnter = false;  // Reset the flag after Enter key is pressed
-        } else if (e.key === 'Enter' && currentNPC.canTalkAgain === false) {
-            waitingForEnter = false;  // Reset the flag after Enter key is pressed
-
-        }
-
+    
         switch (e.key) {
             case 'ArrowUp':
             case 'w':
@@ -622,16 +644,14 @@ document.addEventListener('keydown', (e) => {
                 break;
         }
     } else {
-        if (e.key === 'Shift') {
-            isShiftPressed = true;  // Shift is being held down
-        }
-        if (waitingForEnter && e.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
-            npcBattle();  // Start the battle with the current NPC's party
-            waitingForEnter = false;  // Reset the flag after Enter key is pressed
-        } else if (e.key === 'Enter' && currentNPC.canTalkAgain === false) {
-            waitingForEnter = false;  // Reset the flag after Enter key is pressed
+        // if (waitingForEnter && e.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
+        //     updateEatermonNpc();    
+        //     npcBattle();  // Start the battle with the current NPC's party
+        //     waitingForEnter = true;  // Reset the flag after Enter key is pressed
+        // } else if (e.key === 'Enter' && currentNPC.canTalkAgain === false) {
+        //     waitingForEnter = true;  // Reset the flag after Enter key is pressed
 
-        }
+        // }
         switch (e.key) {
 
             case 'Enter':

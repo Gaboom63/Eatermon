@@ -17,7 +17,7 @@ let battleOptionsMenu = document.getElementById('battleOptionsMenu');
 
 const eatermon = [
     {
-        type: eatermonTypes[8].type,
+        type: eatermonTypes[2].type,
         id: 0,
         name: "Woodle",
         hp: 90,

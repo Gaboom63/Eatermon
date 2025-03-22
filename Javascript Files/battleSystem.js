@@ -1,6 +1,8 @@
 let forgetButton = document.getElementById('moveText');
 let finalMovesLearned = document.getElementById('finalMovesLearned'); 
 let noButton = document.getElementById('moveTextNo'); 
+let enemyMoves = eatermonMoves[enemyEatermonIndex].moves;
+
 // Restore enemy HP at the beginning of battle
 function restoreEnemyHp() {
     if (hasEncounted) {
@@ -81,6 +83,7 @@ function attackMove(eatermonIndex, moveIndex) {
                 battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
                     npcNormal = true; 
+                    isNpcEatermon = false; 
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.lostMessage}`;
@@ -117,10 +120,16 @@ function attackMove(eatermonIndex, moveIndex) {
 // Enemy attack move
 function enemyMove() {
     const enemyEatermon = eatermon[enemyEatermonIndex];
-    const enemyMoves = eatermonMoves[enemyEatermonIndex].moves;
     const selectedEnemyMove = enemyMoves[Math.floor(Math.random() * enemyMoves.length)];
     const playerEatermon = eatermon[currentEatermonIndex];
     const playerType = playerEatermon.type;
+
+    console.log(enemyEatermon);
+    console.log(enemyMoves);
+    console.log(selectedEnemyMove);
+    console.log(playerEatermon);
+    console.log(playerType);
+
 
     if (playerEatermon.hp <= 0) {
         // If player is already defeated, stop enemy from attacking
@@ -164,6 +173,7 @@ function enemyMove() {
                 battleText.innerHTML = `You Lost Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
                     npcNormal = true; 
+                    isNpcEatermon = false; 
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.wonMessage}`;
