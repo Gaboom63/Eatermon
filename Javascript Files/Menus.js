@@ -32,7 +32,31 @@ function generateAttackButtons(disableButtons = false) {
             <br>
             <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
         `;
-    } else {
+    } else if(moves && moves.length >= 3) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+        <br><br>
+        <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }else if(moves && moves.length >= 2) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+        <br><br>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }else if(moves && moves.length >= 1) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <br><br>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }  else {
         attackButtonsHtml = `
             <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
             <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>

@@ -202,6 +202,7 @@ canvas.addEventListener('click', (e) => {
     }
 });
 
+
 function highlightTile(x, y) {
     drawMap();
     selectedTiles.forEach(tile => {
@@ -221,3 +222,24 @@ function highlightTile(x, y) {
     drawPlayer();
     drawCoordinates();
 }
+
+function highlightSelectedTiles() {
+    drawMap();
+    selectedTiles.forEach(tile => {
+        ctx.strokeStyle = 'yellow';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+        ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+        ctx.fillRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+
+    ctx.strokeStyle = 'orange';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    ctx.fillStyle = 'rgba(255, 165, 0, 0.3)';
+    ctx.fillRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+
+    drawPlayer();
+    drawCoordinates();
+}
+   

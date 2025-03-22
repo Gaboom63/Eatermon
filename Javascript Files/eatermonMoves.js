@@ -5,15 +5,15 @@ let eatermonMoves = [
             { name: "Leaf Slash", power: 20, type: eatermonTypes[2].type },
             { name: "Vine Whip", power: 25, type: eatermonTypes[2].type },
             { name: "Quick Attack", power: 15, type: eatermonTypes[4].type },
-            { name: "Growth", power: 0, type: eatermonTypes[2].type }
+            { name: "Growth", power: 0, heal: 10, type: eatermonTypes[2].type }
         ]
     },
     {
         eatermon: eatermon[1], // Tomadoodle
         moves: [
             { name: "Fireball", power: 30, type: eatermonTypes[0].type },
-            { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
-            { name: "Scratch", power: 10, type: eatermonTypes[4].type },
+            // { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
+            // { name: "Scratch", power: 10, type: eatermonTypes[4].type },
             { name: "Debug Ember", power: 2500, type: eatermonTypes[4].type }
         ]
     },

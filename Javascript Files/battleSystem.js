@@ -50,7 +50,8 @@ function attackMove(eatermonIndex, moveIndex) {
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
 
     let modifiedPower = selectedMove.power;  // Now we're using the power from the move object
-
+    let moveHeal = selectedMove.heal; 
+    let playerEatermon = eatermon[currentEatermonIndex];
     // Handle effectiveness
     if (typeEffectiveness === 'strong') {
         modifiedPower *= 2;
@@ -63,6 +64,13 @@ function attackMove(eatermonIndex, moveIndex) {
     // If it's a Fire-type move and the enemy has an ability that negates it, set power to 0
     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
         modifiedPower = 0; // No damage dealt
+    }
+
+    if(moveHeal > 0) {
+        playerEatermon.hp += moveHeal; 
+        playerEatermon.hp = Math.max(100, playerEatermon.hp);  // Ensure HP doesn't go below 0
+        playerEatermon.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
+
     }
 
     // Apply damage to the enemy
@@ -137,7 +145,14 @@ function enemyMove() {
     }
 
     let modifiedPower = selectedEnemyMove.power;
+    let moveHeal = selectedEnemyMove.heal; 
 
+    if(moveHeal > 0) {
+        enemyEatermon.hp += moveHeal; 
+        enemyEatermon.hp = Math.max(enemyEatermon.maxHp, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+        enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+
+    }
     // Check if the enemy's move is strong or weak against the player's type
     const moveType = selectedEnemyMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, playerType);
@@ -311,44 +326,49 @@ function handleLearnNewMove(eatermonIndex) {
         return;
     }
 
-    // If newMove is valid (has a name), proceed with the move learning process
-    if (typeof newMove === 'object' && newMove !== null && newMove.name) {
-        console.log("New move details:", newMove);
-        something = true; 
-        finalMovesLearned.innerHTML = ``;  // Clear any previous messages
+    // Check if the eatermon already knows 4 moves
+    if (eatermonMoves[eatermonIndex].moves.length < 4) {
+        // If not, just teach the move
+        console.log(`${eatermon[eatermonIndex].name} will learn ${newMove.name}`);
+        eatermonMoves[eatermonIndex].moves.push(newMove);  // Add the new move to the moves list
 
-        // Display the move the eatermon will learn
-        const moveHolder = document.getElementById('moveLearnText');
-        moveHolder.innerHTML = `${newMove.name}.`;  // Display the move name
+        finalMovesLearned.innerHTML = `${eatermon[eatermonIndex].name} learned ${newMove.name}!`;
 
-        forgetButton.style.display = 'block';  // Make the "Forget Move?" button visible
-        noButton.style.display = 'block'; 
-        moveTextNoButton.removeAttribute('disabled');
-        moveTextButton.removeAttribute('disabled');
+        // Refresh the attack buttons
+        generateAttackButtons();
+        generateAttackButtons(true);
 
-        forgetButton.onclick = function() {
-            const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove.name);
-            if (moveToReplaceIndex !== null) {
-                const oldMove = eatermonMoves[eatermonIndex].moves[moveToReplaceIndex];
-                eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
-                finalMovesLearned.innerHTML = `${eatermon[eatermonIndex].name} learned ${newMove.name} and replaced ${oldMove.name}!`;
-
-                // Refresh the attack buttons (this might depend on your specific implementation)
-                generateAttackButtons();
-                generateAttackButtons(true);
-
-                // Reset back to normal view after a short delay
+        // Reset back to normal view after a short delay
+        setTimeout(() => {
+            if(firstEvolving) {
                 setTimeout(() => {
-                    returnToNormal(); 
-                    generateAttackButtons();
-                    something = false; 
-                }, 2000);
+                    generateAttackButtons(); 
+                }, 5000); 
+            } else {
+                returnToNormal(); 
             }
-        };
+        }, 2000);
     } else {
-        console.error("New move is undefined or missing a name:", newMove);
+        // If eatermon already knows 4 moves, prompt for move replacement
+        console.log("Eatermon knows 4 moves, asking for replacement.");
+        const moveToReplaceIndex = promptForMoveReplacement(eatermonIndex, newMove.name);
+        if (moveToReplaceIndex !== null) {
+            const oldMove = eatermonMoves[eatermonIndex].moves[moveToReplaceIndex];
+            eatermonMoves[eatermonIndex].moves[moveToReplaceIndex] = newMove;
+            finalMovesLearned.innerHTML = `${eatermon[eatermonIndex].name} learned ${newMove.name} and replaced ${oldMove.name}!`;
+
+            // Refresh the attack buttons (this might depend on your specific implementation)
+            generateAttackButtons();
+            generateAttackButtons(true);
+
+            // Reset back to normal view after a short delay
+            setTimeout(() => {
+                returnToNormal(); 
+            }, 2000);
+        }
     }
 }
+
 
 
 

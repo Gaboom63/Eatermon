@@ -166,3 +166,17 @@ function triggerBlinkingAnimation() {
 }
 
 // triggerBlinkingAnimation();
+
+function fadeIn() {
+    const element = document.getElementById('fadeElement');
+    element.classList.remove('hidden');
+    element.classList.add('visible');
+}
+
+// Function to trigger fade-out
+function fadeOut() {
+    const element = document.getElementById('fadeElement');
+    element.classList.remove('visible');
+    element.classList.add('hidden');
+}
+
