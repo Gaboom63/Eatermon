@@ -42,12 +42,13 @@ const encounter = () => {
 
             // Trigger the coin flip animation and set up the emblem
             loadingImagess(); // Load the emblems before starting the animation
-            startBattleAnimation(); // Trigger the battle animation
 
             battleMenuScript.style.display = 'block'; // Show battle menu
+            startBattleAnimation(); // Trigger the battle animation
         }
     }
 };
+
 
 
 

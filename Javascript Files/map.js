@@ -18,6 +18,10 @@ let talkingToNPC = false;
 let playerX = 7;
 let playerY = 2;
 let currentNPC = 0;
+let currentNPCEatermon;
+let waitingForEnter = false;
+let npcNormal = true;
+let npcText = document.getElementById('npcP');
 
 const mainPlayer = document.getElementById("player");
 const img = new Image();
@@ -269,8 +273,8 @@ const treasures = [
     {
         treauseType: "Chest",
         x: 9,
-        y: 10, 
-        opened: false 
+        y: 10,
+        opened: false
     }
 ]
 
@@ -281,28 +285,38 @@ const lakes = [
 let npc = [
     {
         name: "George",
-        message: "Hello!",
+        message: "Yo! Lets Battle!",
+        wonMessage: "Hahahaha You Lose!",
+        lostMessage: "WHAT How did you beat my eatermon!! Anyway... Good Job!",
         x: 10,
         y: 10,
         src: 'images/NPCS/George.png',
-        canTalkAgain: false
+        party: npcParty[0].party,
+        canBattle: true,
+        canTalkAgain: true
     },
     {
-        name: "Blodoof",
-        message: "Bloted? Me too...",
+        name: "Jake",
+        message: "BATTLE! ME WANT BATTLE...",
         x: 15,
         y: 15,
         src: 'images/NPCS/Jake.png',
-        canTalkAgain: false
+        party: npcParty[1].party,
+        canBattle: true,
+        canTalkAgain: true
     },
     {
-        name: "Debbie", 
+        name: "Debbie",
         message: "I'm You're Mom!",
         x: 10,
-        y: 15, 
+        y: 15,
         src: 'images/NPCS/Debbie.png',
-        canTalkAgain: false, 
-    }
+        party: npcParty[2].party,
+        canBattle: false,
+        canTalkAgain: true,
+    },
+    
+    
 ];
 
 let selectedTiles = []; // For selected tiles
@@ -441,7 +455,7 @@ function drawNPC() {
 }
 
 function drawTreasure() {
-  
+
 }
 
 // Preload NPC images
@@ -500,76 +514,139 @@ function isNPC(x, y) {
 function isWall(x, y) {
     return walls.some(wall => wall.x === x && wall.y === y);
 }
-
 function checkNPCInteraction() {
     npc.forEach(npc => {
-        if (playerX === npc.x && playerY === npc.y && npc.canTalkAgain) {
-            talkingToNPC = true;
-            currentNPC = npc;
-            NPCtext();
-        } else if (playerX !== npc.x || playerY !== npc.y) {
+        const proximity = 1;  // Interaction range
+        if (Math.abs(playerX - npc.x) <= proximity && Math.abs(playerY - npc.y) <= proximity) {
+            if (!waitingForEnter) {
+                // When near the NPC and not waiting for Enter
+                talkingToNPC = true;
+                currentNPC = npc;
+                currentNPCEatermon = npc.party;  // Set the current NPC's party (to use in battle)
+                NPCtext();  // Show the NPC's message
+
+                // Set to wait for Enter key to proceed
+                waitingForEnter = true;
+            }
+        } else {
             talkingToNPC = false;
             document.getElementById('npcTextContainer').style.display = 'none';
         }
     });
 }
 
+
+
+
+
+
 // NPC Interaction
 function NPCtext() {
-    let npcText = document.getElementById('npcP');
     let npcTextContainer = document.getElementById('npcTextContainer');
     let npcName = document.getElementById('npcName');
 
     if (currentNPC) {
-        console.log('Showing NPC dialogue:', currentNPC.message);
-        npcName.innerHTML = `${currentNPC.name} Says: `;
-        npcText.innerHTML = `${currentNPC.message}`;
+        if (currentNPC.canTalkAgain && waitingForEnter) {
+            npcName.innerHTML = `${currentNPC.name} Says: `;
+            npcText.innerHTML = `${currentNPC.message}`;
+            npcTextContainer.style.display = 'block';  // Make sure text box is visible
+        } else if (!currentNPC.canTalkAgain) {
+            npcName.innerHTML = `${currentNPC.name} Says: `;
+            npcText.innerHTML = `We Already Talked!`;
+            setTimeout(() => {
+                npcNormal = true; 
+            }, 1000);
+            npcTextContainer.style.display = 'block'; // Show the already talked message
+            waitingForEnter = true;   // Wait for Enter again after this message
+        }
     }
-
-    npcTextContainer.style.display = talkingToNPC ? 'block' : 'none';
 }
+
+
+
 
 // Event Listeners
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Shift') {
-        isShiftPressed = true;  // Shift is being held down
-    }
-    switch (e.key) {
-        case 'ArrowUp':
-        case 'w':
-            currentFrameY = 2;
-            movePlayer(0, -1);
-            break;
-        case 'ArrowDown':
-        case 's':
-            currentFrameY = 0;
-            movePlayer(0, 1);
-            break;
-        case 'ArrowLeft':
-        case 'a':
-            currentFrameY = 3;
-            movePlayer(-1, 0);
-            break;
-        case 'ArrowRight':
-        case 'd':
-            currentFrameY = 1;
-            movePlayer(1, 0);
-            break;
-        case 'Enter':
-            interactWithNPC();
-            break;
-        case '[': // Toggle tile selection (true/false)
-            tileSelectionEnabled = !tileSelectionEnabled;
-            console.log(`Tile selection ${tileSelectionEnabled ? 'enabled' : 'disabled'}`);
-            break;
-        case ']': // Save the selected tiles to a file
-            if (showGrid) {
-                downloadSelectedTiles();
-            }
-            break;
-        case 'Escape':
-            openEscapeMenu();
-            break;
+    if (npcNormal) {
+        if (e.key === 'Shift') {
+            isShiftPressed = true;  // Shift is being held down
+        }
+        if (waitingForEnter && e.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
+            npcBattle();  // Start the battle with the current NPC's party
+            waitingForEnter = false;  // Reset the flag after Enter key is pressed
+        } else if (e.key === 'Enter' && currentNPC.canTalkAgain === false) {
+            waitingForEnter = false;  // Reset the flag after Enter key is pressed
+
+        }
+
+        switch (e.key) {
+            case 'ArrowUp':
+            case 'w':
+                currentFrameY = 2;
+                movePlayer(0, -1);
+                break;
+            case 'ArrowDown':
+            case 's':
+                currentFrameY = 0;
+                movePlayer(0, 1);
+                break;
+            case 'ArrowLeft':
+            case 'a':
+                currentFrameY = 3;
+                movePlayer(-1, 0);
+                break;
+            case 'ArrowRight':
+            case 'd':
+                currentFrameY = 1;
+                movePlayer(1, 0);
+                break;
+            case 'Enter':
+                interactWithNPC();
+                if(currentNPC.canBattle === false) {
+                    setTimeout(() => {
+                        npcNormal = true; 
+                    }, 1000); 
+                 }
+                break;
+            case '[': // Toggle tile selection (true/false)
+                tileSelectionEnabled = !tileSelectionEnabled;
+                console.log(`Tile selection ${tileSelectionEnabled ? 'enabled' : 'disabled'}`);
+                break;
+            case ']': // Save the selected tiles to a file
+                if (showGrid) {
+                    downloadSelectedTiles();
+                }
+                break;
+            case 'Escape':
+                openEscapeMenu();
+                break;
+        }
+    } else {
+        if (e.key === 'Shift') {
+            isShiftPressed = true;  // Shift is being held down
+        }
+        if (waitingForEnter && e.key === 'Enter' && currentNPC.canTalkAgain === true && currentNPC.canBattle === true) {
+            npcBattle();  // Start the battle with the current NPC's party
+            waitingForEnter = false;  // Reset the flag after Enter key is pressed
+        } else if (e.key === 'Enter' && currentNPC.canTalkAgain === false) {
+            waitingForEnter = false;  // Reset the flag after Enter key is pressed
+
+        }
+        switch (e.key) {
+
+            case 'Enter':
+                interactWithNPC();
+                if(currentNPC.canBattle === false) {
+                   setTimeout(() => {
+                    npcNormal = true; 
+                   }, 1000)
+                }
+                break;
+
+            case 'Escape':
+                openEscapeMenu();
+                break;
+        }
     }
 });
 
@@ -631,6 +708,7 @@ function interactWithNPC() {
         talkingToNPC = true;
         currentNPC = npcAtPlayerPosition;
         NPCtext();
+        npcNormal = false;
     } else {
         console.log('No NPC found at player position');
     }

@@ -7,6 +7,11 @@ function restoreEnemyHp() {
         eatermon[enemyEatermonIndex].hp = eatermon[enemyEatermonIndex].maxHp;
         enemyHpInner.style.display = 'block';
         enemyHpInner.style.width = `${eatermon[enemyEatermonIndex].maxHp}%`;
+    } else if(talkingToNPC === true) {
+        eatermon[enemyEatermonIndex].hp = eatermon[enemyEatermonIndex].maxHp;
+        enemyHpInner.style.display = 'block';
+        enemyHpInner.style.width = `${eatermon[enemyEatermonIndex].maxHp}%`;
+
     }
 }
 
@@ -72,6 +77,15 @@ function attackMove(eatermonIndex, moveIndex) {
         enemyHpInner.style.width = `0%`;
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
+            if(talkingToNPC) {
+                battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
+                setTimeout(() => {
+                    npcNormal = true; 
+                    currentNPC.canTalkAgain = false; 
+                    currentNPC.canBattle = false; 
+                    npcText.innerHTML = `${currentNPC.lostMessage}`;
+                }, 1000); 
+            }
             enemyHpInner.style.display = `none`;
             // Add XP to the current eatermon instead of resetting it
             const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
@@ -99,10 +113,6 @@ function attackMove(eatermonIndex, moveIndex) {
 
     updateHp();  // Update the UI after the attack
 }
-
-
-
-
 
 // Enemy attack move
 function enemyMove() {
@@ -150,10 +160,21 @@ function enemyMove() {
             
         }, 1000);
         setTimeout(() => {
-            inBattle = false; // End the battle if the player is dead
-            battleMenuScript.style.display = 'none'; // End the battle
-            alert("You Died (Debug So Reloading)");
-            location.reload(); 
+            if(talkingToNPC) {
+                battleText.innerHTML = `You Lost Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
+                setTimeout(() => {
+                    npcNormal = true; 
+                    currentNPC.canTalkAgain = false; 
+                    currentNPC.canBattle = false; 
+                    npcText.innerHTML = `${currentNPC.wonMessage}`;
+                }, 1000); 
+            } else {
+                inBattle = false; // End
+                //  the battle if the player is dead
+                battleMenuScript.style.display = 'none'; // End the battle
+                alert("You Died (Debug So Reloading)");
+                location.reload(); 
+            }
         }, 3000);
     }
 

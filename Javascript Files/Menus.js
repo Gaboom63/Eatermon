@@ -66,10 +66,14 @@ function Bag() {
 }
 
 function Run() {
-    battleMenuScript.style.display = 'none';
-    setTimeout(() => {
-        inBattle = false;
-    }, 3000);
+    if(npcNormal) {
+        battleMenuScript.style.display = 'none';
+        setTimeout(() => {
+            inBattle = false;
+        }, 3000);
+    } else if(!npcNormal) {
+        
+    }
 }
 
 function loadPlates() {
@@ -95,14 +99,17 @@ function catchThatMon() {
 
     let catchChance = Math.random();
 
-    if (catchChance > 0.5) {
+    if (catchChance > 0.5 && !isNpcEatermon) {
         caught = true;
         playerParty.push(eatermon[enemyEatermonIndex]);  // Add the caught Eatermon to the party
         battleText.innerHTML = `${eatermon[enemyEatermonIndex].name} has been added to your party!`;
 
         console.log("Player's Party after catching:", playerParty);  // Verify the catch
 
-    } else {
+    } else if(isNpcEatermon === true) {
+        caught = false;
+        battleText.innerHTML = "You Can't Catch Another Persons Eatermon!";
+    }   else {
         caught = false;
         battleText.innerHTML = "The capture attempt failed.";
     }
@@ -270,4 +277,10 @@ function closeEscapeMenu() {
     const escapeMenu = document.getElementById('escapeMenu');
     escapeMenu.classList.remove('active');
     document.body.style.overflow = 'hidden';
+}
+
+
+
+function battleNPC() {
+    
 }

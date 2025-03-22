@@ -45,7 +45,7 @@ function checkNPCInteraction() {
 }
 
     
-    if(catching) {
+    if(catching && !isNpcEatermon) {
         enemyImg.src = plates[0].src; // Make sure this is inside the condition where the image should update
     } else {
         loadingImages();
