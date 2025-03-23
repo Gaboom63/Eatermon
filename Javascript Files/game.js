@@ -10,7 +10,11 @@ function gameLoop() {
     // Draw the map and the player
     drawMap();
 
-
+    if(showGrid) {
+        drawCoordinates();
+        highlightSelectedTiles();  // Make sure this happens after drawing the map
+    }
+    
     if(firstEvolving && runAnimation === false) {
         eatermon[currentEatermonIndex].src = eatermonEvolutions[currentEatermonIndex].src
         eatermon[currentEatermonIndex].name = eatermonEvolutions[currentEatermonIndex].name    

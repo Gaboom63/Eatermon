@@ -25,10 +25,7 @@ let tileSelectionEnabled = false;
 let isShiftPressed = false;  // Track if the Shift key is pressed
 let firstTile = null;  // Store the first tile clicked when Shift is pressed
 
-let mapDoor = [
-    { x: 7, y: 8, doorDestination: 1 },
-    { x: 7, y: 12, doorDestination: 0 }
-];
+
 
 let currentMap = maps[1];
 let tileMap = maps[1].id;
@@ -44,13 +41,25 @@ lowerImg.src = currentMap.lowerSRC;
 mainplayerImg.src = 'images/player.png';
 
 function drawDoors() {
-    ctx.fillStyle = 'yellow';
+    // Loop through all doors in currentMap
     currentMap.doors.forEach(door => {
         const doorX = door.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const doorY = door.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+
+        // Check if the door is part of a specific group and set its color
+        let doorColor = 'yellow';  // Default color
+        if (door.doorDestinationGroup1) {
+            doorColor = 'blue';  // Color for Group 1 doors
+        } else if (door.doorDestinationGroup2) {
+            doorColor = 'green';  // Color for Group 2 doors
+        }
+        
+        // Set the fill color based on the group
+        ctx.fillStyle = doorColor;
         ctx.fillRect(doorX, doorY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
     });
 }
+
 
 function isDoor(x, y) {
     return currentMap.doors.some(door => door.x === x && door.y === y);
@@ -115,7 +124,7 @@ function drawPlayer() {
 
 function drawMap() {
     // Clear the canvas to avoid remnants of previous frames
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw the upper image (background)
     ctx.drawImage(
@@ -152,7 +161,6 @@ function drawMap() {
         drawLake();
     }
 }
-
 function drawWalls() {
     ctx.fillStyle = 'red';
     currentMap.walls.forEach(wall => {
@@ -181,8 +189,8 @@ function drawGrid() {
 }
 
 function drawNPC() {
-    npc.forEach(npc => {
-        const npcImage = npcImages[npc.name]; // Use the preloaded image
+    currentMap.npcs.forEach(npc => {  // 'npc' instead of 'npcs'
+        const npcImage = npcImages[npc.name]; // Access image using npc.name
 
         if (npcImage) {
             // Scale the NPC image to fit within one tile
@@ -201,15 +209,16 @@ function drawNPC() {
 // Preload NPC images
 const npcImages = {};
 
-npc.forEach(npc => {
+currentMap.npcs.forEach(npc => {  // Corrected the variable name from 'npcs' to 'npc'
     const img = new Image();
-    img.src = npc.src;
+    img.src = npc.src;  // Correctly reference the 'src' property of the individual NPC
     npcImages[npc.name] = img;
 });
 
+
 // Function to check if the position is occupied by an NPC
 function isNPC(x, y) {
-    return npc.some(n => n.x === x && n.y === y);
+    return currentMap.npcs.some(npcs => npcs.x === x && npcs.y === y);
 }
 
 function isWall(x, y) {
@@ -251,7 +260,7 @@ function NPCtext() {
 
 // NPC Interaction
 function interactWithNPC() {
-    const npcAtPlayerPosition = npc.find(n => Math.abs(n.x - playerX) <= 1 && Math.abs(n.y - playerY) <= 1);
+    const npcAtPlayerPosition = currentMap.npcs.find(n => Math.abs(n.x - playerX) <= 1 && Math.abs(n.y - playerY) <= 1);
     if (npcAtPlayerPosition) {
         console.log('Interacting with NPC:', npcAtPlayerPosition.name);
         talkingToNPC = true;

@@ -157,6 +157,7 @@ canvas.addEventListener('click', (e) => {
     const tileX = Math.floor((mouseX + cameraX) / (TILE_SIZE * ZOOM_FACTOR));
     const tileY = Math.floor((mouseY + cameraY) / (TILE_SIZE * ZOOM_FACTOR));
 
+    // Handle tile selection and highlight tiles
     handleTileSelection(tileX, tileY);
 });
 
@@ -168,6 +169,7 @@ function handleTileSelection(tileX, tileY) {
         const startY = Math.min(firstTile.y, tileY);
         const endY = Math.max(firstTile.y, tileY);
 
+        // Add all tiles in the selected range to the selectedTiles array
         for (let x = startX; x <= endX; x++) {
             for (let y = startY; y <= endY; y++) {
                 if (!selectedTiles.some(tile => tile.x === x && tile.y === y)) {
@@ -176,35 +178,44 @@ function handleTileSelection(tileX, tileY) {
             }
         }
     } else {
+        // Add single tile to selectedTiles array
         if (!selectedTiles.some(tile => tile.x === tileX && tile.y === tileY)) {
             selectedTiles.push({ x: tileX, y: tileY });
         }
 
+        // Store the first tile if Shift is pressed
         if (isShiftPressed && !firstTile) {
             firstTile = { x: tileX, y: tileY };
         }
     }
 
+    // Call highlight function to show selected tiles
     highlightSelectedTiles();
 }
 
+
 // Highlight the selected tile and all selected tiles
-function highlightTile(x, y) {
-    drawMap();
+// Highlight the selected tiles
+function highlightSelectedTiles() {
+    // Redraw selected tiles on top of the map elements
     selectedTiles.forEach(tile => {
-        ctx.strokeStyle = 'yellow';
+        // Highlight each selected tile in yellow
+        ctx.strokeStyle = 'yellow'; // Tile border color
         ctx.lineWidth = 2;
-        ctx.strokeRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
-        ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
-        ctx.fillRect(tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX, tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+        ctx.strokeRect(
+            tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX,
+            tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY,
+            TILE_SIZE * ZOOM_FACTOR,
+            TILE_SIZE * ZOOM_FACTOR
+        );
+        ctx.fillStyle = 'rgba(255, 255, 0, 0.3)'; // Tile fill color
+        ctx.fillRect(
+            tile.x * TILE_SIZE * ZOOM_FACTOR - cameraX,
+            tile.y * TILE_SIZE * ZOOM_FACTOR - cameraY,
+            TILE_SIZE * ZOOM_FACTOR,
+            TILE_SIZE * ZOOM_FACTOR
+        );
     });
-
-    ctx.strokeStyle = 'orange';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
-    ctx.fillStyle = 'rgba(255, 165, 0, 0.3)';
-    ctx.fillRect(x * TILE_SIZE * ZOOM_FACTOR - cameraX, y * TILE_SIZE * ZOOM_FACTOR - cameraY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
-
-    drawPlayer();
-    drawCoordinates();
 }
+
+

@@ -113,29 +113,31 @@ canvas {
     height: 100%;
 }
 
-  /* Fade element styles */
-  .fade {
+/* Fade element styles */
+.fade {
     width: 0px;
     height: 0px;
     background-color: white;
     opacity: 0;
-    transition: opacity 2s ease-in-out;
+    transition: opacity 2s ease-in-out, width 2s ease-in-out, height 2s ease-in-out; /* Added width and height transitions */
     z-index: 100; /* Make sure the fade element appears above other elements */
     position: absolute; /* Ensure it can move above the canvas */
     top: 50%; /* You can adjust this for positioning */
     left: 50%;
     transform: translate(-50%, -50%);
-    display: none; 
+    display: block;  /* Make it visible even when width and height are 0 */
 }
 
 /* Visible class - Fade-in effect */
 .fade.visible {
     opacity: 1;
-    /* display: block;  */
+    width: 100%;
+    height: 100%; /* Make the element take up the full size */
 }
 
 /* Hidden class - Fade-out effect */
 .fade.hidden {
     opacity: 0;
-    /* display: none;  */
+    width: 0px;
+    height: 0px; /* Reduce width and height to 0 when hidden */
 }
