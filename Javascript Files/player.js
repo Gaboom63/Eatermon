@@ -28,30 +28,69 @@ function movePlayer(dx, dy) {
 
     // Check if the player stepped on a door and handle map change
     if (isDoor(newX, newY)) {
-        npcNormal = false; 
-        fadeIn(); 
+        npcNormal = false;  // Set npcNormal to false to indicate the transition process.
+        fadeIn();  // Fade in transition.
+        console.log("Door detected, starting transition...");
+    
         setTimeout(() => {
-            let changeMap = currentMap.id;
-            // Assuming mapDoor contains the destination map
-            currentMap = maps[mapDoor[changeMap].doorDestination];    
-            fadeOut(); 
-            upperImg.src = currentMap.upperSRC;
-            lowerImg.src = currentMap.lowerSRC;    
-            ZOOM_FACTOR = currentMap.zoom;
-            npcNormal = true; 
-        }, 3000)
-        // Reload images for the new map
-    setTimeout(() => {
-        playerX = mapDoor[currentMap.id].x;
-        playerY = mapDoor[currentMap.id].y; 
-    }, 2000); 
-        // Clear the canvas and draw the new map
+            // Find the door that the player is interacting with.
+            let door = currentMap.doors.find(d => d.x === newX && d.y === newY);
+            
+            if (door) {
+                console.log("Found door:", door);
+    
+                // Now we will loop through the destinations in this door.
+                // Each destination has its own mapId and coordinates.
+                let destination = door.destinations.find(dest => dest.mapId !== currentMap.id); // We want to find a destination with a different mapId (not the current one).
+    
+                if (destination) {
+                    console.log("Found destination with mapId:", destination.mapId, "Coordinates:", destination.x, destination.y);
+    
+                    // Update currentMap based on the destination's mapId.
+                    currentMap = maps[destination.mapId];  // Update to the new map based on the destination.
+                    console.log("Updated currentMap to mapId:", currentMap.id);
+    
+                    // Reload map images for the new map.
+                    fadeOut();
+                    upperImg.src = currentMap.upperSRC;
+                    lowerImg.src = currentMap.lowerSRC;
+                    ZOOM_FACTOR = currentMap.zoom;
+    
+                    npcNormal = true;  // Set npcNormal back to true after transition.
+                } else {
+                    console.error("No valid destination found in the door's destinations.");
+                }
+            } else {
+                console.error("No matching door found at coordinates:", newX, newY);
+            }
+        }, 3000);  // 3-second fade-in transition delay.
+    
+        // Reload images and move player to the correct position.
+        setTimeout(() => {
+            console.log("Reloading map images for new map.");
+            let door = currentMap.doors.find(d => d.x === newX && d.y === newY);
+            if (door) {
+                let destination = door.destinations.find(dest => dest.mapId !== currentMap.id); // Match the destination with a different mapId
+                if (destination) {
+                    // Move player to the new map's destination coordinates
+                    playerX = destination.x;
+                    playerY = destination.y;
+                    movePlayer(0, 0);  // Move player to the new map position.
+                }
+            } else {
+                console.error("No matching door found for the current map:", currentMap.id);
+            }
+        }, 2000);  // Delay to allow the transition to complete before moving the player.
+    
+        // Clear the canvas and redraw the map
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         upperImg.onload = lowerImg.onload = () => {
-            drawMap();
-
+            drawMap();  // Redraw the map after transition.
+            console.log("Map redrawn after transition.");
         };
     }
+    
+    
 }
 
 // Update Player Position Style

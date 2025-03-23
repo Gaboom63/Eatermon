@@ -124,10 +124,30 @@ let maps = [
             { treasureType: "Chest", x: 9, y: 10, opened: false }
         ],
         doors: [
-            { x: 7, y: 14 },
-            { x: 7, y: 15 },
-            { x: 8, y: 14 },
-            { x: 8, y: 15 },
+            { x: 7, 
+              y: 14 ,
+              destinations: [
+                { mapId: 2, x: 7, y: 12 },
+              ]
+            },
+            { x: 7, 
+                y: 15,
+                destinations: [
+                  { mapId: 2, x: 7, y: 12 },
+                ]
+              },
+              { x: 8, 
+                y: 14 ,
+                destinations: [
+                  { mapId: 2, x: 7, y: 12 },
+                ]
+              },
+              { x: 8, 
+                y: 15 ,
+                destinations: [
+                  { mapId: 2, x: 7, y: 12 },
+                ]
+              },
         ],
         lakes: [
 
@@ -384,10 +404,38 @@ let maps = [
             { treasureType: "Chest", x: 9, y: 10, opened: false }
         ],
         doors: [
-            { x: 3, y: 26 },
-            { x: 3, y: 27 },
-            { x: 4, y: 27 },
-            { x: 4, y: 26 },
+            {
+                x: 3, 
+                y: 27,
+                destinations: [
+                    { mapId: 2, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 4, 
+                y: 26,
+                destinations: [
+                    { mapId: 2, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 4, 
+                y: 27,
+                destinations: [
+                    { mapId: 2, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 3, 
+                y: 26,
+                destinations: [
+                    { mapId: 0, x: 7, y: 12 },
+
+                ]
+            },
         ],
         lakes: [
 
@@ -654,18 +702,26 @@ let maps = [
 
         ],
         doors: [
-            { x: 18, y: 1 },
-            { x: 18, y: 2 },
-            { x: 18, y: 3 },
-            { x: 19, y: 1 },
-            { x: 19, y: 2 },
-            { x: 19, y: 3 },
-            { x: 20, y: 1 },
-            { x: 20, y: 2 },
-            { x: 20, y: 3 },
-            { x: 21, y: 1 },
-            { x: 21, y: 2 },
-            { x: 21, y: 3 },
+            // {
+            //     x: 20, 
+            //     y: 3,
+            //     destinations: [
+            //         { mapId: 0, x: 7, y: 12 },
+
+            //     ]
+            // },
+            // { x: 18, y: 1 },
+            // { x: 18, y: 2 },
+            // { x: 18, y: 3 },
+            // { x: 19, y: 1 },
+            // { x: 19, y: 2 },
+            // { x: 19, y: 3 },
+            // { x: 20, y: 1 },
+            // { x: 20, y: 2 },
+            // { x: 20, y: 3 },
+            // { x: 21, y: 1 },
+            // { x: 21, y: 2 },
+            // { x: 21, y: 3 },
         ],
         lakes: [
 
@@ -685,23 +741,11 @@ let maps = [
 
     }
 ]
-let mapDoor = [
-    {
-        x: 19,
-        y: 5,
-        doorDestination: 2
-    },
-    {
-        x: 7,
-        y: 12,
-        doorDestination: 2
-    },
-    {
-        x: 7,
-        y: 12,
-        doorDestination: 0
-    }
-];
+
+function checkForWhichWall() {
+    
+}
+
 /*
 {
         id: 2, //Number, 

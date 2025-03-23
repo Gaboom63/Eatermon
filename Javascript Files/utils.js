@@ -46,9 +46,9 @@ document.addEventListener('keydown', (event) => {
         waitingForEnter = false;
         npcNormal = true;
     } else if (waitingForEnter && event.key === 'Enter' && !currentNPC.canBattle) { // Hide after last message after battle.
-      hideNpcText();
-      waitingForEnter = false;
-      npcNormal = true;
+        hideNpcText();
+        waitingForEnter = false;
+        npcNormal = true;
     }
 
     if (npcNormal && !inBattle) { // Only handle player movement if not in battle
@@ -91,7 +91,7 @@ function handlePlayerMovement(e) {
         case 'Enter':
             interactWithNPC();
             if (!currentNPC.canBattle) {
-                setTimeout(() => { npcNormal = true; hideNpcText()}, 1000);
+                setTimeout(() => { npcNormal = true; hideNpcText() }, 1000);
             }
             break;
         case '[':
@@ -117,7 +117,7 @@ function handleNPCInteraction(e) {
             interactWithNPC();
             if (!currentNPC.canBattle) {
                 setTimeout(() => { npcNormal = true; hideNpcText(); }, 1000);
-                
+
             }
             break;
         case 'Escape':
@@ -219,3 +219,31 @@ function highlightSelectedTiles() {
 }
 
 
+function cutScene() {
+    movePlayer(0, 1);
+    setTimeout(() => {
+        movePlayer(0, 1);
+        setTimeout(() => {
+            movePlayer(0, 1);
+            setTimeout(() => {
+                movePlayer(0, 1);
+                setTimeout(() => {
+                    movePlayer(0, 1);
+                    setTimeout(() => {
+                        movePlayer(0, 1);
+                        setTimeout(() => {
+                            movePlayer(0, 1);
+                            setTimeout(() => {
+                                movePlayer(0, 1);
+                                setTimeout(() => {
+                                    movePlayer(0, 1);
+
+                                }, 500)
+                            }, 500)
+                        }, 500)
+                    }, 500)
+                }, 500)
+            }, 500)
+        }, 500)
+    }, 500);
+}
