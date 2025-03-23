@@ -1,25 +1,29 @@
 #npcTextContainer {
-    width: 50%; /* Adjust width to make it smaller */
-    height: auto; /* Set to auto to allow flexible height based on content */
-    max-height: 300px; /* Limit the height to keep it neat */
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6)); /* Smooth gradient background */
-    padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A modern, clean font */
-    color: rgb(255, 0, 0); /* Text color */
-    z-index: 10;
-    position: absolute;
-    bottom: 20px; /* Adjust the distance from the bottom */
-    left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: all 0.3s ease; /* Smooth transition for hover or display changes */
-    display: none;
-    overflow: hidden; /* Hide overflow if content exceeds height */
+  width: 50%;
+  height: auto;
+  max-height: 300px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(255, 0, 0);
+  z-index: 10000;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: none; /* Ensure it is initially hidden */
+  overflow: hidden;
 }
 
-#npcTextContainer.show { /* Add a class to control when to show */
-    display: block;
+#npcTextContainer.show {
+  display: block; /* Ensure this makes the container visible */
+}
+
+#npcTextContainer.hide {
+  display: none; /* Make sure this hides it */
 }
 
 #npcP {

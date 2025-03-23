@@ -22,6 +22,7 @@ let npc = [
         message: "Yo! Lets Battle!",
         wonMessage: "Hahahaha You Lose!",
         lostMessage: "WHAT How did you beat my eatermon!! Anyway... Good Job!",
+        talkedToAgain: "Awh Man... Maybe Next Time I'll Bet You!",
         x: 10,
         y: 10,
         src: 'images/NPCS/George.png',
@@ -68,16 +69,17 @@ function updateEatermonNpc() {
 }
 
 function npcBattle() {
-    if (talkingToNPC === true) { //Set to true when done 
+    if (talkingToNPC === true) {
         inBattle = true;
-    isNpcEatermon = true; 
-        loadingImagess(); // Load the emblems before starting the animation
+        isNpcEatermon = true;
+        document.getElementById('npcTextContainer').style.display = 'none'; //Force Hide before anything else.
+        loadingImagess();
         restoreEnemyHp();
         updateHp();
-        updateEatermonNpc(); 
-        battleMenuScript.style.display = 'block'; // Show battle menu
-        startBattleAnimation(); // Trigger the battle animation
-
+        updateEatermonNpc();
+        battleMenuScript.style.display = 'block';
+        setTimeout(() => {
+            startBattleAnimation();
+        }, 10);
     }
 }
-

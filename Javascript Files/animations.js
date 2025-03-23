@@ -179,4 +179,3 @@ function fadeOut() {
     element.classList.remove('visible');
     element.classList.add('hidden');
 }
-

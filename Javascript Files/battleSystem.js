@@ -95,6 +95,8 @@ function attackMove(eatermonIndex, moveIndex) {
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.lostMessage}`;
+                    showNpcText(); // Show the npc text box after battle
+                    inBattle = false;
                 }, 1000); 
             }
             enemyHpInner.style.display = `none`;
@@ -106,12 +108,11 @@ function attackMove(eatermonIndex, moveIndex) {
             if (normal) {
                 setTimeout(() => {
                     battleMenuScript.style.display = 'none';
+                    inBattle = false; // End the battle
                 }, 1000);
             }
         }, 1000);
-        setTimeout(() => {
-            inBattle = false;
-        }, 3000);
+
     } else {
         // If the enemy is not defeated, switch to the enemy's turn
         playerTurn = false;
@@ -192,10 +193,11 @@ function enemyMove() {
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.wonMessage}`;
-                }, 1000); 
+                    showNpcText(); // Show the text box
+                    inBattle = false;
+                    }, 1000); 
             } else {
-                inBattle = false; // End
-                //  the battle if the player is dead
+                inBattle = false; // End the battle if the player is dead
                 battleMenuScript.style.display = 'none'; // End the battle
                 alert("You Died (Debug So Reloading)");
                 location.reload(); 
@@ -210,7 +212,6 @@ function enemyMove() {
     // End the enemy's turn, and it's now the player's turn again
     playerTurn = true;
 }
-
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {

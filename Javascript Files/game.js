@@ -8,12 +8,8 @@ const player = {
 // Game loop function
 function gameLoop() {
     // Draw the map and the player
-    
     drawMap();
-    highlightSelectedTiles();
 
-    // Update other game elements (e.g., NPC, player, etc.)
-    drawNPC();
 
     if(firstEvolving && runAnimation === false) {
         eatermon[currentEatermonIndex].src = eatermonEvolutions[currentEatermonIndex].src
@@ -29,8 +25,7 @@ function gameLoop() {
         encounter();  // Function already defined in your game
     }
 
-    checkNPCInteraction();  // Ensure NPC interaction is handled correctly
-
+    
     if(catching && !isNpcEatermon) {
         enemyImg.src = plates[0].src; // Ensure the enemy image is updated as needed
     } else {
