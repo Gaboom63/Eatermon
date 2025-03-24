@@ -227,6 +227,19 @@ const eatermon = [
         maxXp: 50,
         canFlee: false,
         emblem: "images/emblems/normalEmblem.png",
+    },
+    {
+        type: eatermonTypes[9],
+        id: 14, 
+        name: "Hank",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Hank.png",
+        xp: eatermonExp[13].xp,
+        level: eatermonExp[13].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/groundEmblem.png" 
     }
 
 

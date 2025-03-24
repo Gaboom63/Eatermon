@@ -1,3 +1,4 @@
+
 // Movement and Interaction
 function movePlayer(dx, dy) {
     const newX = playerX + dx;

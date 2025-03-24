@@ -124,30 +124,34 @@ let maps = [
             { treasureType: "Chest", x: 9, y: 10, opened: false }
         ],
         doors: [
-            { x: 7, 
-              y: 14 ,
-              destinations: [
-                { mapId: 2, x: 7, y: 12 },
-              ]
+            {
+                x: 7,
+                y: 14,
+                destinations: [
+                    { mapId: 2, x: 20, y: 4 },
+                ]
             },
-            { x: 7, 
+            {
+                x: 7,
                 y: 15,
                 destinations: [
-                  { mapId: 2, x: 7, y: 12 },
+                    { mapId: 2, x: 20, y: 4 },
                 ]
-              },
-              { x: 8, 
-                y: 14 ,
+            },
+            {
+                x: 8,
+                y: 14,
                 destinations: [
-                  { mapId: 2, x: 7, y: 12 },
+                    { mapId: 2, x: 20, y: 4 },
                 ]
-              },
-              { x: 8, 
-                y: 15 ,
+            },
+            {
+                x: 8,
+                y: 15,
                 destinations: [
-                  { mapId: 2, x: 7, y: 12 },
+                    { mapId: 2, x: 20, y: 4 },
                 ]
-              },
+            },
         ],
         lakes: [
 
@@ -405,7 +409,7 @@ let maps = [
         ],
         doors: [
             {
-                x: 3, 
+                x: 3,
                 y: 27,
                 destinations: [
                     { mapId: 2, x: 7, y: 12 },
@@ -413,7 +417,7 @@ let maps = [
                 ]
             },
             {
-                x: 4, 
+                x: 4,
                 y: 26,
                 destinations: [
                     { mapId: 2, x: 7, y: 12 },
@@ -421,7 +425,7 @@ let maps = [
                 ]
             },
             {
-                x: 4, 
+                x: 4,
                 y: 27,
                 destinations: [
                     { mapId: 2, x: 7, y: 12 },
@@ -429,7 +433,7 @@ let maps = [
                 ]
             },
             {
-                x: 3, 
+                x: 3,
                 y: 26,
                 destinations: [
                     { mapId: 0, x: 7, y: 12 },
@@ -483,13 +487,24 @@ let maps = [
                 party: npcParty[3].party,
                 canBattle: true,
                 canTalkAgain: true,
+            },
+            {
+                name: "Abby",
+                message: `Bro I'm On The Phone!`,
+                x: 15,
+                y: 10,
+                src: 'images/NPCS/Abby.png',
+                party: npcParty[4].party,
+                canBattle: true,
+                canTalkAgain: true,
             }
+
 
         ]
 
     },
     {
-        id: 2, //Numeber, 
+        id: 2, //Number, 
         name: "Your House",
         lowerSRC: 'images/maps/mainStarterHouseLower.png',
         upperSRC: 'images/maps/mainStarterHouseUpper.png',
@@ -702,26 +717,79 @@ let maps = [
 
         ],
         doors: [
-            // {
-            //     x: 20, 
-            //     y: 3,
-            //     destinations: [
-            //         { mapId: 0, x: 7, y: 12 },
+            {
+                x: 18, y: 1, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
 
-            //     ]
-            // },
-            // { x: 18, y: 1 },
-            // { x: 18, y: 2 },
-            // { x: 18, y: 3 },
-            // { x: 19, y: 1 },
-            // { x: 19, y: 2 },
-            // { x: 19, y: 3 },
-            // { x: 20, y: 1 },
-            // { x: 20, y: 2 },
-            // { x: 20, y: 3 },
-            // { x: 21, y: 1 },
-            // { x: 21, y: 2 },
-            // { x: 21, y: 3 },
+                ]
+            },
+            {
+                x: 18, y: 2, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 19, y: 1, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 19, y: 2, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 20, y: 1, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 20, y: 2, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 21, y: 1, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            {
+                x: 21, y: 2, destinations: [
+                    { mapId: 0, x: 7, y: 8 },
+
+                ]
+            },
+            //To Outside 
+            {
+                x: 11, y: 22, destinations: [
+                    { mapId: 1, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 11, y: 23, destinations: [
+                    { mapId: 1, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 12, y: 22, destinations: [
+                    { mapId: 1, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 12, y: 23, destinations: [
+                    { mapId: 1, x: 7, y: 12 },
+
+                ]
+            },
         ],
         lakes: [
 
@@ -741,10 +809,6 @@ let maps = [
 
     }
 ]
-
-function checkForWhichWall() {
-    
-}
 
 /*
 {
