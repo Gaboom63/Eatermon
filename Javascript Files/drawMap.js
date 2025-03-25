@@ -26,7 +26,6 @@ let isShiftPressed = false;  // Track if the Shift key is pressed
 let firstTile = null;  // Store the first tile clicked when Shift is pressed
 
 
-
 let currentMap = maps[1];
 let tileMap = maps[1].id;
 
