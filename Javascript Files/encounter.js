@@ -16,10 +16,10 @@ const encounter = () => {
     const playerTileY = Math.floor(playerY);
 
     // Look for green square overlap (event tiles)
-    const greenSquare = greenSquares.find(square => square.x === playerTileX && square.y === playerTileY);
+    const greenSquare = currentMap.grass.find(grass => grass.x === playerTileX && grass.y === playerTileY);
     if (greenSquare) {
         let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
-        console.log(`Number: ${pickNum}`); 
+        // console.log(`Number: ${pickNum}`); 
         // Check if the encounter chance is met and if the player isn't already in a battle
         if (pickNum < 50 && !inBattle && eatermon[enemyEatermonIndex] != eatermon[currentEatermonIndex]) {
             hasEncounted = true;

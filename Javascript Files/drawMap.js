@@ -13,7 +13,7 @@ let cameraX = 0;
 let cameraY = 0;
 let showGrid = true; // Toggle grid visibility
 let talkingToNPC = false;
-let playerX = 7;
+let playerX = 14;
 let playerY = 2;
 let currentNPC = 0;
 let currentNPCEatermon;
@@ -98,6 +98,7 @@ lowerImg.onload = () => {
     drawMap();
     drawPlayer();
     drawCoordinates();
+    
 };
 
 // Drawing Functions
@@ -136,7 +137,13 @@ function drawMap() {
         canvas.width,
         canvas.height
     );
-
+    if (showGrid) {
+        drawGrid();
+        drawDoors();
+        drawWalls();
+        drawGreenSquares();
+        drawLake();
+    }
     drawPlayer();
     drawNPC();
 
@@ -152,13 +159,7 @@ function drawMap() {
         canvas.height
     );
 
-    if (showGrid) {
-        drawGrid();
-        drawDoors();
-        drawWalls();
-        drawGreenSquares();
-        drawLake();
-    }
+   
 }
 function drawWalls() {
     ctx.fillStyle = 'red';
@@ -166,6 +167,16 @@ function drawWalls() {
         const wallX = wall.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const wallY = wall.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
         ctx.fillRect(wallX, wallY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+}
+
+function drawGreenSquares() {
+    ctx.fillStyle = 'green';
+
+    currentMap.grass.forEach(grass => {
+        const grassX = grass.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+        const grassY = grass.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+        ctx.fillRect(grassX, grassY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
     });
 }
 
@@ -273,15 +284,6 @@ function interactWithNPC() {
 
 
 
-function drawGreenSquares() {
-    ctx.fillStyle = 'green';
-
-    greenSquares.forEach(square => {
-        const squareX = square.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
-        const squareY = square.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
-        ctx.fillRect(squareX, squareY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
-    });
-}// Function to download selected tiles as a file
 function hideNpcText() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.classList.remove('show');

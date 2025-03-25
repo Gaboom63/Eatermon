@@ -280,6 +280,7 @@ function handleLearnNewMove(eatermonIndex) {
         noButton.style.display = 'none';    
         setTimeout(() => {
             returnToNormal();
+            inBattle = false; 
         }, 2000); 
         return;
     }
@@ -300,6 +301,7 @@ function handleLearnNewMove(eatermonIndex) {
         noButton.style.display = 'none'; 
         setTimeout(() => {
             returnToNormal();
+            inBattle = false; 
         }, 2000); 
         return;
     }
@@ -323,6 +325,7 @@ function handleLearnNewMove(eatermonIndex) {
         noButton.style.display = 'none';    
         setTimeout(() => {
             returnToNormal();
+            inBattle = false; 
         }, 2000); 
         return;
     }

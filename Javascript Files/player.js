@@ -57,17 +57,6 @@ function movePlayer(dx, dy) {
                     lowerImg.src = currentMap.lowerSRC;
                     ZOOM_FACTOR = currentMap.zoom;
                     npcNormal = true;  // Set npcNormal back to true after transition.
-
-                    // Re-load the tile data for the new map
-                    upperImg.onload = lowerImg.onload = () => {
-                        const mapWidth = Math.floor(upperImg.width / TILE_SIZE);
-                        const mapHeight = Math.floor(upperImg.height / TILE_SIZE);
-                        tileMap = getTileData(mapWidth, mapHeight);  // Update tile map
-                        console.log(`Updated Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
-    
-                        // Redraw the map after loading new tile data
-                        drawMap();
-                    };
                 } else {
                     console.error("No valid destination found in the door's destinations.");
                 }
@@ -76,9 +65,32 @@ function movePlayer(dx, dy) {
             }
         }, 3000);  // 3-second fade-in transition delay.
     
+        // Reload images and move player to the correct position.
+        setTimeout(() => {
+            console.log("Reloading map images for new map.");
+            let door = currentMap.doors.find(d => d.x === newX && d.y === newY);
+            if (door) {
+                let destination = door.destinations.find(dest => dest.mapId !== currentMap.id); // Match the destination with a different mapId
+                if (destination) {
+                    // Move player to the new map's destination coordinates
+                    playerX = destination.x;
+                    playerY = destination.y;
+                    movePlayer(0, 0);  // Move player to the new map position.
+                }
+            } else {
+                console.error("No matching door found for the current map:", currentMap.id);
+            }
+        }, 2000);  // Delay to allow the transition to complete before moving the player.
+    
         // Clear the canvas and redraw the map
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        upperImg.onload = lowerImg.onload = () => {
+            drawMap();  // Redraw the map after transition.
+            console.log("Map redrawn after transition.");
+        };
     }
+    
+    
 }
 
 // Update Player Position Style
