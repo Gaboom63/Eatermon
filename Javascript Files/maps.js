@@ -440,6 +440,39 @@ let maps = [
 
                 ]
             },
+            {
+                x: 30,
+                y:3,
+                destinations: [
+                    { mapId: 3, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 30,
+                y:4,
+                destinations: [
+                    { mapId: 3, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 31,
+                y:3,
+                destinations: [
+                    { mapId: 3, x: 7, y: 12 },
+
+                ]
+            },
+            {
+                x: 31,
+                y:4,
+                destinations: [
+                    { mapId: 3, x: 7, y: 12 },
+
+                ]
+            },
+
         ],
         lakes: [
 
@@ -807,7 +840,37 @@ let maps = [
             },
         ]
 
-    }
+    },
+    {
+        id: 3, //Number, 
+        name: "Route One",
+        lowerSRC: 'images/maps/firstMapLower.png',
+        upperSRC: 'images/maps/firstMapUpper.png',
+        zoom: 3,//Number, 
+        walls: [
+            
+        ],
+        treasures: [
+
+        ],
+        doors: [
+            
+            // {
+            //     x: 12, y: 23, destinations: [
+            //         { mapId: 1, x: 7, y: 12 },
+
+            //     ]
+            // },
+        ],
+        lakes: [
+
+        ],
+        npcs: [
+
+            
+        ]
+
+    },
 ]
 
 /*

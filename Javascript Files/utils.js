@@ -18,6 +18,7 @@ function downloadSelectedTiles() {
 // Helper function to get tile data from the map
 function getTileData(mapWidth, mapHeight) {
     const tileMap = [];
+    
     for (let y = 0; y < mapHeight; y++) {
         const row = [];
         for (let x = 0; x < mapWidth; x++) {
@@ -27,6 +28,8 @@ function getTileData(mapWidth, mapHeight) {
         }
         tileMap.push(row);
     }
+    console.log(mapWidth);
+    console.log(mapHeight); 
     return tileMap;
 }
 

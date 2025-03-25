@@ -56,7 +56,6 @@ function movePlayer(dx, dy) {
                     upperImg.src = currentMap.upperSRC;
                     lowerImg.src = currentMap.lowerSRC;
                     ZOOM_FACTOR = currentMap.zoom;
-    
                     npcNormal = true;  // Set npcNormal back to true after transition.
                 } else {
                     console.error("No valid destination found in the door's destinations.");
