@@ -185,6 +185,7 @@ function handleNPCInteraction(e) {
 
             }
             break;
+
         case 'Escape':
             openEscapeMenu();
             break;

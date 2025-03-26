@@ -94,6 +94,7 @@ function Run() {
         battleMenuScript.style.display = 'none';
         setTimeout(() => {
             inBattle = false;
+            pickRandomEnemy(); 
         }, 500);
     } else if(!npcNormal) {
         

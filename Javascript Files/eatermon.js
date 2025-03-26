@@ -178,7 +178,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[1],
-        id: 10,
+        id: 11,
         name: "Pastmala",
         hp: 110,
         maxHp: 110,
@@ -191,7 +191,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[4],
-        id: 11,
+        id: 12,
         name: "WaffItOff",
         hp: 120,
         maxHp: 120,
@@ -204,7 +204,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[4],
-        id: 12,
+        id: 13,
         name: "Meaty Malt",
         hp: 100,
         maxHp: 100,
@@ -216,8 +216,8 @@ const eatermon = [
         emblem: "images/emblems/normalEmblem.png",
     },
     {
-        type: eatermonTypes[4],
-        id: 13,
+        type: eatermonTypes[5],
+        id: 14,
         name: "Bannano",
         hp: 80,
         maxHp: 80,
@@ -230,7 +230,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[9],
-        id: 14, 
+        id: 15, 
         name: "Hank",
         hp: 100,
         maxHp: 100, 
@@ -243,7 +243,7 @@ const eatermon = [
     }, 
     {
         type: eatermonTypes[10],
-        id: 15, 
+        id: 16, 
         name: "Jammin",
         hp: 100,
         maxHp: 100, 
@@ -256,7 +256,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[11],
-        id: 16, 
+        id: 17, 
         name: "Hardcore Corn",
         hp: 100,
         maxHp: 100, 
@@ -269,7 +269,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[1],
-        id: 17, 
+        id: 18, 
         name: "Barry The Berry",
         hp: 100,
         maxHp: 100, 
@@ -282,7 +282,7 @@ const eatermon = [
     },
     {
         type: eatermonTypes[3],
-        id: 18, 
+        id: 19, 
         name: "Sir Pit",
         hp: 100,
         maxHp: 100, 
@@ -292,8 +292,72 @@ const eatermon = [
         maxXp: 100, 
         canFlee: false, 
         emblem: "images/emblems/grassEmblem.png" 
-    }
-
+    },
+    {
+        type: eatermonTypes[11],
+        id: 20, 
+        name: "March Mad-Muffin",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/March Mad-Muffin.png",
+        xp: eatermonExp[18].xp,
+        level: eatermonExp[18].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/sweetEmblem.png" 
+    },
+    {
+        type: eatermonTypes[11],
+        id: 21, 
+        name: "Sober",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Sober.png",
+        xp: eatermonExp[19].xp,
+        level: eatermonExp[19].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/sweetEmblem.png" 
+    },
+    {
+        type: eatermonTypes[12],
+        id: 22, 
+        name: "Purple Trips",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Purple Trips.png",
+        xp: eatermonExp[20].xp,
+        level: eatermonExp[20].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/sourEmblem.png" 
+    },
+    {
+        type: eatermonTypes[4],
+        id: 23, 
+        name: "Ban Blast",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Ban Blast.png",
+        xp: eatermonExp[21].xp,
+        level: eatermonExp[21].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/normalEmblem.png" 
+    },
+    {
+        type: eatermonTypes[0],
+        id: 24, 
+        name: "Legal Pot",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/LegalPot.png",
+        xp: eatermonExp[22].xp,
+        level: eatermonExp[22].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/fireEmblem.png" 
+    },
 ]
 
 

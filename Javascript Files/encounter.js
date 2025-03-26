@@ -9,11 +9,21 @@ let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
 let playerHpInner = document.getElementById('playerinnerBar');
 
+function pickRandomEnemy() {
+    // Choose a random enemy index, but don't modify the actual eatermon array
+    const randomNumber = Math.floor(Math.random() * eatermon.length); 
+    enemyEatermonIndex = randomNumber;  // Just update the index, don't modify the eatermon array itself
+}
+
 // Modified encounter function to trigger coin flip animation
 const encounter = () => {
     // Check if the player is on a green square
     const playerTileX = Math.floor(playerX);
     const playerTileY = Math.floor(playerY);
+
+    if(currentEatermonIndex === enemyEatermonIndex) {
+        pickRandomEnemy(); 
+    }
 
     // Look for green square overlap (event tiles)
     const greenSquare = currentMap.grass.find(grass => grass.x === playerTileX && grass.y === playerTileY);
