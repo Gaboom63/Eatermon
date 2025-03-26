@@ -447,7 +447,7 @@ let maps = [
                 x: 30,
                 y: 3,
                 destinations: [
-                    { mapId: 3, x: 7, y: 12 },
+                    { mapId: 3, x: 3, y: 61 },
 
                 ]
             },
@@ -455,7 +455,7 @@ let maps = [
                 x: 30,
                 y: 4,
                 destinations: [
-                    { mapId: 3, x: 7, y: 12 },
+                    { mapId: 3, x: 3, y: 61 },
 
                 ]
             },
@@ -463,7 +463,7 @@ let maps = [
                 x: 31,
                 y: 3,
                 destinations: [
-                    { mapId: 3, x: 7, y: 12 },
+                    { mapId: 3, x: 3, y: 61 },
 
                 ]
             },
@@ -471,7 +471,7 @@ let maps = [
                 x: 31,
                 y: 4,
                 destinations: [
-                    { mapId: 3, x: 7, y: 12 },
+                    { mapId: 3, x: 3, y: 61 },
 
                 ]
             },

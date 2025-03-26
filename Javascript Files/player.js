@@ -63,6 +63,10 @@ function movePlayer(dx, dy) {
                     playerX = destination.x;
                     playerY = destination.y;
                     movePlayer(0, 0);
+                    startMoving(MOVE_SPEED, 0, 'right');
+                    setTimeout(() => {
+                        stopMoving();
+                    }, 1200);
                 }
             } else {
                 console.error("No matching door found for the current map:", currentMap.id);
