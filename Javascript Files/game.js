@@ -55,7 +55,8 @@ function evolve() {
         }, 3100); 
         setTimeout(() => {
             firstEvolving = false; 
-            levelUpMenu = false;  
+            levelUpMenu = false; 
+            inBattle = false;  
             if(!something) {
                 returnToNormal(); 
             }  

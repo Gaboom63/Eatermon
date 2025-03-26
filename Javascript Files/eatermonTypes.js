@@ -68,7 +68,33 @@ const eatermonTypes =  [
         weak: ["Water", "Fighting", "Ice", "Grass"],
         strong: ["Flying", "Fire"],
         noEffect: []
+    },
+    {
+        id: 10, 
+        type: "Sticky",
+        weak: ["Water"],
+        strong: ["Ground","Flying"],
+        noEffect: []
+    },
+    {
+        id: 11,
+        type: "Sweet",
+        weak: ["Fire", "Sour", "Fighting"],
+        strong: ["Salty", "Normal"]
+    },
+    {
+        id: 12,
+        type: "Sour",
+        weak: ["Water", "Fighting", "Sour"],
+        strong: ["Sweet"]
+    },
+    {
+        id: 13,
+        type: "Salty",
+        weak: ["Grass", "Fighting", "Sweet"],
+        strong: ["Sour"]
     }
+    
 ]
 
 

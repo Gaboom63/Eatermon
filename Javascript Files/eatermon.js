@@ -240,6 +240,32 @@ const eatermon = [
         maxXp: 100, 
         canFlee: false, 
         emblem: "images/emblems/groundEmblem.png" 
+    }, 
+    {
+        type: eatermonTypes[10],
+        id: 15, 
+        name: "Jammin",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Jammin.png",
+        xp: eatermonExp[14].xp,
+        level: eatermonExp[14].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/stickyEmblem.png" 
+    },
+    {
+        type: eatermonTypes[11],
+        id: 16, 
+        name: "Hardcore Corn",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Hardcore Corn.png",
+        xp: eatermonExp[15].xp,
+        level: eatermonExp[15].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/sweetEmblem.png" 
     }
 
 

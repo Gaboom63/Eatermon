@@ -94,7 +94,7 @@ function Run() {
         battleMenuScript.style.display = 'none';
         setTimeout(() => {
             inBattle = false;
-        }, 3000);
+        }, 500);
     } else if(!npcNormal) {
         
     }
