@@ -161,6 +161,29 @@ function drawMap() {
 
    
 }
+
+function loadMap(mapData) {
+    upperImg.src = mapData.upperSRC;
+    lowerImg.src = mapData.lowerSRC;
+    ZOOM_FACTOR = mapData.zoom;
+
+    Promise.all([
+        new Promise(resolve => upperImg.onload = resolve),
+        new Promise(resolve => lowerImg.onload = resolve)
+    ]).then(() => {
+        const mapWidth = Math.floor(upperImg.width / TILE_SIZE);
+        const mapHeight = Math.floor(lowerImg.height / TILE_SIZE); //Corrected line
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        tileMap = getTileData(mapWidth, mapHeight);
+        console.log(`Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
+        drawMap();
+        drawPlayer();
+        drawCoordinates();
+    });
+}
 function drawWalls() {
     ctx.fillStyle = 'red';
     currentMap.walls.forEach(wall => {

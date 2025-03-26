@@ -68,6 +68,7 @@ function evolve() {
     else {
         firstEvolving = false; 
     }
+    
 }
 
 gameLoop(); 

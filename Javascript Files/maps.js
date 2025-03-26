@@ -844,6 +844,9 @@ let maps = [
                 party: npcParty[2].party,
                 canTalkAgain: true,
             },
+        ],
+        grass: [
+
         ]
 
     },
