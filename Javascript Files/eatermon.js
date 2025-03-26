@@ -266,8 +266,33 @@ const eatermon = [
         maxXp: 100, 
         canFlee: false, 
         emblem: "images/emblems/sweetEmblem.png" 
+    },
+    {
+        type: eatermonTypes[1],
+        id: 17, 
+        name: "Barry The Berry",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Barry The Berry.png",
+        xp: eatermonExp[16].xp,
+        level: eatermonExp[16].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/waterEmblem.png" 
+    },
+    {
+        type: eatermonTypes[3],
+        id: 18, 
+        name: "Sir Pit",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Sir Pit.png",
+        xp: eatermonExp[17].xp,
+        level: eatermonExp[17].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/grassEmblem.png" 
     }
-
 
 ]
 
