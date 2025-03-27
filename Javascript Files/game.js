@@ -36,8 +36,9 @@ function gameLoop() {
         loadingImages();  // This function might be updating player or game state
     }
 
+ 
     updateHp(); // Update UI with the new enemy's HP
-
+    eventSpaceLogic()
     // Call the next frame
     requestAnimationFrame(gameLoop);
 }

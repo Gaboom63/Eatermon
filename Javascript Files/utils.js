@@ -335,3 +335,20 @@ function playCutScene() {
         console.log("Cutscene finished, npcNormal is now", npcNormal);
     }, delay);
 }
+
+function eventSpaceLogic() {
+    let map = currentMap.id; 
+    
+    // Iterate over all event spaces in the current map
+    for (let i = 0; i < maps[map].eventSpace.length; i++) {
+        let event = maps[map].eventSpace[i];
+        
+        // Check if player is at the current event space coordinates
+        if (playerX === event.x && playerY === event.y) {
+            // Trigger the cutscene
+            playCutScene();
+            
+            return; // Exit after the first match is found to avoid unnecessary checks
+        }
+    }
+}

@@ -143,6 +143,7 @@ function drawMap() {
         drawWalls();
         drawGreenSquares();
         drawLake();
+        eventSpaces(); 
     }
     drawPlayer();
     drawNPC();
@@ -190,6 +191,14 @@ function drawWalls() {
         const wallX = wall.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const wallY = wall.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
         ctx.fillRect(wallX, wallY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
+    });
+}
+function eventSpaces() {
+    ctx.fillStyle = 'blue';
+    currentMap.eventSpace.forEach(eventSpace => {
+        const eventSpaceX = eventSpace.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+        const eventSpaceY = eventSpace.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+        ctx.fillRect(eventSpaceX, eventSpaceY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
     });
 }
 

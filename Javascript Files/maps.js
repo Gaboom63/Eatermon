@@ -162,7 +162,9 @@ let maps = [
         grass: [
 
         ],
-        
+        eventSpace: [
+
+        ]
 
     },
     {
@@ -540,7 +542,15 @@ let maps = [
         ],
         grass: [
 
+        ],
+        eventSpace: [
+            { x: 10, y: 16 }, // Add event property
+            { x: 11, y: 16 }, // Add event property
+            { x: 10, y: 17 }, // Add event property
+            { x: 11, y: 17 } // Add event property
+
         ]
+
 
     },
     {
@@ -848,7 +858,11 @@ let maps = [
         ],
         grass: [
 
+        ],
+        eventSpace: [
+            
         ]
+
 
     },
     {
@@ -1509,7 +1523,11 @@ let maps = [
             { x: 30, y: 54 },
             { x: 30, y: 55 },
             { x: 30, y: 56 },
+        ],
+        eventSpace: [
+            
         ]
+
     },
 ]
 
