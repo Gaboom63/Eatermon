@@ -1,6 +1,6 @@
 
 // Movement and Interaction
-function movePlayer(dx, dy) {
+function movePlayer(dx, dy, direction) {
     const newX = playerX + dx;
     const newY = playerY + dy;
 
@@ -26,6 +26,7 @@ function movePlayer(dx, dy) {
     drawMap();
     drawPlayer();
     drawCoordinates();
+    updatePlayerSprite(direction); // Update sprite when moving
 
     // Check if the player stepped on a door and handle map change
     if (isDoor(newX, newY)) {

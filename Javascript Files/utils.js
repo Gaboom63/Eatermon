@@ -285,31 +285,53 @@ function highlightSelectedTiles() {
 }
 
 
-function cutScene() {
-    movePlayer(0, 1);
-    setTimeout(() => {
-        movePlayer(0, 1);
-        setTimeout(() => {
-            movePlayer(0, 1);
-            setTimeout(() => {
-                movePlayer(0, 1);
-                setTimeout(() => {
-                    movePlayer(0, 1);
-                    setTimeout(() => {
-                        movePlayer(0, 1);
-                        setTimeout(() => {
-                            movePlayer(0, 1);
-                            setTimeout(() => {
-                                movePlayer(0, 1);
-                                setTimeout(() => {
-                                    movePlayer(0, 1);
+function cutSceneUp() {
+    movePlayer(0, -1, 'up');
+}
+function cutSceneDown() {
+    movePlayer(0, 1, 'down');
+}
+function cutSceneLeft() {
+    movePlayer(-1, 0, 'left');
+}
+function cutSceneRight() {
+    movePlayer(1, 0, 'right');
+}
 
-                                }, 500)
-                            }, 500)
-                        }, 500)
-                    }, 500)
-                }, 500)
-            }, 500)
-        }, 500)
-    }, 500);
+function delayedMovePlayer(x, y, direction, delay) {
+    setTimeout(() => {
+        movePlayer(x, y, direction);
+    }, delay);
+}
+
+let cutScene = [
+    [
+        { action: 'move', direction: 'right', x: 1, y: 0, multiplier: 9 }, 
+    ]
+];
+
+// Function to play the entire cutscene, including multiple sequences, with delays and multipliers
+function playCutScene() {
+    // Set npcNormal to false to indicate the cutscene is active
+    npcNormal = false;
+    // console.log("Cutscene started, npcNormal is now", npcNormal);
+
+    let delay = 0;  // Initial delay
+
+    for (let sequence of cutScene) {
+        for (let step of sequence) {
+            if (step.action === 'move') {
+                // Apply the multiplier to repeat the action multiple times
+                for (let i = 0; i < step.multiplier; i++) {
+                    delayedMovePlayer(step.x, step.y, step.direction, delay);
+                    delay += 500; // Delay between each move (500ms for each move)
+                }
+            }
+        }
+    }
+
+    setTimeout(() => {
+        npcNormal = true;
+        console.log("Cutscene finished, npcNormal is now", npcNormal);
+    }, delay);
 }
