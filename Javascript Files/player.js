@@ -46,38 +46,44 @@ function movePlayer(dx, dy, direction) {
 
                     fadeOut();
                     loadMap(currentMap); // Load the new map here
-                    npcNormal = true;
+
+                    // Wait for map loading to finish before updating player position
+                    setTimeout(() => {
+                        // Now that the map is loaded, teleport the player to the destination
+                        playerX = destination.x;
+                        playerY = destination.y;
+
+                        // Ensure player is updated in the UI (since this can sometimes lag behind)
+                        updatePlayerPosition();
+
+                        // Apply any camera adjustments needed after teleportation
+                        cameraX = Math.max(0, Math.min(playerX * TILE_SIZE * ZOOM_FACTOR, upperImg.width * ZOOM_FACTOR - canvas.width));
+                        cameraY = Math.max(0, Math.min(playerY * TILE_SIZE * ZOOM_FACTOR, upperImg.height * ZOOM_FACTOR - canvas.height));
+
+                        // Reposition the camera if the player is not within the view
+                        if (playerY * TILE_SIZE * ZOOM_FACTOR - cameraY < 0 || playerY * TILE_SIZE * ZOOM_FACTOR - cameraY > canvas.height) {
+                            cameraY = playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2;
+                        }
+
+                        // Redraw everything after the teleportation
+                        drawMap();
+                        drawPlayer();
+                        drawNPC(); 
+                        drawCoordinates();
+                        updatePlayerSprite(direction); // Update sprite after teleportation
+
+                        npcNormal = true;
+                    }, 50);  // Adjust timing if necessary to match map loading duration
                 } else {
                     console.error("No valid destination found in the door's destinations.");
                 }
             } else {
                 console.error("No matching door found at coordinates:", newX, newY);
             }
-        }, 3000);
-
-        setTimeout(() => {
-            console.log("Reloading map images for new map.");
-            let door = currentMap.doors.find(d => d.x === newX && d.y === newY);
-            if (door) {
-                let destination = door.destinations.find(dest => dest.mapId !== currentMap.id);
-                if (destination) {
-                    playerX = destination.x;
-                    playerY = destination.y;
-                    movePlayer(0, 0);
-                    startMoving(MOVE_SPEED, 0, 'right');
-                    setTimeout(() => {
-                        stopMoving();
-                    }, 1200);
-                }
-            } else {
-                console.error("No matching door found for the current map:", currentMap.id);
-            }
-        }, 2000);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+        }, 3000);  // Timing before initiating the transition to ensure smooth fade
     }
 }
+
 
 
 // Update Player Position Style

@@ -2,8 +2,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const TILE_SIZE = 16;  // Tile size
-const spriteWidth = 32;
-const spriteHeight = 32;
 const spriteSheetCols = 4;
 const spriteSheetRows = 4;
 let currentFrameX = 0;
@@ -13,8 +11,6 @@ let cameraX = 0;
 let cameraY = 0;
 let showGrid = true; // Toggle grid visibility
 let talkingToNPC = false;
-let playerX = 14;
-let playerY = 2;
 let currentNPC = 0;
 let currentNPCEatermon;
 let waitingForEnter = true;
@@ -24,12 +20,20 @@ let selectedTiles = []; // For selected tiles
 let tileSelectionEnabled = false;
 let isShiftPressed = false;  // Track if the Shift key is pressed
 let firstTile = null;  // Store the first tile clicked when Shift is pressed
-
-
-let currentMap = maps[1];
+let initalCutScene = false;
+let currentMap = maps[0];
 let tileMap = maps[1].id;
-
+let playerX = currentMap.startingXY.x;
+let playerY = currentMap.startingXY.y;
 let ZOOM_FACTOR = currentMap.zoom;  // Zoom factor
+const spriteWidth = TILE_SIZE * ZOOM_FACTOR * 0.8;
+const spriteHeight = TILE_SIZE * ZOOM_FACTOR * 0.8;
+let npcName = document.getElementById('npcName');
+let npcP = document.getElementById('npcP');
+let npcTextBox = document.getElementById('npcTextBox'); 
+let initalCutsceneName = document.getElementById('initalCutsceneName');
+let playerName = ''; // This will store the player's name
+
 
 const mainPlayer = document.getElementById("player");
 const upperImg = new Image();
@@ -98,7 +102,8 @@ lowerImg.onload = () => {
     drawMap();
     drawPlayer();
     drawCoordinates();
-    
+    movePlayer(0,0);
+    movePlayer(0,0);
 };
 
 // Drawing Functions
@@ -178,6 +183,7 @@ function loadMap(mapData) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+    
         tileMap = getTileData(mapWidth, mapHeight);
         console.log(`Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
         drawMap();
@@ -272,6 +278,94 @@ function showNpcText() {
     npcTextContainer.classList.add('show');
 }
 
+let messageIndex = 0; // To track which message to show next
+
+let intialDreamMessages = [
+    
+    "Welcome to the world of Eatermon. What is your name?",
+    "This is a very different world from the world you know. In your world many people eat food, and it is how they survive.",
+    "Here food is not a necessity and due to a weird paradox universe food is alive.",
+    `Instead they are creatures we investigate and use for fun. We call those creatures <b>Eatermons</b>.`,
+    `What story awaits you? Let's find out!`
+];
+
+let gettingName = true; 
+function startScreen() {
+    let startingOverlay = document.getElementById('startingScene'); 
+    startingOverlay.style.display = `block`;
+    startingOverlay.style.backgroundColor = 'black'; 
+    
+    // Set NPC Name and message
+    npcName.innerHTML = `Dream Warden`;
+    npcP.innerHTML = intialDreamMessages[messageIndex]; // Initial message
+    npcTextBox.style.display = 'block'; 
+    npcTextBox.innerHTML = `Please enter your name below:`;  // Prompt to enter the name in npcTextBox
+    initalCutsceneName.style.display = 'block'; 
+    npcNormal = false; 
+    normal = false;     
+    initalCutScene = true;
+
+    // Create and style floating Z's (White Z's)
+    let floatingZs = document.createElement('div');
+    floatingZs.classList.add('floating-zs');
+    startingOverlay.appendChild(floatingZs); // Add the floating Z's container to the starting overlay
+
+    // Create individual Z's
+    for (let i = 0; i < 4; i++) {
+        let z = document.createElement('span');
+        z.classList.add('z');
+        z.innerHTML = 'Z'; 
+        floatingZs.appendChild(z);
+    }
+
+    // Focus on the text box and listen for the Enter key on the whole document
+    npcTextBox.focus();
+    document.addEventListener('keydown', handleKeyPress);
+    
+    showNpcText();
+}
+
+
+function handleKeyPress(event) {
+    // Check if the Enter key was pressed
+    if (event.key === 'Enter' && !gettingName) {
+        showNextMessage(); // Show the next message when Enter is pressed
+    }
+}
+
+// startScreen()
+function showNextMessage() {
+    let startingOverlay = document.getElementById('startingScene'); 
+    messageIndex++; // Move to the next message
+    if (messageIndex < intialDreamMessages.length) {
+        npcP.innerHTML = intialDreamMessages[messageIndex]; // Display the next message
+    } else {
+        npcP.innerHTML = `I have told you all I can for now. Wake Up ${playerName}!`; // If no more messages, end the conversation
+        setTimeout(() => {
+            hideNpcText(); 
+            npcNormal = true; 
+            normal = true;     
+            initalCutScene = false;
+            startingOverlay.classList.add('hidden'); // Add the "hidden" class to trigger fade-out
+        }, 2000); // Wait for 2 seconds before hiding
+    }
+}
+
+
+function submitName() {
+    playerName = npcTextBox.value.trim(); // Get the value entered by the player
+    if (playerName !== '') {
+        npcP.innerHTML = `Welcome, ${playerName}, to the world of Eatermon!`; // Personalizing the npcTextBox message
+        npcTextBox.style.display = 'none'; // Hide the input field after submission
+        initalCutsceneName.style.display = 'none'; // Hide the submit button
+        messageIndex = 0; // Reset messages after name submission
+        gettingName = false; 
+    } else {
+        npcTextBox.innerHTML = `Please enter a valid name.`; // Error message if name is not entered
+    }
+}
+
+
 // NPC Interaction
 function NPCtext() {
     let npcTextContainer = document.getElementById('npcTextContainer');
@@ -331,3 +425,6 @@ function showNpcText() {
     // console.log("showNpcText: Container shown.");
 }
 
+
+//THIS IS HOW YOU START THE FIRST CUTSCENE
+// startScreen()

@@ -25,9 +25,13 @@
     <div id="npcTextContainer">
         <h1 id="npcName">Name Says: </h1>
         <p id="npcP">Hello</p>
-        <div class="arrow bounce"></div>    
+        <input id="npcTextBox"></input>
+        <button id="initalCutsceneName" onclick="submitName()">Enter Name</button>
+        <div class="arrow bounce"></div>
     </div>
-
+ >
+      
+    <div id="startingScene"></div>
     <p id="console"></p>
     <canvas id="gameCanvas">
         <div id="player"></div>
@@ -54,7 +58,7 @@
                 <div id="xpProgress"></div>
             </div>
         </div>
-        
+
         <div id="battleOptionsMenu">
             <button id="attack" onclick="Attack()">Attack!</button> <br>
             <button id="bag" onclick="Bag()">Bag</button> <br>
@@ -63,22 +67,22 @@
         <div id="eatermonEnemyContainer">
             <img id="eatermonEnemy"> <!-- Enemy Image -->
 
-          </div>
-          
-          <div id="eatermonPlayerContainer">
+        </div>
+
+        <div id="eatermonPlayerContainer">
             <img id="eatermonPlayer"> <!-- Player Image -->
 
-          </div>
-          <div id="coinPlayer" class="coin">
+        </div>
+        <div id="coinPlayer" class="coin">
             <div class="side-a"></div>
             <div class="side-b"></div>
         </div>
-        
+
         <div id="coinEnemy" class="coin">
             <div class="side-a"></div>
             <div class="side-b"></div>
         </div>
-        
+
         <div id="fireball" class="fireball"></div>
         <div id="vineWhip" class="vineWhip"></div>
         <div id="firestar" class="firestar"></div>
@@ -105,13 +109,15 @@
             <h2>Game Menu</h2>
         </div>
         <div class="menu-options" id="menu-options">
-            <button class="menu-btn" onclick="closeEscapeMenu()"><span class="icon">&#x2190;</span> Return to Game</button>
-            <button class="menu-btn" id="menuBag" onclick="showResultsOfMenuBag()"><span class="icon">&#x01F4BC;</span> Bag</button>
+            <button class="menu-btn" onclick="closeEscapeMenu()"><span class="icon">&#x2190;</span> Return to
+                Game</button>
+            <button class="menu-btn" id="menuBag" onclick="showResultsOfMenuBag()"><span class="icon">&#x01F4BC;</span>
+                Bag</button>
             <button class="menu-btn"><span class="icon">&#x1F3A5;</span> Settings</button>
-            <button class="menu-btn""><span class="icon">&#x1F6AB;</span> Quit Game</button>
+            <button class="menu-btn""><span class=" icon">&#x1F6AB;</span> Quit Game</button>
         </div>
     </div>
-    
+
     <!-- <img id="Player"> -->
     <!-- <div class="frame">
         <div class="corner_topleft"></div>
@@ -128,26 +134,27 @@
               </div>
            </div> -->
     <!-- <div style="position: relative; width: 100%; height: 100%;"> -->
-        <!-- </div> -->
+    <!-- </div> -->
 
-    <script src="Javascript Files/animations.js"></script> 
+    <script src="Javascript Files/animations.js"></script>
     <script src="Javascript Files/eatermonTypes.js"></script>
-    <script src="Javascript Files/grass.js"></script> 
-    <script src="Javascript Files/encounter.js"></script> 
-    <script src="Javascript Files/eatermonStats.js"></script> 
+    <script src="Javascript Files/grass.js"></script>
+    <script src="Javascript Files/encounter.js"></script>
+    <script src="Javascript Files/eatermonStats.js"></script>
     <script src="Javascript Files/eatermonExpSystem.js"></script>
     <script src="Javascript Files/eatermonEvolutions.js"></script>
-    <script src="Javascript Files/eatermon.js"></script> 
+    <script src="Javascript Files/eatermon.js"></script>
     <script src="Javascript Files/eatermonAbilitys.js"></script>
-    <script src="Javascript Files/eatermonMoves.js"></script> 
+    <script src="Javascript Files/eatermonMoves.js"></script>
     <script src="Javascript Files/battleSystem.js"></script>
     <script src="Javascript Files/Menus.js"></script>
     <script src="Javascript Files/eatermonNpcBattles.js"></script>
     <script src="Javascript Files/maps.js"></script>
+    <script src="Javascript Files/drawMap.js"></script>
     <script src="Javascript Files/player.js"></script>
-    <script src="Javascript Files/drawMap.js"></script> 
-    <script src="Javascript Files/utils.js"></script> 
-    <script src="Javascript Files/game.js"></script> 
+    <script src="Javascript Files/controller.js"></script>
+    <script src="Javascript Files/utils.js"></script>
+    <script src="Javascript Files/game.js"></script>
 </body>
 
 </html>

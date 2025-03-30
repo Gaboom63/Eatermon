@@ -164,7 +164,12 @@ let maps = [
         ],
         eventSpace: [
 
-        ]
+        ],
+        startingXY: {
+            x:  14, 
+            y: 2
+        }
+
 
     },
     {
@@ -550,6 +555,10 @@ let maps = [
             { x: 11, y: 17 } // Add event property
 
         ]
+        ,startingXY: {
+            x:  7, 
+            y: 12
+        }
 
 
     },
@@ -861,7 +870,11 @@ let maps = [
         ],
         eventSpace: [
             
-        ]
+        ],
+        startingXY: {
+            x:  7, 
+            y: 12
+        }
 
 
     },
@@ -1438,7 +1451,16 @@ let maps = [
 
         ],
         npcs: [
-
+            {
+                name: "Elijah",
+                message: `Nice To Meet you! I'm Elijah, But You Can Call Me EJ! I'm What Some Would Say Your <b>Rival</b>!`,
+                x: 10,
+                y: 61,
+                src: 'images/NPCS/Rival.png',
+                party: npcParty[3].party,
+                canBattle: true,
+                canTalkAgain: true,
+            },
 
         ],
         grass: [
@@ -1525,8 +1547,17 @@ let maps = [
             { x: 30, y: 56 },
         ],
         eventSpace: [
-            
-        ]
+            // {x: 7, y: 58},
+            // {x: 7, y: 63},
+            // {x: 7, y: 59},
+            // {x: 7, y: 60},
+            // {x: 7, y: 61},
+            // {x: 7, y: 62}, 
+        ],
+        startingXY: {
+            x:  10, 
+            y: 58
+        }
 
     },
 ]

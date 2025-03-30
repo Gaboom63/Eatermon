@@ -309,3 +309,6 @@ function closeEscapeMenu() {
 function battleNPC() {
     
 }
+
+let startingOverlay = document.getElementById('startingScene');
+

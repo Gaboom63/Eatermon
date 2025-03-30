@@ -45,7 +45,7 @@ const eatermonTypes =  [
         id: 6, 
         type: "Poison",
         weak: [],
-        strong: [],
+        strong: [], 
         noEffect: []
     },
     {
