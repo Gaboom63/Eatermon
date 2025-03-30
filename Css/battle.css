@@ -14,7 +14,7 @@
     background-attachment: fixed;
     image-rendering: pixelated;
     display: none;
-    
+    zoom: .67;
 }
 
 #battleOptionsMenu {

@@ -4,6 +4,8 @@ let maps = [
         name: "Your Room",
         lowerSRC: 'images/maps/starterHouseRoomLower.png',
         upperSRC: 'images/maps/starterHouseRoomUpper.png',
+        mapWidth: 16,
+        mapHeight: 16, 
         zoom: 4,
         walls: [
             { x: 0, y: 0 },
@@ -178,6 +180,9 @@ let maps = [
         lowerSRC: 'images/maps/startingMap.png',
         upperSRC: 'images/maps/upperMapForStartingMap.png',
         zoom: 3,
+        mapWidth: 32,
+        mapHeight: 32, 
+
         walls: [
             { x: 21, y: 26 },
             { x: 21, y: 27 },
@@ -568,6 +573,9 @@ let maps = [
         lowerSRC: 'images/maps/mainStarterHouseLower.png',
         upperSRC: 'images/maps/mainStarterHouseUpper.png',
         zoom: 3,//Number, 
+        mapWidth: 24,
+        mapHeight: 24, 
+
         walls: [
             { x: 17, y: 1 },
             { x: 17, y: 6 },
@@ -884,6 +892,9 @@ let maps = [
         lowerSRC: 'images/maps/firstMapLower.png',
         upperSRC: 'images/maps/firstMapUpper.png',
         zoom: 3,//Number, 
+        mapWidth: 32,
+        mapHeight: 64, 
+
         walls: [
             { x: 8, y: 6 },
             { x: 9, y: 6 },

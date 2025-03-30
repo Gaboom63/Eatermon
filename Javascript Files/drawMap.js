@@ -26,13 +26,14 @@ let tileMap = maps[1].id;
 let playerX = currentMap.startingXY.x;
 let playerY = currentMap.startingXY.y;
 let ZOOM_FACTOR = currentMap.zoom;  // Zoom factor
-const spriteWidth = TILE_SIZE * ZOOM_FACTOR * 0.8;
-const spriteHeight = TILE_SIZE * ZOOM_FACTOR * 0.8;
+const spriteWidth = TILE_SIZE * ZOOM_FACTOR * 0.5;
+const spriteHeight = TILE_SIZE * ZOOM_FACTOR * 0.5;
 let npcName = document.getElementById('npcName');
 let npcP = document.getElementById('npcP');
 let npcTextBox = document.getElementById('npcTextBox'); 
 let initalCutsceneName = document.getElementById('initalCutsceneName');
 let playerName = ''; // This will store the player's name
+let scaledSize = TILE_SIZE * ZOOM_FACTOR * 3;
 
 
 const mainPlayer = document.getElementById("player");
@@ -44,20 +45,17 @@ lowerImg.src = currentMap.lowerSRC;
 mainplayerImg.src = 'images/player.png';
 
 function drawDoors() {
-    // Loop through all doors in currentMap
     currentMap.doors.forEach(door => {
         const doorX = door.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
         const doorY = door.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
 
-        // Check if the door is part of a specific group and set its color
-        let doorColor = 'yellow';  // Default color
+        let doorColor = 'yellow';
         if (door.doorDestinationGroup1) {
-            doorColor = 'blue';  // Color for Group 1 doors
+            doorColor = 'blue';
         } else if (door.doorDestinationGroup2) {
-            doorColor = 'green';  // Color for Group 2 doors
+            doorColor = 'green';
         }
         
-        // Set the fill color based on the group
         ctx.fillStyle = doorColor;
         ctx.fillRect(doorX, doorY, TILE_SIZE * ZOOM_FACTOR, TILE_SIZE * ZOOM_FACTOR);
     });
@@ -77,7 +75,6 @@ function drawLake() {
     });
 }
 
-// Image Loading and Initialization
 upperImg.onload = () => {
     const mapWidth = Math.floor(upperImg.width / TILE_SIZE);
     const mapHeight = Math.floor(upperImg.height / TILE_SIZE);
@@ -106,32 +103,32 @@ lowerImg.onload = () => {
     movePlayer(0,0);
 };
 
-// Drawing Functions
-function drawPlayer() {
-    // Ensure image smoothing is disabled
-    ctx.imageSmoothingEnabled = false;
+let MAP_WIDTH = currentMap.mapWidth;
+let MAP_HEIGHT = currentMap.mapHeight;
 
-    // Scale the player sprite to a larger size while ensuring it fits within one tile (1 block)
-    const scaledSize = TILE_SIZE * ZOOM_FACTOR * 3; // Scale factor > 1 to make the player larger, but keep it within one tile
+function updateCamera() {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
 
-    // Draw the player sprite
-    ctx.drawImage(
-        mainplayerImg,
-        currentFrameX * spriteWidth,
-        currentFrameY * spriteHeight,
-        spriteWidth, spriteHeight,
-        Math.floor(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),  // Center the player image
-        Math.floor(playerY * TILE_SIZE * ZOOM_FACTOR - cameraY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),  // Center the player image
-        Math.floor(scaledSize), // Ensure the scaled width is an integer
-        Math.floor(scaledSize)  // Ensure the scaled height is an integer
-    );
+    const playerScreenX = playerX * TILE_SIZE * ZOOM_FACTOR;
+    const playerScreenY = playerY * TILE_SIZE * ZOOM_FACTOR;
+
+    cameraX = playerScreenX - centerX;
+    cameraY = playerScreenY - centerY;
+
+    const mapWidth = MAP_WIDTH * TILE_SIZE * ZOOM_FACTOR;
+    const mapHeight = MAP_HEIGHT * TILE_SIZE * ZOOM_FACTOR;
+
+    // Corrected camera boundary logic
+    cameraX = Math.max(0, Math.min(cameraX, mapWidth - canvas.width));
+    cameraY = Math.max(0, Math.min(cameraY, mapHeight - canvas.height));
 }
 
 function drawMap() {
-    // Clear the canvas to avoid remnants of previous frames
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    MAP_WIDTH = currentMap.mapWidth;
+    MAP_HEIGHT = currentMap.mapHeight;
+    updateCamera();
 
-    // Draw the upper image (background)
     ctx.drawImage(
         lowerImg,
         cameraX / ZOOM_FACTOR,
@@ -142,18 +139,20 @@ function drawMap() {
         canvas.width,
         canvas.height
     );
+
     if (showGrid) {
         drawGrid();
         drawDoors();
         drawWalls();
         drawGreenSquares();
         drawLake();
-        eventSpaces(); 
+        eventSpaces();
     }
-    drawPlayer();
-    drawNPC();
 
-    // Draw the lower image (on top of the player)
+    drawNPC();    // Draw NPCs BEFORE the player
+
+    drawPlayer(); // Player is drawn AFTER NPCs
+
     ctx.drawImage(
         upperImg,
         cameraX / ZOOM_FACTOR,
@@ -164,33 +163,23 @@ function drawMap() {
         canvas.width,
         canvas.height
     );
-
-   
 }
 
-function loadMap(mapData) {
-    upperImg.src = mapData.upperSRC;
-    lowerImg.src = mapData.lowerSRC;
-    ZOOM_FACTOR = mapData.zoom;
 
-    Promise.all([
-        new Promise(resolve => upperImg.onload = resolve),
-        new Promise(resolve => lowerImg.onload = resolve)
-    ]).then(() => {
-        const mapWidth = Math.floor(upperImg.width / TILE_SIZE);
-        const mapHeight = Math.floor(lowerImg.height / TILE_SIZE); //Corrected line
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-    
-        tileMap = getTileData(mapWidth, mapHeight);
-        console.log(`Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
-        drawMap();
-        drawPlayer();
-        drawCoordinates();
-    });
+function drawPlayer() {
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(
+        mainplayerImg,
+        currentFrameX * spriteWidth,
+        currentFrameY * spriteHeight,
+        spriteWidth, spriteHeight,
+        Math.floor(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),
+        Math.floor(playerY * TILE_SIZE * ZOOM_FACTOR - cameraY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),
+        Math.floor(scaledSize),
+        Math.floor(scaledSize)
+    );
 }
+
 function drawWalls() {
     ctx.fillStyle = 'red';
     currentMap.walls.forEach(wall => {
@@ -236,38 +225,15 @@ function drawGrid() {
     }
 }
 
-function drawNPC() {
-    currentMap.npcs.forEach(npc => {  // 'npc' instead of 'npcs'
-        const npcImage = npcImages[npc.name]; // Access image using npc.name
+let npcImages = {};
 
-        if (npcImage) {
-            // Scale the NPC image to fit within one tile
-            const scaledSize = TILE_SIZE * ZOOM_FACTOR * 2.5; // Scale factor to ensure NPC fits within the tile size
-
-            // Calculate the position on the canvas with camera offset
-            const npcX = npc.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
-            const npcY = npc.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
-
-            // Draw the NPC image ensuring it's centered within the tile
-            ctx.drawImage(npcImage, npcX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, npcY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, scaledSize, scaledSize);
-        }
-    });
-}
-
-// Preload NPC images
-const npcImages = {};
-
-currentMap.npcs.forEach(npc => {  // Corrected the variable name from 'npcs' to 'npc'
+currentMap.npcs.forEach(npc => {
     const img = new Image();
-    img.src = npc.src;  // Correctly reference the 'src' property of the individual NPC
+    img.src = npc.src;
     npcImages[npc.name] = img;
 });
 
 
-// Function to check if the position is occupied by an NPC
-function isNPC(x, y) {
-    return currentMap.npcs.some(npcs => npcs.x === x && npcs.y === y);
-}
 
 function isWall(x, y) {
     return currentMap.walls.some(wall => wall.x === x && wall.y === y);
@@ -278,10 +244,9 @@ function showNpcText() {
     npcTextContainer.classList.add('show');
 }
 
-let messageIndex = 0; // To track which message to show next
+let messageIndex = 0;
 
 let intialDreamMessages = [
-    
     "Welcome to the world of Eatermon. What is your name?",
     "This is a very different world from the world you know. In your world many people eat food, and it is how they survive.",
     "Here food is not a necessity and due to a weird paradox universe food is alive.",
@@ -295,22 +260,19 @@ function startScreen() {
     startingOverlay.style.display = `block`;
     startingOverlay.style.backgroundColor = 'black'; 
     
-    // Set NPC Name and message
     npcName.innerHTML = `Dream Warden`;
-    npcP.innerHTML = intialDreamMessages[messageIndex]; // Initial message
+    npcP.innerHTML = intialDreamMessages[messageIndex];
     npcTextBox.style.display = 'block'; 
-    npcTextBox.innerHTML = `Please enter your name below:`;  // Prompt to enter the name in npcTextBox
+    npcTextBox.innerHTML = `Please enter your name below:`;
     initalCutsceneName.style.display = 'block'; 
     npcNormal = false; 
     normal = false;     
     initalCutScene = true;
 
-    // Create and style floating Z's (White Z's)
     let floatingZs = document.createElement('div');
     floatingZs.classList.add('floating-zs');
-    startingOverlay.appendChild(floatingZs); // Add the floating Z's container to the starting overlay
+    startingOverlay.appendChild(floatingZs);
 
-    // Create individual Z's
     for (let i = 0; i < 4; i++) {
         let z = document.createElement('span');
         z.classList.add('z');
@@ -318,61 +280,54 @@ function startScreen() {
         floatingZs.appendChild(z);
     }
 
-    // Focus on the text box and listen for the Enter key on the whole document
     npcTextBox.focus();
     document.addEventListener('keydown', handleKeyPress);
     
     showNpcText();
 }
 
-
 function handleKeyPress(event) {
-    // Check if the Enter key was pressed
     if (event.key === 'Enter' && !gettingName) {
-        showNextMessage(); // Show the next message when Enter is pressed
+        showNextMessage();
     }
 }
 
-// startScreen()
 function showNextMessage() {
     let startingOverlay = document.getElementById('startingScene'); 
-    messageIndex++; // Move to the next message
+    messageIndex++;
     if (messageIndex < intialDreamMessages.length) {
-        npcP.innerHTML = intialDreamMessages[messageIndex]; // Display the next message
+        npcP.innerHTML = intialDreamMessages[messageIndex];
     } else {
-        npcP.innerHTML = `I have told you all I can for now. Wake Up ${playerName}!`; // If no more messages, end the conversation
+        npcP.innerHTML = `I have told you all I can for now. Wake Up ${playerName}!`;
         setTimeout(() => {
             hideNpcText(); 
             npcNormal = true; 
             normal = true;     
             initalCutScene = false;
-            startingOverlay.classList.add('hidden'); // Add the "hidden" class to trigger fade-out
-        }, 2000); // Wait for 2 seconds before hiding
+            startingOverlay.classList.add('hidden');
+        }, 2000);
     }
 }
-
 
 function submitName() {
-    playerName = npcTextBox.value.trim(); // Get the value entered by the player
+    playerName = npcTextBox.value.trim();
     if (playerName !== '') {
-        npcP.innerHTML = `Welcome, ${playerName}, to the world of Eatermon!`; // Personalizing the npcTextBox message
-        npcTextBox.style.display = 'none'; // Hide the input field after submission
-        initalCutsceneName.style.display = 'none'; // Hide the submit button
-        messageIndex = 0; // Reset messages after name submission
+        npcP.innerHTML = `Welcome, ${playerName}, to the world of Eatermon!`;
+        npcTextBox.style.display = 'none';
+        initalCutsceneName.style.display = 'none';
+        messageIndex = 0;
         gettingName = false; 
     } else {
-        npcTextBox.innerHTML = `Please enter a valid name.`; // Error message if name is not entered
+        npcTextBox.innerHTML = `Please enter a valid name.`;
     }
 }
 
-
-// NPC Interaction
 function NPCtext() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     let npcName = document.getElementById('npcName');
 
     if (currentNPC) {
-        showNpcText(); // Show text when talking to the NPC.
+        showNpcText();
         if (currentNPC.canTalkAgain) {
             npcName.innerHTML = `${currentNPC.name} Says: `;
             npcText.innerHTML = `${currentNPC.message}`;
@@ -383,20 +338,37 @@ function NPCtext() {
             setTimeout(() => {
                 npcNormal = true;
                 waitingForEnter = false;
-                hideNpcText(); // Hide text after "Already talked"
+                hideNpcText();
             }, 1000);
             waitingForEnter = true;
         }
     }
 }
-
-
-
-
-
-// NPC Interaction
 function interactWithNPC() {
-    const npcAtPlayerPosition = currentMap.npcs.find(n => Math.abs(n.x - playerX) <= 1 && Math.abs(n.y - playerY) <= 1);
+    // console.log(`Player Position: (${Math.floor(playerX)}, ${Math.floor(playerY)})`);
+
+    const npcAtPlayerPosition = currentMap.npcs.find(npc => {
+        const npcWidth = Math.ceil(3); // Adjust based on NPC sprite size
+        const npcHeight = Math.ceil(3);
+
+        // console.log(`Checking NPC: ${npc.name} at (${Math.floor(npc.x)}, ${Math.floor(npc.y)})`);
+
+        for (let offsetX = 0; offsetX < npcWidth; offsetX++) {
+            for (let offsetY = 0; offsetY < npcHeight; offsetY++) {
+                let checkX = Math.floor(npc.x) + offsetX;
+                let checkY = Math.floor(npc.y) + offsetY;
+                
+                // console.log(`Checking tile: (${checkX}, ${checkY})`);
+
+                if (checkX === Math.floor(playerX) && checkY === Math.floor(playerY)) {
+                    // console.log(`Match found! NPC ${npc.name} detected.`);
+                    return true;
+                }
+            }
+        }
+        return false;
+    });
+
     if (npcAtPlayerPosition) {
         console.log('Interacting with NPC:', npcAtPlayerPosition.name);
         talkingToNPC = true;
@@ -404,7 +376,7 @@ function interactWithNPC() {
         NPCtext();
         npcNormal = false;
     } else {
-        console.log('No NPC found at player position');
+        console.log(' No NPC found at player position');
     }
 }
 
@@ -414,17 +386,124 @@ function hideNpcText() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.classList.remove('show');
     npcTextContainer.style.display = 'none';
-    // console.log("hideNpcText: Container hidden.");
 }
 
-// Add this function to show the npcTextContainer
 function showNpcText() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.style.display = 'block';
     npcTextContainer.classList.add('show');
-    // console.log("showNpcText: Container shown.");
+}
+
+function loadMap(mapData) {
+    currentMap = mapData;
+    upperImg.src = mapData.upperSRC;
+    lowerImg.src = mapData.lowerSRC;
+    ZOOM_FACTOR = mapData.zoom;
+    playerX = mapData.startingXY.x;
+    playerY = mapData.startingXY.y;
+    MAP_WIDTH = mapData.mapWidth;
+    MAP_HEIGHT = mapData.mapHeight;
+
+    console.log("Loading map:", currentMap.id, "ZOOM_FACTOR:", ZOOM_FACTOR);
+
+    Promise.all([
+        new Promise(resolve => upperImg.onload = resolve),
+        new Promise(resolve => lowerImg.onload = resolve)
+    ]).then(() => {
+        const mapWidth = Math.floor(upperImg.width / TILE_SIZE);
+        const mapHeight = Math.floor(lowerImg.height / TILE_SIZE);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        tileMap = getTileData(mapWidth, mapHeight);
+        console.log(`Tile Map Size: ${tileMap[0].length}x${tileMap.length}`);
+
+        let npcImagePromises = currentMap.npcs.map(npc => {
+            return new Promise(resolve => {
+                const img = new Image();
+                img.src = npc.src;
+                img.onload = () => {
+                    npcImages[npc.name] = img;
+                    resolve();
+                };
+                img.onerror = () => {
+                    console.error("error loading npc image: ", npc.src);
+                    resolve();
+                };
+            });
+        });
+
+        Promise.all(npcImagePromises).then(() => {
+            console.log("NPC Images:", npcImages);
+            console.log("Current Map npcs:", currentMap.npcs);
+
+            // Use requestAnimationFrame to ensure rendering is complete
+            requestAnimationFrame(() => {
+                drawMap();
+                drawPlayer();
+                // drawNPC();
+                drawCoordinates();
+            });
+        });
+    });
+}
+function drawNPC() {
+    currentMap.npcs.forEach(npc => {
+        const npcImage = npcImages[npc.name];
+        if (npcImage) {
+            const scaledSize = TILE_SIZE * ZOOM_FACTOR * 2.5;
+            const npcX = npc.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
+            const npcY = npc.y * TILE_SIZE * ZOOM_FACTOR - cameraY;
+
+            ctx.drawImage(npcImage, npcX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, npcY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, scaledSize, scaledSize);
+        }
+    });
+}
+
+let shrinkFactor = 0.7; // Example: shrink to 75% of original size
+
+function drawPlayer() {
+    ctx.imageSmoothingEnabled = false;
+
+    // Calculate the new scaled size
+    let currentScaledSize = scaledSize * shrinkFactor;
+
+    ctx.drawImage(
+        mainplayerImg,
+        currentFrameX * spriteWidth,
+        currentFrameY * spriteHeight,
+        spriteWidth, spriteHeight,
+        Math.floor(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX + (TILE_SIZE * ZOOM_FACTOR - currentScaledSize) / 2),
+        Math.floor(playerY * TILE_SIZE * ZOOM_FACTOR - cameraY + (TILE_SIZE * ZOOM_FACTOR - currentScaledSize) / 2),
+        Math.floor(currentScaledSize),
+        Math.floor(currentScaledSize)
+    );
+}
+
+// To shrink the player, update the shrinkFactor or scaledSize variable.
+// Example:
+function shrinkPlayer() {
+    shrinkFactor = 0.5; // Shrink to 50%
+}
+
+function resetPlayerSize() {
+    shrinkFactor = 1; // back to 100%
 }
 
 
-//THIS IS HOW YOU START THE FIRST CUTSCENE
-// startScreen()
+
+function isNPC(x, y) {
+    return currentMap.npcs.some(npc => {
+        const npcWidth = Math.ceil(2); // Approximate width in tiles
+        const npcHeight = Math.ceil(2); // Approximate height in tiles
+
+        for (let offsetX = 0; offsetX < npcWidth; offsetX++) {
+            for (let offsetY = 0; offsetY < npcHeight; offsetY++) {
+                if (Math.floor(npc.x) + offsetX === Math.floor(x) && 
+                    Math.floor(npc.y) + offsetY === Math.floor(y)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    });
+}

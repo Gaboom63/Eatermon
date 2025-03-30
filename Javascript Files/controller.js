@@ -4,29 +4,36 @@ let frameCounter = 0;
 const TOTAL_FRAMES = 4; // 4 images per row in the sprite sheet
 const MOVE_SPEED = 1; // Pixels per movement
 const MOVE_INTERVAL = 90; // Milliseconds between movements (for consistent movement speed)
+let frameUpdateCounter = 0; // Counter for sprite frame updates
+const frameUpdateInterval = 3; // Adjust for slower/faster frame changes (larger = slower)
+
 
 function updatePlayerSprite(direction) {
-    // frameCounter = (frameCounter + 1) % TOTAL_FRAMES; // Cycle through frames 0-3
+    if (frameUpdateCounter % frameUpdateInterval === 0) { // Only update every frameUpdateInterval movements
+        frameCounter = (frameCounter + 1) % TOTAL_FRAMES; // Cycle through frames 0-3
 
-    // // Update the currentFrameX depending on the direction and frameCounter
-    // switch (direction) {
-    //     case 'up':
-    //         currentFrameX = frameCounter;
-    //         currentFrameY = 2; // Assuming row 2 is up
-    //         break;
-    //     case 'down':
-    //         currentFrameX = frameCounter;
-    //         currentFrameY = 0; // Assuming row 0 is down
-    //         break;
-    //     case 'left':
-    //         currentFrameX = frameCounter;
-    //         currentFrameY = 3; // Assuming row 3 is left
-    //         break;
-    //     case 'right':
-    //         currentFrameX = frameCounter;
-    //         currentFrameY = 1; // Assuming row 1 is right
-    //         break;
-    // }
+        // Update the currentFrameX depending on the direction and frameCounter
+        switch (direction) {
+            case 'up':
+                currentFrameX = frameCounter;
+                currentFrameY = 3;// Assuming row 2 is up
+                break;
+            case 'down':
+                currentFrameX = frameCounter;
+                currentFrameY = 0; // Assuming row 0 is down
+                break;
+            case 'left':
+                currentFrameX = frameCounter;
+                currentFrameY = 2; // Assuming row 3 is left
+                break;
+            case 'right':
+                currentFrameX = frameCounter;
+                currentFrameY = 1; // Assuming row 1 is right
+                break;
+        }
+    }
+    frameUpdateCounter++;
+
 }
 
 
