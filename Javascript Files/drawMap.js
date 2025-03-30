@@ -106,23 +106,7 @@ lowerImg.onload = () => {
 let MAP_WIDTH = currentMap.mapWidth;
 let MAP_HEIGHT = currentMap.mapHeight;
 
-function updateCamera() {
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
 
-    const playerScreenX = playerX * TILE_SIZE * ZOOM_FACTOR;
-    const playerScreenY = playerY * TILE_SIZE * ZOOM_FACTOR;
-
-    cameraX = playerScreenX - centerX;
-    cameraY = playerScreenY - centerY;
-
-    const mapWidth = MAP_WIDTH * TILE_SIZE * ZOOM_FACTOR;
-    const mapHeight = MAP_HEIGHT * TILE_SIZE * ZOOM_FACTOR;
-
-    // Corrected camera boundary logic
-    cameraX = Math.max(0, Math.min(cameraX, mapWidth - canvas.width));
-    cameraY = Math.max(0, Math.min(cameraY, mapHeight - canvas.height));
-}
 
 function drawMap() {
     MAP_WIDTH = currentMap.mapWidth;
@@ -459,7 +443,7 @@ function drawNPC() {
     });
 }
 
-let shrinkFactor = 0.7; // Example: shrink to 75% of original size
+let shrinkFactor = 0.67; // Example: shrink to 75% of original size
 
 function drawPlayer() {
     ctx.imageSmoothingEnabled = false;
@@ -482,19 +466,19 @@ function drawPlayer() {
 // To shrink the player, update the shrinkFactor or scaledSize variable.
 // Example:
 function shrinkPlayer() {
-    shrinkFactor = 0.5; // Shrink to 50%
+    shrinkFactor = 0; // Shrink to 50%
 }
 
 function resetPlayerSize() {
-    shrinkFactor = 1; // back to 100%
+    shrinkFactor = 0.3; // back to 100%
 }
 
 
 
 function isNPC(x, y) {
     return currentMap.npcs.some(npc => {
-        const npcWidth = Math.ceil(2); // Approximate width in tiles
-        const npcHeight = Math.ceil(2); // Approximate height in tiles
+        const npcWidth = Math.ceil(1); // Approximate width in tiles
+        const npcHeight = Math.ceil(1); // Approximate height in tiles
 
         for (let offsetX = 0; offsetX < npcWidth; offsetX++) {
             for (let offsetY = 0; offsetY < npcHeight; offsetY++) {

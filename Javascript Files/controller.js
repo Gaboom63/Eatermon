@@ -9,32 +9,34 @@ const frameUpdateInterval = 3; // Adjust for slower/faster frame changes (larger
 
 
 function updatePlayerSprite(direction) {
-    if (frameUpdateCounter % frameUpdateInterval === 0) { // Only update every frameUpdateInterval movements
-        frameCounter = (frameCounter + 1) % TOTAL_FRAMES; // Cycle through frames 0-3
+    // console.log("frameUpdateCounter: ", frameUpdateCounter);
+    if (frameUpdateCounter % frameUpdateInterval === 0) {
+        frameCounter = (frameCounter + 1) % TOTAL_FRAMES; // Cycle through frames
 
-        // Update the currentFrameX depending on the direction and frameCounter
         switch (direction) {
             case 'up':
                 currentFrameX = frameCounter;
-                currentFrameY = 3;// Assuming row 2 is up
+                currentFrameY = 3;
                 break;
             case 'down':
                 currentFrameX = frameCounter;
-                currentFrameY = 0; // Assuming row 0 is down
+                currentFrameY = 0;
                 break;
             case 'left':
                 currentFrameX = frameCounter;
-                currentFrameY = 2; // Assuming row 3 is left
+                currentFrameY = 2;
                 break;
             case 'right':
                 currentFrameX = frameCounter;
-                currentFrameY = 1; // Assuming row 1 is right
+                currentFrameY = 1;
                 break;
+            default:
+                // console.log("Unknown direction: ", direction);
         }
     }
     frameUpdateCounter++;
-
 }
+
 
 
 // Handle player movement
@@ -138,8 +140,8 @@ function startMoving(dx, dy, direction) {
     if (isMoving) return; // If already moving, do not start another interval
     isMoving = true;
     movementInterval = setInterval(() => {
-        movePlayer(dx, dy);
-        updatePlayerSprite(direction); // Update sprite when moving
+        movePlayer(dx, dy, direction);  // direction should be passed here
+        updatePlayerSprite(direction);  // and here as well
     }, MOVE_INTERVAL);
 }
 

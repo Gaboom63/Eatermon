@@ -1,6 +1,12 @@
-
-
 // Movement and Interaction
+let targetCameraX = 0;
+let targetCameraY = 0;
+let cameraSmoothing = 0.1; // Adjust for smoother/faster camera movement
+
+let targetPlayerX = 0;
+let targetPlayerY = 0;
+let playerSmoothing = 0.2; // Adjust for smoother/faster player movement
+
 function movePlayer(dx, dy, direction) {
     const newX = playerX + dx;
     const newY = playerY + dy;
@@ -16,14 +22,9 @@ function movePlayer(dx, dy, direction) {
         playerX = newX;
         playerY = newY;
 
-        // Update camera position
-        cameraX = Math.max(0, Math.min(cameraX + dx * TILE_SIZE * ZOOM_FACTOR, upperImg.width * ZOOM_FACTOR - canvas.width));
-        cameraY = Math.max(0, Math.min(cameraY + dy * TILE_SIZE * ZOOM_FACTOR, upperImg.height * ZOOM_FACTOR - canvas.height));
-
-        // Adjust camera Y to keep the player centered within the view
-        if (playerY * TILE_SIZE * ZOOM_FACTOR - cameraY < 0 || playerY * TILE_SIZE * ZOOM_FACTOR - cameraY > canvas.height) {
-            cameraY = playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2;
-        }
+        // Calculate target camera position
+        targetCameraX = Math.max(0, Math.min(playerX * TILE_SIZE * ZOOM_FACTOR - canvas.width / 2, upperImg.width * ZOOM_FACTOR - canvas.width));
+        targetCameraY = Math.max(0, Math.min(playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2, upperImg.height * ZOOM_FACTOR - canvas.height));
     }
 
     // Only call drawing functions after successful movement
@@ -64,13 +65,8 @@ function movePlayer(dx, dy, direction) {
                             updatePlayerPosition();
     
                             // Apply any camera adjustments needed after teleportation
-                            cameraX = Math.max(0, Math.min(playerX * TILE_SIZE * ZOOM_FACTOR, upperImg.width * ZOOM_FACTOR - canvas.width));
-                            cameraY = Math.max(0, Math.min(playerY * TILE_SIZE * ZOOM_FACTOR, upperImg.height * ZOOM_FACTOR - canvas.height));
-    
-                            // Reposition the camera if the player is not within the view
-                            if (playerY * TILE_SIZE * ZOOM_FACTOR - cameraY < 0 || playerY * TILE_SIZE * ZOOM_FACTOR - cameraY > canvas.height) {
-                                cameraY = playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2;
-                            }
+                            targetCameraX = Math.max(0, Math.min(playerX * TILE_SIZE * ZOOM_FACTOR - canvas.width / 2, upperImg.width * ZOOM_FACTOR - canvas.width));
+                            targetCameraY = Math.max(0, Math.min(playerY * TILE_SIZE * ZOOM_FACTOR - canvas.height / 2, upperImg.height * ZOOM_FACTOR - canvas.height));
     
                             // Redraw everything after the teleportation
                             drawMap();
@@ -92,9 +88,6 @@ function movePlayer(dx, dy, direction) {
     }
 }
 
-
-
-
 // Update Player Position Style
 function updatePlayerPosition() {
     mainPlayer.style.left = `${playerX}px`;
@@ -102,3 +95,17 @@ function updatePlayerPosition() {
     mainPlayer.style.backgroundPosition = `-${currentFrameX * spriteWidth}px -${currentFrameY * spriteHeight}px`;
     mainPlayer.style.transform = `scale(${scaleFactor})`;
 }
+
+function updateCamera() {
+    // Smooth camera movement using lerp
+    cameraX += (targetCameraX - cameraX) * cameraSmoothing;
+    cameraY += (targetCameraY - cameraY) * cameraSmoothing;
+
+    const mapWidth = MAP_WIDTH * TILE_SIZE * ZOOM_FACTOR;
+    const mapHeight = MAP_HEIGHT * TILE_SIZE * ZOOM_FACTOR;
+
+    // Corrected camera boundary logic
+    cameraX = Math.max(0, Math.min(cameraX, mapWidth - canvas.width));
+    cameraY = Math.max(0, Math.min(cameraY, mapHeight - canvas.height));
+}
+
