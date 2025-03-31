@@ -7,6 +7,7 @@ const player = {
 
 // Game loop function
 function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     // Draw the map and the player
     drawMap();
 

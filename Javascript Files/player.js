@@ -73,7 +73,16 @@ function movePlayer(dx, dy, direction) {
                             drawPlayer();
                             drawCoordinates();
                             updatePlayerSprite(direction);
-                            npcNormal = true;
+                            if (game.currentMessageArray === game.momMessageText) {
+                                npcNormal = true;
+                                setTimeout(() => {
+                                    npcNormal = false;
+                                }, 1000);
+                                console.log("isMomMessageActive (Downstairs Transition)");
+                                momMessageDownstairs();
+                            } else {
+                                npcNormal = true;
+                            }
                         }, 50);  // Adjust timing if necessary to match map loading duration
                     } else {
                         console.error("Map with mapId:", destination.mapId, "not found.");

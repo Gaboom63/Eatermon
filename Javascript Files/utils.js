@@ -138,28 +138,48 @@ function delayedMovePlayer(x, y, direction, delay) {
     }, delay);
 }
 
-let cutScene = [
+let cutScenes = [
     [
         { action: 'move', direction: 'right', x: 1, y: 0, multiplier: 10 }, 
+    ],
+    [
+        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 7 }, 
+        { action: 'move', direction: 'left', x: -1, y: 0, multiplier: 11 }, 
+        { action: 'move', direction: 'up', x: 0, y: 0, multiplier: 5 }, 
     ]
 ];
 
+let currentCutScene = 0;
+
 // Function to play the entire cutscene, including multiple sequences, with delays and multipliers
-function playCutScene() {
-    // Set npcNormal to false to indicate the cutscene is active
+function playCutScene(index) {
+    if (index < 0 || index >= cutScenes.length) {
+        console.log("Invalid cutscene index.");
+        return;
+    }
+
+    // Set npcNormal to false to indicate cutscene is active
     npcNormal = false;
-    // console.log("Cutscene started, npcNormal is now", npcNormal);
+    console.log("Cutscene started, npcNormal is now", npcNormal);
 
     let delay = 0;  // Initial delay
 
-    for (let sequence of cutScene) {
-        for (let step of sequence) {
-            if (step.action === 'move') {
-                // Apply the multiplier to repeat the action multiple times
-                for (let i = 0; i < step.multiplier; i++) {
-                    delayedMovePlayer(step.x, step.y, step.direction, delay);
-                    delay += 500; // Delay between each move (500ms for each move)
-                }
+    // Get the selected cutscene sequence by index
+    let cutscene = cutScenes[index];
+
+    // Loop through each step in the cutscene (no need for a second loop over 'sequence')
+    for (let step of cutscene) {
+        if (step.action === 'move') {
+            // Apply the multiplier to repeat the action multiple times
+            for (let i = 0; i < step.multiplier; i++) {
+                delayedMovePlayer(step.x, step.y, step.direction, delay);
+                delay += 500; // Delay between each move (500ms for each move)
+            }
+        } else if (step.action === 'face') {
+            // Apply the multiplier to repeat the action multiple times
+            for (let i = 0; i < step.multiplier; i++) {
+                delayedMovePlayer(step.x, step.y, step.direction, delay);
+                delay += 500; // Delay between each move (500ms for each move)
             }
         }
     }
@@ -169,6 +189,17 @@ function playCutScene() {
         console.log("Cutscene finished, npcNormal is now", npcNormal);
     }, delay);
 }
+
+// Function to change the current cutscene
+function setCutScene(index) {
+    currentCutScene = index;
+    playCutScene(currentCutScene);
+}
+
+// Example to use:
+// setCutScene(0);  // Plays cutscene 1
+// setCutScene(1);  // Plays cutscene 2
+// setCutScene(0);  // Play the first cutscene
 
 function eventSpaceLogic() {
     let map = currentMap.id; 
