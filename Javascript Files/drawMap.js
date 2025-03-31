@@ -277,7 +277,7 @@ function interactWithNPC() {
         return false;
     });
 
-    if (npcAtPlayerPosition) {
+    if (npcAtPlayerPosition && momMessageDone) {
         console.log('Interacting with NPC:', npcAtPlayerPosition.name);
         talkingToNPC = true;
         currentNPC = npcAtPlayerPosition;

@@ -143,9 +143,13 @@ let cutScenes = [
         { action: 'move', direction: 'right', x: 1, y: 0, multiplier: 10 }, 
     ],
     [
-        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 7 }, 
+        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 8 }, 
         { action: 'move', direction: 'left', x: -1, y: 0, multiplier: 11 }, 
-        { action: 'move', direction: 'up', x: 0, y: 0, multiplier: 5 }, 
+        { action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1 }, 
+    ],
+    [
+        { action: 'move', direction: 'left', x: -1, y: 0, multiplier: 3 },
+        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 11 }, 
     ]
 ];
 
@@ -187,6 +191,7 @@ function playCutScene(index) {
     setTimeout(() => {
         npcNormal = true;
         console.log("Cutscene finished, npcNormal is now", npcNormal);
+        // if(playerX === )
     }, delay);
 }
 
@@ -208,12 +213,15 @@ function eventSpaceLogic() {
         let event = maps[map].eventSpace[i];
         
         // Check if player is at the current event space coordinates
-        if (playerX === event.x && playerY === event.y) {
+        if (playerX === event.x && playerY === event.y && currentMap.id === 1) {
             stopMoving(); 
-            // Trigger the cutscene
-            playCutScene();
-
-            return; // Exit after the first match is found to avoid unnecessary checks
+            setCutScene(0);
+            return; 
+        } else if (playerX === event.x && playerY === event.y && currentMap.id === 2) {
+            npcNormal = false;  
+            normal = false;
+            momMessageDownstairs();
+            return; 
         }
     }
 }

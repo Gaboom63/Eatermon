@@ -14,13 +14,16 @@ let game = {
         `You Should Come Downstairs!`,
     ],
     downstairsMomMessageText: [
-        `Hello`,
+        "",
+        `Some kid named Elijah is outside waiting for you. You Should Go See Him!`,
     ],
     currentMessageArray: [],
     isMomMessageComplete: false,
     currentMessageHandler: null, // Function to handle key press
     cutSceneState: 0, // 0: initial, 1: downstairs
 };
+
+let momMessageDone = false; 
 
 function startScreen() {
     let startingOverlay = document.getElementById('startingScene');
@@ -62,9 +65,11 @@ function handleKeyPress(event) {
 
 function showNextMessage() {
     game.messageIndex++;
+    // If messageIndex is within bounds of the current array, continue showing messages
     if (game.messageIndex < game.currentMessageArray.length) {
         npcP.innerHTML = game.currentMessageArray[game.messageIndex];
     } else {
+        // If all messages are shown in the current array, handle what to do next
         if (game.currentMessageArray === game.initialDreamMessages) {
             npcP.innerHTML = `I have told you all I can for now. Wake Up ${game.playerName}!`;
             setTimeout(() => {
@@ -73,36 +78,36 @@ function showNextMessage() {
                 normal = true;
                 initalCutScene = false;
                 document.removeEventListener('keydown', game.currentMessageHandler);
-                requestAnimationFrame(() => { // Ensure overlay exists before hiding
+                requestAnimationFrame(() => {
                     let startingOverlay = document.getElementById('startingScene');
                     startingOverlay.classList.add('hidden');
                     startingOverlay.style.display = 'none'; 
-                    momMessage();
+                    momMessage(); // Transition to mom message
                 });
             }, 2000);
         } else if (game.currentMessageArray === game.momMessageText) {
             game.isMomMessageComplete = true;
             setTimeout(() => {
                 hideNpcText();
-                npcNormal = true; // Added this line
-                normal = true; // Added this line
+                npcNormal = true;
+                normal = true;
                 let npcTextContainer = document.getElementById('npcTextContainer');
                 npcTextContainer.classList.remove('show');
                 npcTextContainer.style.display = 'none';
                 document.removeEventListener('keydown', game.currentMessageHandler);
-                // momMessageDownstairs(); //Removed from here. Called by map transition.
+                momMessageDone = true;
             }, 2000);
         } else if (game.currentMessageArray === game.downstairsMomMessageText) {
             game.isMomMessageComplete = true;
             setTimeout(() => {
                 hideNpcText();
-                npcNormal = true; // Added this line
-                normal = true; // Added this line
+                npcNormal = true;
+                normal = true;
                 let npcTextContainer = document.getElementById('npcTextContainer');
                 npcTextContainer.classList.remove('show');
                 npcTextContainer.style.display = 'none';
                 document.removeEventListener('keydown', game.currentMessageHandler);
-                setCutScene(1);
+                momMessageDone = true;
             }, 2000);
         }
     }
@@ -141,13 +146,14 @@ function triggerMapTransition(){
 }
 
 function momMessageDownstairs() {
+    game.downstairsMomMessageText[0] = `Hello ${game.playerName}`;
     game.messageIndex = 0;
     npcName.innerHTML = `Mom`;
     npcP.innerHTML = game.downstairsMomMessageText[game.messageIndex];
     npcNormal = false;
     normal = false;
     npcTextBox.focus();
-    game.currentMessageArray = game.downstairsMomMessageText;
+    game.currentMessageArray = game.downstairsMomMessageText; // Set the current array for downstairs messages
     game.currentMessageHandler = handleKeyPress;
     document.addEventListener('keydown', game.currentMessageHandler);
     showNpcText();

@@ -79,7 +79,8 @@ function movePlayer(dx, dy, direction) {
                                     npcNormal = false;
                                 }, 1000);
                                 console.log("isMomMessageActive (Downstairs Transition)");
-                                momMessageDownstairs();
+                                setCutScene(1);
+                                momMessageDownstairs(); 
                             } else {
                                 npcNormal = true;
                             }
