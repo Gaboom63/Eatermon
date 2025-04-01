@@ -246,8 +246,8 @@ function NPCtext() {
             setTimeout(() => {
                 npcNormal = true;
                 waitingForEnter = false;
-                hideNpcText();
-            }, 1000);
+                hideNpcTextOriginal();
+        }, 1000);
             waitingForEnter = true;
         }
     }
@@ -290,7 +290,7 @@ function interactWithNPC() {
 
 
 
-function hideNpcText() {
+function hideNpcTextOriginal() {
     let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.classList.remove('show');
     npcTextContainer.style.display = 'none';

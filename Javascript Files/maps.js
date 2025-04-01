@@ -530,8 +530,8 @@ let maps = [
             {
                 name: "Elijah",
                 message: `Nice To Meet you! I'm Elijah, But You Can Call Me EJ! I'm What Some Would Say Your <b>Rival</b>!`,
-                x: 20,
-                y: 10,
+                x: 7,
+                y: 28,
                 src: 'images/NPCS/Rival.png',
                 party: npcParty[3].party,
                 canBattle: true,
@@ -835,25 +835,25 @@ let maps = [
             //To Outside 
             {
                 x: 11, y: 22, destinations: [
-                    { mapId: 1, x: 7, y: 12 },
+                    { mapId: 1, x: 4, y: 28 },
 
                 ]
             },
             {
                 x: 11, y: 23, destinations: [
-                    { mapId: 1, x: 7, y: 12 },
+                    { mapId: 1, x: 4, y: 28 },
 
                 ]
             },
             {
                 x: 12, y: 22, destinations: [
-                    { mapId: 1, x: 7, y: 12 },
+                    { mapId: 1, x: 4, y: 28 },
 
                 ]
             },
             {
                 x: 12, y: 23, destinations: [
-                    { mapId: 1, x: 7, y: 12 },
+                    { mapId: 1, x: 4, y: 28 },
 
                 ]
             },

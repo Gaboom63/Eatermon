@@ -150,8 +150,16 @@ let cutScenes = [
     [
         { action: 'move', direction: 'left', x: -1, y: 0, multiplier: 3 },
         { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 11 }, 
+    ],
+    [
+        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 2 },
+        { action: 'move', direction: 'right', x: 1, y: 0, multiplier: 3},
+        { action: 'move', direction: 'up', x: 0, y: -1, multiplier: 1},
+
+
     ]
 ];
+
 
 let currentCutScene = 0;
 
@@ -189,9 +197,17 @@ function playCutScene(index) {
     }
 
     setTimeout(() => {
-        npcNormal = true;
-        console.log("Cutscene finished, npcNormal is now", npcNormal);
-        // if(playerX === )
+        if(maps[currentMap.id].id === 2, playerX === 9 && playerY === 12) {
+            momMessageDownstairs(); 
+            showNpcText();
+            setTimeout(() => {
+                showNpcText();
+            }, 1000); 
+        } else {
+            npcNormal = true;
+            console.log("Cutscene finished, npcNormal is now", npcNormal);    
+        }
+
     }, delay);
 }
 

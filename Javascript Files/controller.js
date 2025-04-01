@@ -152,12 +152,12 @@ document.addEventListener('keydown', (event) => {
     if (waitingForEnter && event.key === 'Enter' && currentNPC.canTalkAgain && currentNPC.canBattle && !initalCutScene) {
         currentNPCEatermon = currentNPC.party;
         updateEatermonNpc();
-        hideNpcText(); // Hide the text before battle
+        hideNpcTextOriginal();
         npcBattle();
         waitingForEnter = false;
         // npcNormal = true;
     } else if (waitingForEnter && event.key === 'Enter' && !currentNPC.canBattle && !initalCutScene) { // Hide after last message after battle.
-        hideNpcText();
+        hideNpcTextOriginal();
         waitingForEnter = false;
         npcNormal = true;
     }

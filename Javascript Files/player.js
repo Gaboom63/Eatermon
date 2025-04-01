@@ -80,7 +80,8 @@ function movePlayer(dx, dy, direction) {
                                 }, 1000);
                                 console.log("isMomMessageActive (Downstairs Transition)");
                                 setCutScene(1);
-                                momMessageDownstairs(); 
+                            } else if(goingToElijah) {
+                                setCutScene(3);
                             } else {
                                 npcNormal = true;
                             }
