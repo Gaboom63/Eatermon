@@ -90,10 +90,12 @@ function handleNPCInteraction(e) {
     if (inBattle) return; // Prevent interaction during battle
     switch (e.key) {
         case 'Enter':
-            interactWithNPC();
-            if (!currentNPC.canBattle) {
-                setTimeout(() => { npcNormal = true; hideNpcText(); }, 1000);
-
+            if(normal) {
+                interactWithNPC();
+                if (!currentNPC.canBattle) {
+                    setTimeout(() => { npcNormal = true; hideNpcText(); }, 1000);
+    
+                }
             }
             break;
 

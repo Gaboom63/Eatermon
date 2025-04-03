@@ -143,7 +143,7 @@ let cutScenes = [
         { action: 'move', direction: 'right', x: 1, y: 0, multiplier: 10 }, 
     ],
     [
-        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 8 }, 
+        { action: 'move', direction: 'down', x: 0, y: 1, multiplier: 7 }, 
         { action: 'move', direction: 'left', x: -1, y: 0, multiplier: 11 }, 
         { action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1 }, 
     ],
@@ -197,8 +197,14 @@ function playCutScene(index) {
     }
 
     setTimeout(() => {
-        if(maps[currentMap.id].id === 2, playerX === 9 && playerY === 12) {
+        if(maps[currentMap.id].id === 2, playerX === 9 && playerY === 11) {
             momMessageDownstairs(); 
+            showNpcText();
+            setTimeout(() => {
+                showNpcText();
+            }, 1000); 
+        } else if(maps[currentMap.id].id === 1, playerX === 7 && playerY === 29) {
+            meetingElijah(); 
             showNpcText();
             setTimeout(() => {
                 showNpcText();

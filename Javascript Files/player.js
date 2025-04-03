@@ -3,10 +3,6 @@ let targetCameraX = 0;
 let targetCameraY = 0;
 let cameraSmoothing = 0.1; // Adjust for smoother/faster camera movement
 
-let targetPlayerX = 0;
-let targetPlayerY = 0;
-let playerSmoothing = 0.2; // Adjust for smoother/faster player movement
-
 function movePlayer(dx, dy, direction) {
     const newX = playerX + dx;
     const newY = playerY + dy;
