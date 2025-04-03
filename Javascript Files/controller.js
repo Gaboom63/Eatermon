@@ -94,11 +94,9 @@ function handleNPCInteraction(e) {
                 interactWithNPC();
                 if (!currentNPC.canBattle) {
                     setTimeout(() => { npcNormal = true; hideNpcText(); }, 1000);
-    
                 }
             }
             break;
-
         case 'Escape':
             openEscapeMenu();
             break;

@@ -32,6 +32,8 @@ let game = {
     buttonResult: "", // Stores the result of the button click
     buttonResultShown: false, // Track if button result has been shown.
     waitingForEnter: false, // Flag to track if waiting for enter press
+    routeOne: false, 
+    goingToElijah: false, 
 };
 
 
@@ -70,7 +72,7 @@ function startScreen() {
 }
 
 function handleKeyPress(event) {
-    if (event.key === 'Enter' && !game.gettingName && !game.isTransitioning && !game.waitingForEnter) {
+    if (event.key === 'Enter' && !game.gettingName && !game.isTransitioning && !game.waitingForEnter && !game.buttonClicked) {
         console.log("Key pressed: Enter");
 
         // If a button was clicked, proceed to the next message
@@ -252,7 +254,7 @@ function meetingElijah() {
     showQuestionButtons(); 
     questionOneButton.innerHTML = `Why have I never met you before?`; 
     questionTwoButton.innerHTML = `My Mail?`; 
-    
+    game.buttonClicked = true; 
     // Add event listeners to the buttons
     questionOneButton.addEventListener('click', function() {
         displayResultMessage("Why have I never met you before?");
@@ -275,13 +277,14 @@ function handleMeetElijahComplete() {
         npcTextContainer.style.display = 'none';
         document.removeEventListener('keydown', game.currentMessageHandler);
         meetingElijah = false;
+        routeOne = true; 
 }
 
 function displayResultMessage(buttonClicked) {
     let resultMessage = '';
 
     // Set flag to true once a button is clicked
-    game.buttonClicked = true;
+    game.buttonClicked = false;
 
     if (buttonClicked === "Why have I never met you before?") {
         resultMessage = `Elijah: "Oh, well, I usually stay in the background and avoid meeting people directly. I guess I missed you until now!"`;
@@ -327,4 +330,9 @@ function showQuestionButtons() {
 
 
 
-startScreen();
+// startScreen();
+
+function debugNoScreen() {
+    momMessageDone = true; 
+    npcNormal = true; 
+}

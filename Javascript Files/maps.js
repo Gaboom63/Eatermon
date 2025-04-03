@@ -5,7 +5,7 @@ let maps = [
         lowerSRC: 'images/maps/starterHouseRoomLower.png',
         upperSRC: 'images/maps/starterHouseRoomUpper.png',
         mapWidth: 16,
-        mapHeight: 16, 
+        mapHeight: 16,
         zoom: 4,
         walls: [
             { x: 0, y: 0 },
@@ -168,7 +168,7 @@ let maps = [
 
         ],
         startingXY: {
-            x:  14, 
+            x: 14,
             y: 2
         }
 
@@ -181,7 +181,7 @@ let maps = [
         upperSRC: 'images/maps/upperMapForStartingMap.png',
         zoom: 3,
         mapWidth: 32,
-        mapHeight: 32, 
+        mapHeight: 32,
 
         walls: [
             { x: 21, y: 26 },
@@ -489,6 +489,11 @@ let maps = [
                 ]
             },
 
+            { x: 23, y: 27 },
+            { x: 23, y: 26 },
+            { x: 24, y: 26 },
+            { x: 24, y: 27 },
+
         ],
         lakes: [
 
@@ -560,8 +565,8 @@ let maps = [
             { x: 11, y: 17 } // Add event property
 
         ]
-        ,startingXY: {
-            x:  7, 
+        , startingXY: {
+            x: 7,
             y: 12
         }
 
@@ -574,7 +579,7 @@ let maps = [
         upperSRC: 'images/maps/mainStarterHouseUpper.png',
         zoom: 3,//Number, 
         mapWidth: 24,
-        mapHeight: 24, 
+        mapHeight: 24,
 
         walls: [
             { x: 17, y: 1 },
@@ -880,7 +885,7 @@ let maps = [
             // {x: 9, y: 11},
         ],
         startingXY: {
-            x:  7, 
+            x: 7,
             y: 12
         }
 
@@ -893,7 +898,7 @@ let maps = [
         upperSRC: 'images/maps/firstMapUpper.png',
         zoom: 3,//Number, 
         mapWidth: 32,
-        mapHeight: 64, 
+        mapHeight: 64,
 
         walls: [
             { x: 8, y: 6 },
@@ -1420,7 +1425,7 @@ let maps = [
 
         ],
         doors: [
-    
+
             {
                 x: 0, y: 63, destinations: [
                     { mapId: 1, x: 7, y: 12 },
@@ -1566,7 +1571,7 @@ let maps = [
             // {x: 7, y: 62}, 
         ],
         startingXY: {
-            x:  10, 
+            x: 10,
             y: 58
         }
 
