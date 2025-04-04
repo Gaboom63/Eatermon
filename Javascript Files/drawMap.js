@@ -21,7 +21,7 @@ let tileSelectionEnabled = false;
 let isShiftPressed = false;  // Track if the Shift key is pressed
 let firstTile = null;  // Store the first tile clicked when Shift is pressed
 let initalCutScene = false;
-let currentMap = maps[0];
+let currentMap = maps[3];
 let tileMap = maps[1].id;
 let playerX = currentMap.startingXY.x;
 let playerY = currentMap.startingXY.y;
@@ -388,7 +388,7 @@ function drawNPC() {
     });
 }
 
-let shrinkFactor = 0.67; // Example: shrink to 75% of original size
+let shrinkFactor = 0.85; // Example: shrink to 75% of original size
 
 function drawPlayer() {
     ctx.imageSmoothingEnabled = false;
