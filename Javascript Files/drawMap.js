@@ -25,16 +25,16 @@ let currentMap = maps[0];
 let tileMap = maps[1].id;
 let playerX = currentMap.startingXY.x;
 let playerY = currentMap.startingXY.y;
-let ZOOM_FACTOR = currentMap.zoom;  // Zoom factor
-const spriteWidth = TILE_SIZE * ZOOM_FACTOR * 0.5;
-const spriteHeight = TILE_SIZE * ZOOM_FACTOR * 0.5;
+// let ZOOM_FACTOR = currentMap.zoom;  // Zoom factor
+let ZOOM_FACTOR = maps[4].zoom; // Assuming maps[4] is your initial map
+let spriteWidth = TILE_SIZE * ZOOM_FACTOR * 0.5;
+let spriteHeight = TILE_SIZE * ZOOM_FACTOR * 0.5;
 let npcName = document.getElementById('npcName');
 let npcP = document.getElementById('npcP');
 let npcTextBox = document.getElementById('npcTextBox'); 
 let initalCutsceneName = document.getElementById('initalCutsceneName');
 let playerName = ''; // This will store the player's name
 let scaledSize = TILE_SIZE * ZOOM_FACTOR * 3;
-
 
 const mainPlayer = document.getElementById("player");
 const upperImg = new Image();
@@ -44,6 +44,10 @@ upperImg.src = currentMap.upperSRC;
 lowerImg.src = currentMap.lowerSRC;
 mainplayerImg.src = 'images/player.png';
 
+mainplayerImg.onload = () => {
+    spriteWidth = mainplayerImg.width / spriteSheetCols; // Assuming spriteSheetCols is 4
+    spriteHeight = mainplayerImg.height / spriteSheetRows; // Assuming spriteSheetRows is 4 (for all directions)
+};
 function drawDoors() {
     currentMap.doors.forEach(door => {
         const doorX = door.x * TILE_SIZE * ZOOM_FACTOR - cameraX;
@@ -152,15 +156,32 @@ function drawMap() {
 
 function drawPlayer() {
     ctx.imageSmoothingEnabled = false;
+
+    const scaledWidth = spriteWidth * ZOOM_FACTOR * playerScale;
+    const scaledHeight = spriteHeight * ZOOM_FACTOR * playerScale;
+
+    // Calculate the position to center the scaled sprite within the tile
+    const playerXPos = Math.floor(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX);
+    const playerYPos = Math.floor(playerY * TILE_SIZE * ZOOM_FACTOR - cameraY);
+
+    // We want the drawn width and height to be a multiple of TILE_SIZE * ZOOM_FACTOR
+    const drawWidth = TILE_SIZE * ZOOM_FACTOR * 1; // Adjust '1' to your desired scale (e.g., 1.5, 2)
+    const drawHeight = TILE_SIZE * ZOOM_FACTOR * 1; // Should usually be the same as drawWidth for square sprites
+
+    // Calculate the position to center the scaled sprite
+    const offsetX = (drawWidth - scaledWidth) / 2;
+    const offsetY = (drawHeight - scaledHeight) / 2;
+
     ctx.drawImage(
         mainplayerImg,
         currentFrameX * spriteWidth,
         currentFrameY * spriteHeight,
-        spriteWidth, spriteHeight,
-        Math.floor(playerX * TILE_SIZE * ZOOM_FACTOR - cameraX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),
-        Math.floor(playerY * TILE_SIZE * ZOOM_FACTOR - cameraY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2),
-        Math.floor(scaledSize),
-        Math.floor(scaledSize)
+        spriteWidth,
+        spriteHeight,
+        playerXPos + offsetX, // Destination X with offset
+        playerYPos + offsetY, // Destination Y with offset
+        drawWidth,            // Destination Width (scaled)
+        drawHeight           // Destination Height (scaled)
     );
 }
 

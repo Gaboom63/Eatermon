@@ -41,6 +41,7 @@ function gameLoop() {
     updateHp(); // Update UI with the new enemy's HP
     eventSpaceLogic();
     debugNoScreen();
+    updatePlayerSprite();
     // Call the next frame
     requestAnimationFrame(gameLoop);
 }
