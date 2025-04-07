@@ -79,10 +79,14 @@ function movePlayer(dx, dy, direction) {
                             // } else if(game.goingToElijah) {
                             //     setCutScene(3);
                             // } else if(game.routeOne){
-                                
-                            // } else {
-                            //     npcNormal = true;
-                            // }
+                            //}        
+                        
+                            if(maps[currentMap.id].id ===  4 && game.meetingProfesser) {
+                                setCutScene(5);                                
+                            } else {
+                                npcNormal = true;
+                            }
+                            
                         }, 50);  // Adjust timing if necessary to match map loading duration
                     } else {
                         console.error("Map with mapId:", destination.mapId, "not found.");

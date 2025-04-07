@@ -93,6 +93,12 @@ const eatermonTypes =  [
         type: "Salty",
         weak: ["Grass", "Fighting", "Sweet"],
         strong: ["Sour"]
+    },
+    {
+        id: 14, 
+        type: "Dragon",
+        weak: ["Sweet", "Ice"],
+        strong: ["Sticky", "Water"]
     }
     
 ]

@@ -358,6 +358,46 @@ const eatermon = [
         canFlee: false, 
         emblem: "images/emblems/fireEmblem.png" 
     },
+    {
+        type: eatermonTypes[14],
+        id: 25, 
+        name: "Chivy",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Chivy.png",
+        xp: eatermonExp[23].xp,
+        level: eatermonExp[23].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/dragonEmblem.png" 
+    },
+    {
+        type: eatermonTypes[14],
+        id: 26, 
+        name: "Chivester",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Chivester.png",
+        xp: eatermonExp[24].xp,
+        level: eatermonExp[24].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/dragonEmblem.png" 
+    },
+    {
+        type: eatermonTypes[14],
+        id: 27, 
+        name: "Voladorio",
+        hp: 100,
+        maxHp: 100, 
+        src: "images/Eatermons/Voladorio.png",
+        xp: eatermonExp[25].xp,
+        level: eatermonExp[25].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/dragonEmblem.png" 
+    },
+
 ]
 
 

@@ -1864,25 +1864,25 @@ let maps = [
             //To Outside 
             {
                 x: 11, y: 22, destinations: [
-                    { mapId: 1, x: 4, y: 28 },
+                    { mapId: 1, x: 23, y: 28 },
 
                 ]
             },
             {
                 x: 11, y: 23, destinations: [
-                    { mapId: 1, x: 4, y: 28 },
+                    { mapId: 1, x: 23, y: 28 },
 
                 ]
             },
             {
                 x: 12, y: 22, destinations: [
-                    { mapId: 1, x: 4, y: 28 },
+                    { mapId: 1, x: 23, y: 28 },
 
                 ]
             },
             {
                 x: 12, y: 23, destinations: [
-                    { mapId: 1, x: 4, y: 28 },
+                    { mapId: 1, x: 23, y: 28 },
 
                 ]
             },
@@ -1905,7 +1905,7 @@ let maps = [
 
         ],
         eventSpace: [
-            // {x: 9, y: 11},
+            {x: 9, y: 12},
         ],
         startingXY: {
             x: 7,

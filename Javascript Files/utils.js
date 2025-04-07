@@ -161,6 +161,11 @@ let cutScenes = [
     [
         {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 16},
         {action: 'move', direction: 'up', x: 0, y: -1, multiplier: 2}
+    ],
+    [
+        {action: 'move', direction: 'up', x: 0, y: -1, multiplier: 8},
+        {action: 'move', direction: 'left', x: -1, y: 0, multiplier: 2},
+        {action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1},
     ]
 ];
 
@@ -201,24 +206,29 @@ function playCutScene(index) {
     }
 
     setTimeout(() => {
-        if(maps[currentMap.id].id === 2, playerX === 9 && playerY === 11) {
-            momMessageDownstairs(); 
+    if(maps[currentMap.id].id === 2 && playerX === 9 && playerY === 11) {
+        momMessageDownstairs();
+        showNpcText();
+        setTimeout(() => {
             showNpcText();
-            setTimeout(() => {
-                showNpcText();
-            }, 1000); 
-        } else if(maps[currentMap.id].id === 1, playerX === 7 && playerY === 29) {
-            meetingElijah(); 
+        }, 1000);
+    } else if(maps[currentMap.id].id === 1 && playerX === 7 && playerY === 29) {
+        meetingElijah();
+        showNpcText();
+        setTimeout(() => {
             showNpcText();
-            setTimeout(() => {
-                showNpcText();
-            }, 1000); 
-        } else {
-            npcNormal = true;
-            console.log("Cutscene finished, npcNormal is now", npcNormal);    
-        }
-
-    }, delay);
+        }, 1000);
+    } else if(maps[currentMap.id].id === 4 && playerX === 9 && playerY === 12){
+        firstProfesser();
+        showNpcText();
+        // setTimeout(() => {
+        //     showNpcText();
+        // }, 1000);
+    } else {
+        npcNormal = true;
+        console.log("Cutscene finished, npcNormal is now", npcNormal);
+    }
+}, delay);
 }
 
 // Function to change the current cutscene

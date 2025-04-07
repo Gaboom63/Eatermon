@@ -21,6 +21,13 @@ let game = {
     firstElijahMessageText: [
         "",
         `The professor (or my dad pretty cool huh) has been waiting for both of us since we both turned 16 today!`,
+        `We should go meet him... My house is the one on the right.`
+
+    ],
+    professerInitalText: [
+        "", 
+        `Lets Get Elijah In Here Before We Begin...`,
+        `Well Hello Elijah Perfect Timing` 
 
     ],
     currentMessageArray: [],
@@ -33,6 +40,7 @@ let game = {
     buttonResultShown: false, // Track if button result has been shown.
     waitingForEnter: false, // Flag to track if waiting for enter press
     routeOne: false, 
+    meetingProfesser:false, 
     goingToElijah: false, 
 };
 
@@ -75,69 +83,48 @@ function handleKeyPress(event) {
     if (event.key === 'Enter' && !game.gettingName && !game.isTransitioning && !game.waitingForEnter && !game.buttonClicked) {
         console.log("Key pressed: Enter");
 
-        // If a button was clicked, proceed to the next message
+        // Proceed if the button was clicked
         if (game.buttonClicked) {
             game.buttonClicked = false;  // Reset flag
             showNextMessage();  // Proceed to the next message
         } else {
+            // Check if there are more messages to show
             showNextMessage();
+            showNpcText(); 
         }
     }
 }
 
 
+
 function showNextMessage() {
+    console.log("showNextMessage called. game.messageIndex:", game.messageIndex, "game.currentMessageArray.length:", game.currentMessageArray.length);
     const currentArray = game.currentMessageArray;
-
-    console.log("Current Message Array:", currentArray);
-    console.log("Current Message Index:", game.messageIndex);
-
-    // Check if we are at the point where the first Elijah message is displayed
-    if (game.currentMessageArray[game.messageIndex] === game.firstElijahMessageText[0] && !game.buttonClicked) {
-        let questionOneButton = document.getElementById('questionButton1');
-        let questionTwoButton = document.getElementById('questionButton2');
-        questionOneButton.innerHTML = `Why have I never met you before?`; 
-        questionTwoButton.innerHTML = `My Mail?`; 
-        showQuestionButtons();
-    }
-
-    // Check if we still have messages to show
     if (game.messageIndex < currentArray.length) {
-        if (game.buttonResultShown && game.messageIndex === game.firstElijahMessageText.length) {
-            //Reset button shown and continue normally
-            game.buttonResultShown = false;
-        }
-
+        console.log("Before showing message. game.messageIndex:", game.messageIndex);
         npcP.innerHTML = currentArray[game.messageIndex];
         console.log("Showing message:", currentArray[game.messageIndex]);
-        game.messageIndex++;  // Increment after showing the message
-        console.log("Updated Message Index:", game.messageIndex);
+        game.messageIndex++;
+        console.log("After showing message. game.messageIndex:", game.messageIndex);
     } else {
-        console.log("No more messages in this array.");
-        // Handle the completion of messages
+        console.log("No more messages. Calling completion handler for:", currentArray);
         if (currentArray === game.initialDreamMessages) {
             handleInitialDreamMessagesComplete();
         } else if (currentArray === game.downstairsMomMessageText) {
             handleDownstairsMomMessagesComplete();
         } else if (currentArray === game.momMessageText) {
             handleMomMessagesComplete();
-        } else if (game.buttonResultShown && currentArray === game.firstElijahMessageText) {
-            //Reset button shown and continue normally
-            game.buttonResultShown = false;
-        } else if(currentArray === game.firstElijahMessageText) {
-            handleMeetElijahComplete(); 
-        }
-        else if (currentArray === game.firstElijahMessageText && game.buttonResult != "") {
-            npcP.innerHTML = game.buttonResult;
-            game.buttonResult = "";
-            game.messageIndex++;
-            game.buttonResultShown = true;
-        }
-        else {
-            npcP.innerHTML = currentArray[game.messageIndex];
+        } else if (currentArray === game.firstElijahMessageText) {
+            handleMeetElijahComplete();
+        } else if (currentArray === game.professerInitalText) {
+            handleMeetProfessorComplete();
+        } else {
+            npcP.innerHTML = "No more messages.";
         }
     }
 }
+
+// Handling button results after a choice is made
 
 
 
@@ -268,6 +255,32 @@ function meetingElijah() {
     goingToElijah = false;
 }
 
+function firstProfesser() {
+    npcNormal = false;
+    normal = false;
+    game.professerInitalText[0] = `Well if it isn't ${game.playerName}! Happy 16th!`;
+    game.messageIndex = 0;
+    npcName.innerHTML = `Professor Ron`;
+    npcP.innerHTML = game.professerInitalText[game.messageIndex];
+    npcTextBox.focus();
+    game.currentMessageArray = game.professerInitalText;
+    game.currentMessageHandler = handleKeyPress;
+    document.addEventListener('keydown', game.currentMessageHandler);
+    showNpcText();  // Call showNpcText once
+    console.log("firstProfesser called. game.messageIndex:", game.messageIndex, "game.currentMessageArray:", game.currentMessageArray);
+}
+
+function handleMeetProfessorComplete() {
+        hideNpcText();
+        npcNormal = true;
+        normal = true;
+        let npcTextContainer = document.getElementById('npcTextContainer');
+        npcTextContainer.classList.remove('show');
+        npcTextContainer.style.display = 'none';
+        document.removeEventListener('keydown', game.currentMessageHandler);
+        meetingProfesser = false; 
+}
+
 function handleMeetElijahComplete() {
         hideNpcText();
         npcNormal = true;
@@ -277,7 +290,8 @@ function handleMeetElijahComplete() {
         npcTextContainer.style.display = 'none';
         document.removeEventListener('keydown', game.currentMessageHandler);
         meetingElijah = false;
-        routeOne = true; 
+        meetingProfesser = true; 
+        setCutScene(4); 
 }
 
 function displayResultMessage(buttonClicked) {
@@ -295,14 +309,16 @@ function displayResultMessage(buttonClicked) {
     // Store the result message in game.buttonResult
     game.buttonResult = resultMessage;
 
-    // Optionally, hide the buttons after an answer is given
+    // Hide the buttons after an answer is given
     hideQuestionButtons();
 
-    //Show the result message right away.
+    // Show the result message immediately
     npcP.innerHTML = resultMessage;
-    game.messageIndex++; //increment index to skip the original question text.
-    game.buttonResultShown = true;
+    game.messageIndex++; // Increment index to skip the original question text
+    game.buttonResultShown = true;  // Flag to show that a result was shown
+    setTimeout(showNextMessage, 1000);  // Proceed to the next message after a brief delay
 }
+
 
 
 
@@ -334,5 +350,6 @@ function showQuestionButtons() {
 
 function debugNoScreen() {
     momMessageDone = true; 
-    npcNormal = true; 
+    game.gettingName = false;
+    // npcNormal = true; 
 }
