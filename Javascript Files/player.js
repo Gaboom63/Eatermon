@@ -80,7 +80,9 @@ function movePlayer(dx, dy, direction) {
                             //     setCutScene(3);
                             // } else if(game.routeOne){
                             //}        
-                        
+                            if(maps[currentMap.id].id === 3 && game.routeOne) {
+                                setCutScene(6);                                
+                            }
                             if(maps[currentMap.id].id ===  4 && game.meetingProfesser) {
                                 setCutScene(5);                                
                             } else {

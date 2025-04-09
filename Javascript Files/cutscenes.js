@@ -326,6 +326,7 @@ function firstProfesser() {
     console.log("firstProfesser called. game.messageIndex:", game.messageIndex, "game.currentMessageArray:", game.currentMessageArray);
 }
 
+
 function handleMeetProfessorComplete() {
     hideNpcText();
     npcNormal = true;
@@ -335,6 +336,7 @@ function handleMeetProfessorComplete() {
     npcTextContainer.style.display = 'none';
     document.removeEventListener('keydown', game.currentMessageHandler);
     meetingProfesser = false;
+    game.routeOne = true; 
 }
 
 function handleMeetElijahComplete() {
@@ -366,16 +368,20 @@ function displayResultMessage(buttonClicked) {
         currentMap.npcs[1].party = npcParty[5].party
         currentNPCEatermon = currentMap.npcs[1].party
         updateEatermonNpc();
+        currentNPC = currentMap.npcs[1]
+        console.log(currentNPC); 
         talkingToNPC = true;
         resultMessage = `Congratulations! You And Tomadoodle Are Going To Be Best Of Buds!`
     } else if (buttonClicked === "I choose: Woodle!") {
-        eatermon[currentEatermonIndex] = eatermon[0]
+        eatermon[currentEatermonIndex] = eatermon[0];
         currentEatermonIndex = 0;
-        currentMap.npcs[1].party = npcParty[6].party
-        currentNPCEatermon = currentMap.npcs[1].party
+        currentMap.npcs[1].party = npcParty[6].party;
+        currentNPCEatermon = currentMap.npcs[1].party;
         updateEatermonNpc();
+        currentNPC = currentMap.npcs[1];
+        console.log(currentNPC); 
         talkingToNPC = true;
-        resultMessage = `Congratulations! You And Woodle Are Going To Be Best Of Buds!`
+        resultMessage = `Congratulations! You And Woodle Are Going To Be Best Of Buds!`;
     } else {
         console.log("Error");
     }

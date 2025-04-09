@@ -1906,6 +1906,8 @@ let maps = [
             {
                 name: "Elijah",
                 message: "Henry! We Should Battle!",
+                wonMessage: "Good Job Elijah! Your Friend Need's To Get Stronger!",
+                lostMessage: "Awesome Job! Elijah, Train More. Battle More. Catch More! Both Of You Go! To Route One Just North Of Here!",
                 x: 10,
                 y: 12,
                 src: 'images/NPCS/Rival.png',

@@ -91,12 +91,14 @@ function attackMove(eatermonIndex, moveIndex) {
                 battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
                     npcNormal = true; 
+                    normal = true; 
                     isNpcEatermon = false; 
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.lostMessage}`;
                     showNpcText(); // Show the npc text box after battle
                     inBattle = false;
+                    battleMenuScript.style.display = 'none';
                 }, 1000); 
             }
             enemyHpInner.style.display = `none`;
@@ -189,6 +191,7 @@ function enemyMove() {
                 generateAttackButtons(true);
                 battleText.innerHTML = `You Lost Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
+                    normal = true; 
                     npcNormal = true; 
                     isNpcEatermon = false; 
                     currentNPC.canTalkAgain = false; 

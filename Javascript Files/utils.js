@@ -166,6 +166,12 @@ let cutScenes = [
         {action: 'move', direction: 'up', x: 0, y: -1, multiplier: 8},
         {action: 'move', direction: 'left', x: -1, y: 0, multiplier: 2},
         {action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1},
+    ],
+    [
+        {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 6},
+        {action: 'move', direction: 'down', x: 0, y: 1, multiplier: 1},
+        {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 1},
+        {action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1},
     ]
 ];
 
