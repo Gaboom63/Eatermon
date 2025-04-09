@@ -182,10 +182,11 @@ function enemyMove() {
         setTimeout(() => {
             playerHpInner.style.display = `none`;
             battleText.innerHTML = `You Lost Against ${enemyEatermon.name}!`;
-            
+           generateAttackButtons(true); 
         }, 1000);
         setTimeout(() => {
             if(talkingToNPC) {
+                generateAttackButtons(true);
                 battleText.innerHTML = `You Lost Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
                     npcNormal = true; 
@@ -195,6 +196,11 @@ function enemyMove() {
                     npcText.innerHTML = `${currentNPC.wonMessage}`;
                     showNpcText(); // Show the text box
                     inBattle = false;
+                    battleMenuScript.style.display = 'none';
+                    normal = true; 
+                    setTimeout(() => {
+                        generateAttackButtons(); 
+                    }, 2000); 
                     }, 1000); 
             } else {
                 inBattle = false; // End the battle if the player is dead

@@ -1894,6 +1894,8 @@ let maps = [
             {
                 name: "Professer Ron",
                 message: "Nice to meet you sir. Ready To Get Going On Your Adventure?",
+                wonMessage: "Good Job Elijah! Your Friend Need's To Get Stronger!",
+                lostMessage: "Awesome Job! Elijah, Train More. Battle More. Catch More! Both Of You Go! To Route One Just North Of Here!",
                 x: 9,
                 y: 11,
                 src: 'images/NPCS/Professer.png',

@@ -150,12 +150,13 @@ function showNextMessage() {
 
     }
 
-    if(currentArray[game.messageIndex] === game.professerInitalText[6] && !finishedInitalBattle){
+    if(currentArray[game.messageIndex] === game.professerInitalText[7] && !finishedInitalBattle){
             npcTextContainer.style.display = 'none';
             game.inBattle = true; // Set the inBattle flag to true when the battle starts
             npcBattle();
             setTimeout(() => {
                 finishedInitalBattle = true;
+                npcTextContainer.style.display = 'none';
             }, 1000);
 
     } else {
