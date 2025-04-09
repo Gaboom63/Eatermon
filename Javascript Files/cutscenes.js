@@ -25,9 +25,13 @@ let game = {
 
     ],
     professerInitalText: [
-        "", 
+        "",
         `Lets Get Elijah In Here Before We Begin...`,
-        `Well Hello Elijah Perfect Timing` 
+        `Well Hello Elijah Perfect Timing, I want to give you and ${this.playerName} A Eatermon!`,
+        `The Eatermon You Choose Really Will Affect Your Experience In This World`,
+        `Please Pick Wisely!`,
+        `Please Pick Wisely!`,
+        `${this.playerName}, You Should Battle Elijah! `
 
     ],
     currentMessageArray: [],
@@ -39,9 +43,10 @@ let game = {
     buttonResult: "", // Stores the result of the button click
     buttonResultShown: false, // Track if button result has been shown.
     waitingForEnter: false, // Flag to track if waiting for enter press
-    routeOne: false, 
-    meetingProfesser:false, 
-    goingToElijah: false, 
+    routeOne: false,
+    meetingProfesser: false,
+    goingToElijah: false,
+    inBattle: false, // New flag to track if the game is currently in battle
 };
 
 
@@ -80,7 +85,7 @@ function startScreen() {
 }
 
 function handleKeyPress(event) {
-    if (event.key === 'Enter' && !game.gettingName && !game.isTransitioning && !game.waitingForEnter && !game.buttonClicked) {
+    if (event.key === 'Enter' && !game.gettingName && !game.isTransitioning && !game.waitingForEnter && !game.buttonClicked && canPressEnter && !game.inBattle) {
         console.log("Key pressed: Enter");
 
         // Proceed if the button was clicked
@@ -90,94 +95,144 @@ function handleKeyPress(event) {
         } else {
             // Check if there are more messages to show
             showNextMessage();
-            showNpcText(); 
+            showNpcText();
         }
     }
 }
 
+
+let canPressEnter = true;
+let afterMeetingProfessor = false;
+let finishedInitalBattle = false;
 
 
 function showNextMessage() {
+    let questionOneButton = document.getElementById('questionButton1');
+    let questionTwoButton = document.getElementById('questionButton2');
+
     console.log("showNextMessage called. game.messageIndex:", game.messageIndex, "game.currentMessageArray.length:", game.currentMessageArray.length);
     const currentArray = game.currentMessageArray;
-    if (game.messageIndex < currentArray.length) {
-        console.log("Before showing message. game.messageIndex:", game.messageIndex);
-        npcP.innerHTML = currentArray[game.messageIndex];
-        console.log("Showing message:", currentArray[game.messageIndex]);
-        game.messageIndex++;
-        console.log("After showing message. game.messageIndex:", game.messageIndex);
+
+
+    if (currentArray[game.messageIndex] === game.professerInitalText[0] && canPressEnter) {
+        game.messageIndex++; // Move to the next message
+        canPressEnter = false; // Disable Enter key while fade-in is in progress
+        fadeIn();
+        setTimeout(() => {
+            afterMeetingProfessor = true;
+            showNPC('Elijah'); // Show Elijah after fade-in completes
+            fadeOut(); // Start fade-out after Elijah is shown
+
+            setTimeout(() => {
+                showNpcText(); // Show the text box again after fade-out
+                // game.messageIndex++; // Move to the next message
+                showNextMessage(); // Proceed with the next message
+                setTimeout(() => {
+                    canPressEnter = true;
+                }, 1000);
+            }, 2000); // Delay to wait for fade-out to complete
+        }, 3000); // Fade-in delay
+    }
+
+    if (currentArray[game.messageIndex] === game.professerInitalText[5]) {
+        showQuestionButtons();
+        questionOneButton.innerHTML = `I choose: Tomadoodle!`;
+        questionTwoButton.innerHTML = `I choose: Woodle!`;
+        game.buttonClicked = true;
+        // Add event listeners to the buttons
+        questionOneButton.addEventListener('click', function () {
+            displayResultMessage("I choose: Tomadoodle!");
+        });
+
+        questionTwoButton.addEventListener('click', function () {
+            displayResultMessage("I choose: Woodle!");
+        });
+
+    }
+
+    if(currentArray[game.messageIndex] === game.professerInitalText[6] && !finishedInitalBattle){
+            npcTextContainer.style.display = 'none';
+            game.inBattle = true; // Set the inBattle flag to true when the battle starts
+            npcBattle();
+            setTimeout(() => {
+                finishedInitalBattle = true;
+            }, 1000);
+
     } else {
-        console.log("No more messages. Calling completion handler for:", currentArray);
-        if (currentArray === game.initialDreamMessages) {
-            handleInitialDreamMessagesComplete();
-        } else if (currentArray === game.downstairsMomMessageText) {
-            handleDownstairsMomMessagesComplete();
-        } else if (currentArray === game.momMessageText) {
-            handleMomMessagesComplete();
-        } else if (currentArray === game.firstElijahMessageText) {
-            handleMeetElijahComplete();
-        } else if (currentArray === game.professerInitalText) {
-            handleMeetProfessorComplete();
+        if (game.messageIndex < currentArray.length) {
+            console.log("Before showing message. game.messageIndex:", game.messageIndex);
+            npcP.innerHTML = currentArray[game.messageIndex].replace('${game.playerName}', game.playerName);
+            console.log("Showing message:", currentArray[game.messageIndex]);
+            game.messageIndex++;
+            console.log("After showing message. game.messageIndex:", game.messageIndex);
         } else {
-            npcP.innerHTML = "No more messages.";
+            console.log("No more messages. Calling completion handler for:", currentArray);
+            if (currentArray === game.initialDreamMessages) {
+                handleInitialDreamMessagesComplete();
+            } else if (currentArray === game.downstairsMomMessageText) {
+                handleDownstairsMomMessagesComplete();
+            } else if (currentArray === game.momMessageText) {
+                handleMomMessagesComplete();
+            } else if (currentArray === game.firstElijahMessageText) {
+                handleMeetElijahComplete();
+            } else if (currentArray === game.professerInitalText) {
+                handleMeetProfessorComplete();
+                // talkingToNPC = false;
+            } else {
+                npcP.innerHTML = "No more messages.";
+            }
         }
     }
 }
 
-// Handling button results after a choice is made
-
-
-
-
-
 function handleDownstairsMomMessagesComplete() {
     console.log("Downstairs Mom Messages Complete.");
-        hideNpcText();
-        npcNormal = true;
-        normal = true;
-        let npcTextContainer = document.getElementById('npcTextContainer');
-        npcTextContainer.classList.remove('show');
-        npcTextContainer.style.display = 'none';
-        document.removeEventListener('keydown', game.currentMessageHandler);
-        momMessageDone = true;
-        initalCutScene = false; // If you want to start the next part of the game
+    hideNpcText();
+    npcNormal = true;
+    normal = true;
+    let npcTextContainer = document.getElementById('npcTextContainer');
+    npcTextContainer.classList.remove('show');
+    npcTextContainer.style.display = 'none';
+    document.removeEventListener('keydown', game.currentMessageHandler);
+    momMessageDone = true;
+    initalCutScene = false; // If you want to start the next part of the game
 }
 
 function handleMomMessagesComplete() {
     console.log("Mom Messages Complete.");
     game.isTransitioning = true; // Flag transition start
-        hideNpcText();
-        npcNormal = true;
-        normal = true;
-        let npcTextContainer = document.getElementById('npcTextContainer');
-        npcTextContainer.classList.remove('show');
-        npcTextContainer.style.display = 'none';
-        document.removeEventListener('keydown', game.currentMessageHandler);
-        momMessageDone = true;
-        initalCutScene = false;
-        game.isTransitioning = false; // Flag transition end
+    hideNpcText();
+    npcNormal = true;
+    normal = true;
+    let npcTextContainer = document.getElementById('npcTextContainer');
+    npcTextContainer.classList.remove('show');
+    npcTextContainer.style.display = 'none';
+    document.removeEventListener('keydown', game.currentMessageHandler);
+    momMessageDone = true;
+    initalCutScene = false;
+    game.isTransitioning = false; // Flag transition end
 }
 
 
 function handleInitialDreamMessagesComplete() {
     console.log("Initial Dream Messages Complete.");
     npcP.innerHTML = `I have told you all I can for now. Wake Up ${game.playerName}!`;
-        hideNpcText();
-        initalCutsceneName.style.display = 'none';
-        game.currentMessageArray = [];
-        game.messageIndex = 0;
-        document.removeEventListener('keydown', game.currentMessageHandler);
+    hideNpcText();
+    initalCutsceneName.style.display = 'none';
+    game.currentMessageArray = [];
+    game.messageIndex = 0;
+    document.removeEventListener('keydown', game.currentMessageHandler);
 
-        let startingOverlay = document.getElementById('startingScene');
+    let startingOverlay = document.getElementById('startingScene');
+    startingOverlay.classList.add('hidden');
+    startingOverlay.addEventListener('transitionend', () => {
         startingOverlay.classList.add('hidden');
-        startingOverlay.addEventListener('transitionend', () => {
-            startingOverlay.classList.add('hidden');
-            startingOverlay.style.display = 'none';
-            let npcTextContainer = document.getElementById('npcTextContainer');
-            npcTextContainer.classList.remove('show');
-            npcTextContainer.style.display = 'none';
-            momMessage();
-        });
+        startingOverlay.style.display = 'none';
+        let npcTextContainer = document.getElementById('npcTextContainer');
+        npcTextContainer.classList.remove('show');
+        npcTextContainer.style.display = 'none';
+        momMessage();
+    });
 }
 
 
@@ -230,7 +285,7 @@ function meetingElijah() {
     let questionTwoButton = document.getElementById('questionButton2');
     npcNormal = false;
     normal = false;
-    game.firstElijahMessageText[0] = `Hi ${game.playerName}! I went through your mail so I know your name!`; 
+    game.firstElijahMessageText[0] = `Hi ${game.playerName}! I went through your mail so I know your name!`;
     game.messageIndex = 0;
     npcName.innerHTML = `Elijah`;
     npcP.innerHTML = game.firstElijahMessageText[game.messageIndex];
@@ -238,16 +293,16 @@ function meetingElijah() {
     game.currentMessageArray = game.firstElijahMessageText;
     game.currentMessageHandler = handleKeyPress;
     document.addEventListener('keydown', game.currentMessageHandler);
-    showQuestionButtons(); 
-    questionOneButton.innerHTML = `Why have I never met you before?`; 
-    questionTwoButton.innerHTML = `My Mail?`; 
-    game.buttonClicked = true; 
+    showQuestionButtons();
+    questionOneButton.innerHTML = `Why have I never met you before?`;
+    questionTwoButton.innerHTML = `My Mail?`;
+    game.buttonClicked = true;
     // Add event listeners to the buttons
-    questionOneButton.addEventListener('click', function() {
+    questionOneButton.addEventListener('click', function () {
         displayResultMessage("Why have I never met you before?");
     });
 
-    questionTwoButton.addEventListener('click', function() {
+    questionTwoButton.addEventListener('click', function () {
         displayResultMessage("My Mail?");
     });
 
@@ -271,27 +326,27 @@ function firstProfesser() {
 }
 
 function handleMeetProfessorComplete() {
-        hideNpcText();
-        npcNormal = true;
-        normal = true;
-        let npcTextContainer = document.getElementById('npcTextContainer');
-        npcTextContainer.classList.remove('show');
-        npcTextContainer.style.display = 'none';
-        document.removeEventListener('keydown', game.currentMessageHandler);
-        meetingProfesser = false; 
+    hideNpcText();
+    npcNormal = true;
+    normal = true;
+    let npcTextContainer = document.getElementById('npcTextContainer');
+    npcTextContainer.classList.remove('show');
+    npcTextContainer.style.display = 'none';
+    document.removeEventListener('keydown', game.currentMessageHandler);
+    meetingProfesser = false;
 }
 
 function handleMeetElijahComplete() {
-        hideNpcText();
-        npcNormal = true;
-        normal = true;
-        let npcTextContainer = document.getElementById('npcTextContainer');
-        npcTextContainer.classList.remove('show');
-        npcTextContainer.style.display = 'none';
-        document.removeEventListener('keydown', game.currentMessageHandler);
-        meetingElijah = false;
-        meetingProfesser = true; 
-        setCutScene(4); 
+    hideNpcText();
+    npcNormal = true;
+    normal = true;
+    let npcTextContainer = document.getElementById('npcTextContainer');
+    npcTextContainer.classList.remove('show');
+    npcTextContainer.style.display = 'none';
+    document.removeEventListener('keydown', game.currentMessageHandler);
+    meetingElijah = false;
+    meetingProfesser = true;
+    setCutScene(4);
 }
 
 function displayResultMessage(buttonClicked) {
@@ -304,6 +359,24 @@ function displayResultMessage(buttonClicked) {
         resultMessage = `Elijah: "Oh, well, I usually stay in the background and avoid meeting people directly. I guess I missed you until now!"`;
     } else if (buttonClicked === "My Mail?") {
         resultMessage = `Elijah: "I found some letters in your mailbox. Nothing too exciting, just some birthday wishes and a few coupons."`;
+    } else if (buttonClicked === "I choose: Tomadoodle!") {
+        eatermon[currentEatermonIndex] = eatermon[1]
+        currentEatermonIndex = 1;
+        currentMap.npcs[1].party = npcParty[5].party
+        currentNPCEatermon = currentMap.npcs[1].party
+        updateEatermonNpc();
+        talkingToNPC = true;
+        resultMessage = `Congratulations! You And Tomadoodle Are Going To Be Best Of Buds!`
+    } else if (buttonClicked === "I choose: Woodle!") {
+        eatermon[currentEatermonIndex] = eatermon[0]
+        currentEatermonIndex = 0;
+        currentMap.npcs[1].party = npcParty[6].party
+        currentNPCEatermon = currentMap.npcs[1].party
+        updateEatermonNpc();
+        talkingToNPC = true;
+        resultMessage = `Congratulations! You And Woodle Are Going To Be Best Of Buds!`
+    } else {
+        console.log("Error");
     }
 
     // Store the result message in game.buttonResult
@@ -316,14 +389,14 @@ function displayResultMessage(buttonClicked) {
     npcP.innerHTML = resultMessage;
     game.messageIndex++; // Increment index to skip the original question text
     game.buttonResultShown = true;  // Flag to show that a result was shown
-    setTimeout(showNextMessage, 1000);  // Proceed to the next message after a brief delay
+    setTimeout(() => {
+        showNextMessage();
+    }, 1000);
 }
 
 
-
-
-
 function hideNpcText() {
+    let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.classList.remove('show');
     npcTextContainer.style.display = 'none';
 }
@@ -331,25 +404,23 @@ function hideNpcText() {
 function hideQuestionButtons() {
     let questionOneButton = document.getElementById('questionButton1');
     let questionTwoButton = document.getElementById('questionButton2');
-    questionOneButton.style.display = 'none'; 
-    questionTwoButton.style.display = 'none'; 
+    questionOneButton.style.display = 'none';
+    questionTwoButton.style.display = 'none';
 
 }
 
 function showQuestionButtons() {
     let questionOneButton = document.getElementById('questionButton1');
     let questionTwoButton = document.getElementById('questionButton2');
-    questionOneButton.style.display = 'block'; 
-    questionTwoButton.style.display = 'block'; 
+    questionOneButton.style.display = 'block';
+    questionTwoButton.style.display = 'block';
 
 }
-
-
 
 // startScreen();
 
 function debugNoScreen() {
-    momMessageDone = true; 
-    game.gettingName = false;
+    momMessageDone = true;
+    game.gettingName = false    // game.meetingProfesser = true; 
     // npcNormal = true; 
 }

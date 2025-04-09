@@ -20,6 +20,16 @@ let npcParty = [
     {
         id: 4, 
         party: eatermon[15], //Abby
+    },
+    {
+        //Inital Elijah Fight Woodle! 
+        id: 5, 
+        party: eatermon[0],
+    },
+       {
+        //Inital Elijah Fight Tomadoodle! 
+        id: 6, 
+        party: eatermon[1],
     }
 ]
 

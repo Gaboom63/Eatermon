@@ -39,7 +39,7 @@ function attackMove(eatermonIndex, moveIndex) {
     }
 
     const selectedEatermon = eatermon[eatermonIndex];
-    const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
+    const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex]; //Issue Right Here. 
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
 

@@ -62,7 +62,9 @@ function handlePlayerMovement(e) {
                 startMoving(MOVE_SPEED, 0, 'right');
                 break;
             case 'Enter':
+                if(canPressEnter) {
                 interactWithNPC();
+                }
                 if (!currentNPC.canBattle) {
                     setTimeout(() => { npcNormal = true; hideNpcText() }, 1000);
                 }
@@ -88,9 +90,11 @@ function handlePlayerMovement(e) {
 // Handle NPC interaction
 function handleNPCInteraction(e) {
     if (inBattle) return; // Prevent interaction during battle
+
     switch (e.key) {
         case 'Enter':
-            if(normal) {
+            if (normal && canPressEnter) {
+                // Interact with visible NPCs
                 interactWithNPC();
                 if (!currentNPC.canBattle) {
                     setTimeout(() => { npcNormal = true; hideNpcText(); }, 1000);
@@ -102,7 +106,6 @@ function handleNPCInteraction(e) {
             break;
     }
 }
-
 
 // Handle keyup events
 document.addEventListener('keyup', (e) => {

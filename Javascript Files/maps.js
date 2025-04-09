@@ -1899,6 +1899,17 @@ let maps = [
                 src: 'images/NPCS/Professer.png',
                 party: npcParty[2].party,
                 canTalkAgain: true,
+                visible: true
+            },
+            {
+                name: "Elijah",
+                message: "Henry! We Should Battle!",
+                x: 10,
+                y: 12,
+                src: 'images/NPCS/Rival.png',
+                party: npcParty[5].party,
+                canTalkAgain: true,
+                visible: false
             },
         ],
         grass: [

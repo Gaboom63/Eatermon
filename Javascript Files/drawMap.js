@@ -33,7 +33,6 @@ let npcName = document.getElementById('npcName');
 let npcP = document.getElementById('npcP');
 let npcTextBox = document.getElementById('npcTextBox'); 
 let initalCutsceneName = document.getElementById('initalCutsceneName');
-let playerName = ''; // This will store the player's name
 let scaledSize = TILE_SIZE * ZOOM_FACTOR * 3;
 
 const mainPlayer = document.getElementById("player");
@@ -233,10 +232,12 @@ function drawGrid() {
 let npcImages = {};
 
 currentMap.npcs.forEach(npc => {
+    npc.visible = true; // Default is true, meaning the NPC is visible
     const img = new Image();
     img.src = npc.src;
     npcImages[npc.name] = img;
 });
+
 
 
 
@@ -333,6 +334,13 @@ function loadMap(mapData) {
     MAP_WIDTH = mapData.mapWidth;
     MAP_HEIGHT = mapData.mapHeight;
 
+    // Ensure all NPCs have their visible property initialized
+    currentMap.npcs.forEach(npc => {
+        if (npc.visible === undefined) {
+            npc.visible = true;  // Set to true by default, or whatever is appropriate for your game
+        }
+    });
+
     console.log("Loading map:", currentMap.id, "ZOOM_FACTOR:", ZOOM_FACTOR);
 
     Promise.all([
@@ -369,14 +377,21 @@ function loadMap(mapData) {
             requestAnimationFrame(() => {
                 drawMap();
                 drawPlayer();
-                // drawNPC();
                 drawCoordinates();
             });
         });
     });
 }
+
+
 function drawNPC() {
+      
     currentMap.npcs.forEach(npc => {
+        // console.log(npc.visible); 
+    if (npc.visible) {  
+        if(currentMap.id === 4 && !afterMeetingProfessor) {
+          hideNPC('Elijah');
+        }
         const npcImage = npcImages[npc.name];
         if (npcImage) {
             const scaledSize = TILE_SIZE * ZOOM_FACTOR * 2.5;
@@ -385,7 +400,9 @@ function drawNPC() {
 
             ctx.drawImage(npcImage, npcX + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, npcY + (TILE_SIZE * ZOOM_FACTOR - scaledSize) / 2, scaledSize, scaledSize);
         }
-    });
+
+    };
+})
 }
 
 let shrinkFactor = 0.85; // Example: shrink to 75% of original size
@@ -422,6 +439,8 @@ function resetPlayerSize() {
 
 function isNPC(x, y) {
     return currentMap.npcs.some(npc => {
+        if (!npc.visible) return false;  // Check if NPC is visible
+
         const npcWidth = Math.ceil(1); // Approximate width in tiles
         const npcHeight = Math.ceil(1); // Approximate height in tiles
 
@@ -435,4 +454,17 @@ function isNPC(x, y) {
         }
         return false;
     });
+}
+
+function hideNPC(npcName) {
+    const npc = currentMap.npcs.find(npc => npc.name === npcName);
+    if (npc) {
+        npc.visible = false;
+    }
+}
+function showNPC(npcName) {
+    const npc = currentMap.npcs.find(npc => npc.name === npcName);
+    if (npc) {
+        npc.visible = true;
+    }
 }
