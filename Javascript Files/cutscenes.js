@@ -159,9 +159,10 @@ function showNextMessage() {
 
     }
 
-    // LET ME MAKE THIS REAL CLEAR FOR MYSELF. currentArray is equal to the game.currentMessageIndex and its getting passed in the number of the messageIndex so whatever the text is[number something]
+    // LET ME MAKE THIS REAL CLEAR FOR MYSELF. currentArray is equal to the game.currentMessageIndex 
+    //and its getting passed in the number of the messageIndex so whatever the text is[number something]
     // For example if game.currentMessageArray[game.messageIndex] = 'Follow Me!' and if game.whateverTextIs[number] = 'Follow Me!' then do something 
-   if (currentArray[game.messageIndex] === game.elijahRouteOne[3]) {
+   if (currentArray[game.messageIndex] === game.elijahRouteOne[3] && game.routeOne) {
     console.log(game.messageIndex); 
     canPressEnter = false;
     setTimeout(() => {
@@ -179,12 +180,15 @@ function showNextMessage() {
     return; 
 }
     if(currentArray[game.messageIndex] === game.professerInitalText[7] && !finishedInitalBattle){
-            npcTextContainer.style.display = 'none';
+            // npcTextContainer.style.display = 'none';
+            // hideText = true; 
             game.inBattle = true; // Set the inBattle flag to true when the battle starts
             npcBattle();
             setTimeout(() => {
                 finishedInitalBattle = true;
                 npcTextContainer.style.display = 'none';
+                game.routeOne = true; 
+                game.meetingProfesser = false; 
             }, 1000);
 
     } else {
@@ -296,6 +300,7 @@ function momMessage() {
 function elijahRouteOneMessage() {
     npcNormal = false;
     normal = false;
+    game.inBattle = false; 
     game.elijahRouteOne[0] = `Hey ${game.playerName}!`;
     game.messageIndex = 0;
     npcName.innerHTML = `Elijah`;
@@ -423,6 +428,7 @@ function displayResultMessage(buttonClicked) {
         currentNPCEatermon = currentMap.npcs[1].party
         updateEatermonNpc();
         currentNPC = currentMap.npcs[1]
+        playerParty[0] = eatermon[1]
         console.log(currentNPC); 
         talkingToNPC = true;
         resultMessage = `Congratulations! You And Tomadoodle Are Going To Be Best Of Buds!`
@@ -431,6 +437,7 @@ function displayResultMessage(buttonClicked) {
         currentEatermonIndex = 0;
         currentMap.npcs[1].party = npcParty[6].party;
         currentNPCEatermon = currentMap.npcs[1].party;
+        playerParty[0] = eatermon[0]; 
         updateEatermonNpc();
         currentNPC = currentMap.npcs[1];
         console.log(currentNPC); 

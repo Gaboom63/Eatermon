@@ -85,7 +85,8 @@ function movePlayer(dx, dy, direction) {
                                normal = false;                         
                                 setCutScene(6, () => { 
                                 npcNormal = true; 
-                                normal = true;                         
+                                normal = true;         
+                                teachingCatching = true;                 
                                 });  
                             }
                             if(maps[currentMap.id].id ===  4 && game.meetingProfesser) {

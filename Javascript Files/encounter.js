@@ -139,7 +139,7 @@ function showEmblems() {
     enemyEmblem.classList.add("show");
 }
 
-let teachingCatching = true; 
+let teachingCatching = false; 
 
 function battleTestForCutScene() {
     //THIS IS ONLY FOR TEST

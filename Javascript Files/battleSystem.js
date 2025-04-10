@@ -91,7 +91,36 @@ function attackMove(eatermonIndex, moveIndex) {
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
 
     // Check if the enemy is defeated
-    if (enemyEatermon.hp <= 0) {
+    if(teachingCatching){
+        if (enemyEatermon.hp <= 0) {
+        enemyHpInner.style.width = `0%`;
+        setTimeout(() => {
+            battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
+            if(talkingToNPC) {
+                battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
+                setTimeout(() => {
+                    npcNormal = true; 
+                    normal = true; 
+                    isNpcEatermon = false; 
+                    currentNPC.canTalkAgain = false; 
+                    currentNPC.canBattle = false; 
+                    npcText.innerHTML = `${currentNPC.lostMessage}`;
+                    showNpcText(); // Show the npc text box after battle
+                    inBattle = false;
+                    battleMenuScript.style.display = 'none';
+                }, 1000); 
+            }
+            enemyHpInner.style.display = `none`;
+            if (normal) {
+                setTimeout(() => {
+                    battleMenuScript.style.display = 'none';
+                    inBattle = false; // End the battle
+                }, 1000);
+            }
+        }, 1000);
+
+    } 
+    } else if (enemyEatermon.hp <= 0 && !teachingCatching) {
         enemyHpInner.style.width = `0%`;
         setTimeout(() => {
             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;

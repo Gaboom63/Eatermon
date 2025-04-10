@@ -18,6 +18,7 @@ if(teachingCatching) {
         battleMenuOptions.innerHTML = `
             <button id="run" onclick="Run()">Run</button> <br>
          `;
+         afterFirstBag = false; 
     }
    
 
@@ -185,6 +186,12 @@ function Run() {
                 normal = true; 
                 waitingForEnter = true; 
                 hideText = true; 
+                teachingCatching = false; 
+                battleMenuOptions.innerHTML = `
+                    <button id="attack" onclick="Attack()">Attack!</button> <br>
+                    <button id="bag" onclick="Bag()">Bag</button> <br>
+                    <button id="run" onclick="Run()">Run</button> <br>
+                `;
             }, 1000); 
             setTimeout(() => {
                 inBattle = false;
