@@ -1,3 +1,4 @@
+let hideText = false; 
 let game = {
     messageIndex: 0,
     gettingName: true,
@@ -33,6 +34,14 @@ let game = {
         `Please Pick Wisely!`,
         `${this.playerName}, You Should Battle Elijah! `
 
+    ],
+    elijahRouteOne: [
+        ``,
+        `Professor Ron Told Me To Teach You How To Catch An Eatermon`,
+        `Follow Me!`,
+    ],
+    elijahCatchMessage: [
+        `Ok! Here We Go!`
     ],
     currentMessageArray: [],
     isMomMessageComplete: false,
@@ -150,6 +159,25 @@ function showNextMessage() {
 
     }
 
+    // LET ME MAKE THIS REAL CLEAR FOR MYSELF. currentArray is equal to the game.currentMessageIndex and its getting passed in the number of the messageIndex so whatever the text is[number something]
+    // For example if game.currentMessageArray[game.messageIndex] = 'Follow Me!' and if game.whateverTextIs[number] = 'Follow Me!' then do something 
+   if (currentArray[game.messageIndex] === game.elijahRouteOne[3]) {
+    console.log(game.messageIndex); 
+    canPressEnter = false;
+    setTimeout(() => {
+        hideText = true; 
+        game.messageIndex++
+    }, 1000) 
+    setCutScene(7, () => {
+        hideText = false; 
+        // canPressEnter = true; 
+        currentMap.npcs[0].x = 20;
+        currentMap.npcs[0].y = 53;
+        elijahCatch(); 
+        showNpcText();
+    });
+    return; 
+}
     if(currentArray[game.messageIndex] === game.professerInitalText[7] && !finishedInitalBattle){
             npcTextContainer.style.display = 'none';
             game.inBattle = true; // Set the inBattle flag to true when the battle starts
@@ -263,6 +291,32 @@ function momMessage() {
     game.currentMessageHandler = handleKeyPress;
     document.addEventListener('keydown', game.currentMessageHandler);
     showNpcText();
+}
+
+function elijahRouteOneMessage() {
+    npcNormal = false;
+    normal = false;
+    game.elijahRouteOne[0] = `Hey ${game.playerName}!`;
+    game.messageIndex = 0;
+    npcName.innerHTML = `Elijah`;
+    npcP.innerHTML = game.elijahRouteOne[game.messageIndex];
+    npcTextBox.focus();
+    game.currentMessageArray = game.elijahRouteOne;
+    game.currentMessageHandler = handleKeyPress;
+    document.addEventListener('keydown', game.currentMessageHandler);
+    // showNpcText();
+}
+
+function elijahCatch() {
+    npcNormal = false;
+    normal = false;
+    game.messageIndex = 0;
+    npcP.innerHTML = game.elijahCatchMessage[game.messageIndex];
+    npcTextBox.focus();
+    game.currentMessageArray = game.elijahCatchMessage;
+    game.currentMessageHandler = handleKeyPress;
+    document.addEventListener('keydown', game.currentMessageHandler);
+    battleTestForCutScene(); 
 }
 
 function momMessageDownstairs() {

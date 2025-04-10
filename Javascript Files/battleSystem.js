@@ -2,7 +2,7 @@ let forgetButton = document.getElementById('moveText');
 let finalMovesLearned = document.getElementById('finalMovesLearned'); 
 let noButton = document.getElementById('moveTextNo'); 
 let enemyMoves = eatermonMoves[enemyEatermonIndex].moves;
-
+let afterFirstAttack = false; 
 // Restore enemy HP at the beginning of battle
 function restoreEnemyHp() {
     if (hasEncounted) {
@@ -75,9 +75,17 @@ function attackMove(eatermonIndex, moveIndex) {
 
     // Apply damage to the enemy
     if (modifiedPower > 0) {
-        enemyEatermon.hp -= modifiedPower;
-        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
-        enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+        if(teachingCatching) {
+            npcP.innerHTML = `Woah Great Job! If The Wild Eatermon Reach's 0 Then Your Battle Will End! For This Example It Won't. Now Click Back!`;
+            afterFirstAttack = true;  
+            enemyEatermon.hp -= modifiedPower;
+            enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+            enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+        } else {
+            enemyEatermon.hp -= modifiedPower;
+            enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+            enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+        }
     }
 
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;

@@ -21,7 +21,7 @@ let tileSelectionEnabled = false;
 let isShiftPressed = false;  // Track if the Shift key is pressed
 let firstTile = null;  // Store the first tile clicked when Shift is pressed
 let initalCutScene = false;
-let currentMap = maps[4];
+let currentMap = maps[1];
 let tileMap = maps[1].id;
 let playerX = currentMap.startingXY.x;
 let playerY = currentMap.startingXY.y;
@@ -246,8 +246,10 @@ function isWall(x, y) {
 }
 
 function showNpcText() {
+    if(!npcNormal) return;
     let npcTextContainer = document.getElementById('npcTextContainer');
     npcTextContainer.classList.add('show');
+
 }
 
 

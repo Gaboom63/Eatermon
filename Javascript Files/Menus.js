@@ -1,14 +1,34 @@
 let items = ["Heal Potion"];
 let playerParty = [];
 let catching  = false; 
-
+let afterFirstBag = false; 
 
 function backButton() {
+
+if(teachingCatching) {
+    if(!afterFirstBag) {
+    npcP.innerHTML = `Say You Need To Switch Eatermons Go Ahead And Click On The Bag Button. There You Can Switch Your Eatermon, Access Your Plates, Use Battle Items, And Hp Restoring Items!`; 
+    battleMenuOptions.innerHTML = `
+        <button id="bag" onclick="Bag()">Bag</button> <br>
+     `;
+    }  else if(afterFirstBag) {
+        npcNormal = true
+        normal = true; 
+        npcP.innerHTML = `Lastly See The Option To Run? Well If You Select That You Can Leave The Battle. Be Careful Some Eatermon's Could Keep You In Battle Though! Click The Run Button!`; 
+        battleMenuOptions.innerHTML = `
+            <button id="run" onclick="Run()">Run</button> <br>
+         `;
+    }
+   
+
+} else {
     battleMenuOptions.innerHTML = `
         <button id="attack" onclick="Attack()">Attack!</button> <br>
         <button id="bag" onclick="Bag()">Bag</button> <br>
         <button id="run" onclick="Run()">Run</button> <br>
     `;
+}
+
 }
 
 function clearMenu() {
@@ -22,6 +42,58 @@ function generateAttackButtons(disableButtons = false) {
     // Generate attack buttons based on available moves
     let attackButtonsHtml = '';
 
+if(teachingCatching) {
+    npcP.innerHTML = `Good Job! Next Select A Move! Your Eatermon Learns Up to <b>4 Moves</b>! They Can Learn New Moves By Leveling Up.`;
+     if (moves && moves.length >= 4) {
+        attackButtonsHtml = `
+            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+            <br><br>
+            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
+            <br>
+            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+        `;
+    } else if(moves && moves.length >= 3) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+        <br><br>
+        <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }else if(moves && moves.length >= 2) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+        <br><br>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }else if(moves && moves.length >= 1) {
+        attackButtonsHtml = `
+        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+        <br><br>
+        <br>
+        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+    `;
+    }  else {
+        attackButtonsHtml = `
+            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
+            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
+            <br>
+            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
+            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
+            <br>
+            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+        `;
+    }
+ 
+ // Add the generated buttons to the battle menu
+ battleMenuOptions.innerHTML = attackButtonsHtml;
+
+} else { //This Is AFTER the inital Catching Scene :)
     if (moves && moves.length >= 4) {
         attackButtonsHtml = `
             <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
@@ -71,6 +143,7 @@ function generateAttackButtons(disableButtons = false) {
     // Add the generated buttons to the battle menu
     battleMenuOptions.innerHTML = attackButtonsHtml;
 }
+}
 
 
 function Attack() {
@@ -78,7 +151,15 @@ function Attack() {
 }
 
 function Bag() {
+   if(teachingCatching) {
+    npcP.innerHTML = `For This Example You Can Only See The Eatermon Button Click That! From Here You Can Switch Out Your Current Eatermon For Another One In Your Party!`; 
+    afterFirstBag = true; 
     battleMenuOptions.innerHTML = `
+        <button id="bagItems3">Eatermon</button>
+        <button id="bagItemsBack" onclick="backButton()">Back</button>
+    `;
+   } else {
+     battleMenuOptions.innerHTML = `
         <button id="bagItems1">Hp/Restore Items</button>
         <button id="bagItems2" onclick="loadPlates()">Plates</button>
         <br><br>
@@ -87,18 +168,43 @@ function Bag() {
         <br>
         <button id="bagItemsBack" onclick="backButton()">Back</button>
     `;
+   }
 }
 
 function Run() {
-    if(npcNormal) {
-        battleMenuScript.style.display = 'none';
-        setTimeout(() => {
-            inBattle = false;
-            pickRandomEnemy(); 
-        }, 500);
-    } else if(!npcNormal) {
-        
-    }
+    if(teachingCatching) {
+        if(npcNormal) {
+            battleMenuScript.style.display = 'none';
+            npcNormal = false;
+            normal = false; 
+            waitingForEnter = false; 
+            npcP.innerHTML = `That Was Awesome! Keep Moving On! I'm Sure You Will Get Even Stronger! So Long For Now! Peace!`;
+            setTimeout(() => {
+                hideNPC('Elijah');
+                npcNormal = true;
+                normal = true; 
+                waitingForEnter = true; 
+                hideText = true; 
+            }, 1000); 
+            setTimeout(() => {
+                inBattle = false;
+                pickRandomEnemy(); 
+            }, 500);
+        } else if(!npcNormal) {
+            
+        }
+    } else {
+     if(npcNormal) {
+         battleMenuScript.style.display = 'none';
+         setTimeout(() => {
+             inBattle = false;
+             pickRandomEnemy(); 
+         }, 500);
+     } else if(!npcNormal) {
+         
+     }    
+ }
+    
 }
 
 function loadPlates() {

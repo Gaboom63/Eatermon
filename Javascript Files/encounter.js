@@ -138,3 +138,22 @@ function showEmblems() {
     playerEmblem.classList.add("show");
     enemyEmblem.classList.add("show");
 }
+
+let teachingCatching = true; 
+
+function battleTestForCutScene() {
+    //THIS IS ONLY FOR TEST
+    currentEatermonIndex = 1; 
+    //END OF ONLY TEST
+    npcNormal = false; 
+    normal = false; 
+    waitingForEnter = false; 
+    enemyEatermonIndex = 12;
+    eatermon[enemyEatermonIndex].hp = 30; 
+    eatermon[enemyEatermonIndex].maxHp = 30; 
+    battleMenuScript.style.display = 'block'; // Show battle menu
+    npcTextContainer.style.display = "block";
+    npcName.innerHTML = `Elijah Says:`
+    npcP.innerHTML = `Okay! Here's A Quick Run Down! First There's An Attack Button Click That!`;
+    startBattleAnimation(); // Trigger the battle animation
+}

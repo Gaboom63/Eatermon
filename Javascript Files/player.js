@@ -81,7 +81,12 @@ function movePlayer(dx, dy, direction) {
                             // } else if(game.routeOne){
                             //}        
                             if(maps[currentMap.id].id === 3 && game.routeOne) {
-                                setCutScene(6);                                
+                               npcNormal = false; 
+                               normal = false;                         
+                                setCutScene(6, () => { 
+                                npcNormal = true; 
+                                normal = true;                         
+                                });  
                             }
                             if(maps[currentMap.id].id ===  4 && game.meetingProfesser) {
                                 setCutScene(5);                                

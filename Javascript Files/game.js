@@ -1,6 +1,7 @@
 let inBattle = false;
 let runAnimation = false; 
 let closeMenu = false; 
+let npcTextContainer = document.getElementById('npcTextContainer');
 
 const player = {
 };
@@ -14,6 +15,11 @@ function gameLoop() {
     if(showGrid) {
         drawCoordinates();
         highlightSelectedTiles();  // Make sure this happens after drawing the map
+    }
+
+    if(hideText) {
+    npcTextContainer.classList.remove('show');
+    npcTextContainer.style.display = 'none';
     }
     
     if(firstEvolving && runAnimation === false) {

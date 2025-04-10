@@ -172,76 +172,75 @@ let cutScenes = [
         {action: 'move', direction: 'down', x: 0, y: 1, multiplier: 1},
         {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 1},
         {action: 'move', direction: 'up', x: 0, y: 0, multiplier: 1},
+    ],
+    [
+        {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 6},
+        {action: 'move', direction: 'up', x: 0, y: -1, multiplier: 8},
+        {action: 'move', direction: 'right', x: 1, y: 0, multiplier: 3},
     ]
 ];
 
-
+//6 right 8 up 3 right  20, 53 Elijah Location.
 let currentCutScene = 0;
 
 // Function to play the entire cutscene, including multiple sequences, with delays and multipliers
-function playCutScene(index) {
+function playCutScene(index, onComplete) { // <-- this is the key change
     if (index < 0 || index >= cutScenes.length) {
         console.log("Invalid cutscene index.");
         return;
     }
 
-    // Set npcNormal to false to indicate cutscene is active
     npcNormal = false;
     console.log("Cutscene started, npcNormal is now", npcNormal);
 
-    let delay = 0;  // Initial delay
-
-    // Get the selected cutscene sequence by index
+    let delay = 0;
     let cutscene = cutScenes[index];
 
-    // Loop through each step in the cutscene (no need for a second loop over 'sequence')
     for (let step of cutscene) {
-        if (step.action === 'move') {
-            // Apply the multiplier to repeat the action multiple times
+        if (step.action === 'move' || step.action === 'face') {
             for (let i = 0; i < step.multiplier; i++) {
                 delayedMovePlayer(step.x, step.y, step.direction, delay);
-                delay += 500; // Delay between each move (500ms for each move)
-            }
-        } else if (step.action === 'face') {
-            // Apply the multiplier to repeat the action multiple times
-            for (let i = 0; i < step.multiplier; i++) {
-                delayedMovePlayer(step.x, step.y, step.direction, delay);
-                delay += 500; // Delay between each move (500ms for each move)
+                delay += 500;
             }
         }
     }
 
     setTimeout(() => {
-    if(maps[currentMap.id].id === 2 && playerX === 9 && playerY === 11) {
-        momMessageDownstairs();
-        showNpcText();
-        setTimeout(() => {
+        if (typeof onComplete === 'function') {
+            onComplete();
+        }
+
+        if (maps[currentMap.id].id === 2 && playerX === 9 && playerY === 11) {
+            momMessageDownstairs();
             showNpcText();
-        }, 1000);
-    } else if(maps[currentMap.id].id === 1 && playerX === 7 && playerY === 29) {
-        meetingElijah();
-        showNpcText();
-        setTimeout(() => {
+            setTimeout(() => {
+                showNpcText();
+            }, 1000);
+        } else if (maps[currentMap.id].id === 1 && playerX === 7 && playerY === 29) {
+            meetingElijah();
             showNpcText();
-        }, 1000);
-    } else if(maps[currentMap.id].id === 4 && playerX === 9 && playerY === 12){
-        firstProfesser();
-        showNpcText();
-        // setTimeout(() => {
-        //     showNpcText();
-        // }, 1000);
-    } else {
-        npcNormal = true;
-        console.log("Cutscene finished, npcNormal is now", npcNormal);
-    }
-}, delay);
+            setTimeout(() => {
+                showNpcText();
+            }, 1000);
+        } else if (maps[currentMap.id].id === 3 && playerX === 10 && playerY === 62) {
+            elijahRouteOneMessage();
+            showNpcText();
+        } else if (maps[currentMap.id].id === 4 && playerX === 9 && playerY === 12) {
+            firstProfesser();
+            // showNpcText();
+        } else {
+            npcNormal = true;
+            console.log("Cutscene finished, npcNormal is now", npcNormal);
+        }
+    }, delay);
 }
 
 // Function to change the current cutscene
-function setCutScene(index) {
+function setCutScene(index, onComplete) {
     currentCutScene = index;
-    playCutScene(currentCutScene);
+    playCutScene(currentCutScene, onComplete);
 }
+
 
 // Example to use:
 // setCutScene(0);  // Plays cutscene 1

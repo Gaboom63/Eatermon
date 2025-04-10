@@ -397,17 +397,39 @@ const eatermon = [
         canFlee: false, 
         emblem: "images/emblems/dragonEmblem.png" 
     },
+]
 
+const eventEatermon = [
+    {
+        type: eatermonTypes[4],
+        id: 12,
+        name: "WaffItOff",
+        hp: 30,
+        maxHp: 30,
+        src: "images/Eatermons/WaffItOff.png",
+        xp: eatermonExp[11].xp,
+        level: eatermonExp[11].level,
+        maxXp: 100,
+        canFlee: false,
+        emblem: "images/emblems/normalEmblem.png",
+    }, 
 ]
 
 
 function loadingImages() {
+  if(teachingCatching) {
+            playerImg.src = eatermon[currentEatermonIndex].src; // Player is Tomadoodle
+            emblem.src = eatermon[currentEatermonIndex].emblem;
+            enemyImg.src = eventEatermon[0].src;  // Enemy is dynamically selected
+            enemyEmblem.src = eventEatermon[0].emblem;
+    } else {
+     enemyImg.src = eatermon[enemyEatermonIndex].src;  // Enemy is dynamically selected
+     playerImg.src = eatermon[currentEatermonIndex].src; // Player is Tomadoodle
+     emblem.src = eatermon[currentEatermonIndex].emblem;
+     enemyEmblem.src = eatermon[enemyEatermonIndex].emblem;   
+    }
 
-    enemyImg.src = eatermon[enemyEatermonIndex].src;  // Enemy is dynamically selected
-    playerImg.src = eatermon[currentEatermonIndex].src; // Player is Tomadoodle
-    emblem.src = eatermon[currentEatermonIndex].emblem;
-    enemyEmblem.src = eatermon[enemyEatermonIndex].emblem;
-}
+  }
 
 function updateXpBarDisplay() {
 
