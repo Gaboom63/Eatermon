@@ -27,32 +27,169 @@ function updateHp() {
 
 function restorePlayerHp() {
     let playerHpInner = document.getElementById('playerinnerBar');
+    playerHpInner.style.display = 'block';
     playerHpInner.style.width = `${eatermon[currentEatermonIndex].hp}%`; 
 }
 
 let playerTurn = true;  // Set it to true initially, so it's the player's turn at the start
 
 // Handle player's attack with type matchups
+// function attackMove(eatermonIndex, moveIndex) {
+//     if (!playerTurn) {
+//         return;  // If it's not the player's turn, don't proceed with the attack
+//     }
+
+//     const selectedEatermon = eatermon[eatermonIndex];
+//     const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex]; //Issue Right Here. 
+//     const enemyEatermon = eatermon[enemyEatermonIndex];
+//     const enemyType = enemyEatermon.type;
+
+//     console.log(selectedMove); 
+
+//     // Handle type effectiveness
+//     const moveType = selectedMove.type;
+//     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
+
+//     let modifiedPower = selectedMove.power;  // Now we're using the power from the move object
+//     let moveHeal = selectedMove.heal; 
+//     let playerEatermon = eatermon[currentEatermonIndex];
+//     // Handle effectiveness
+//     if (typeEffectiveness === 'strong') {
+//         modifiedPower *= 2;
+//     } else if (typeEffectiveness === 'weak') {
+//         modifiedPower *= 0.5;
+//     } else if (typeEffectiveness === 'noEffect') {
+//         modifiedPower = 0;
+//     }
+
+//     // If it's a Fire-type move and the enemy has an ability that negates it, set power to 0
+//     if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
+//         modifiedPower = 0; // No damage dealt
+//     }
+
+//     if(moveHeal > 0) {
+//         playerEatermon.hp += moveHeal; 
+//         playerEatermon.hp = Math.max(100, playerEatermon.hp);  // Ensure HP doesn't go below 0
+//         playerEatermon.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
+
+//     }
+
+//     // Apply damage to the enemy
+//     if (modifiedPower > 0) {
+//         if(teachingCatching) {
+//             talkingToNPC = false; 
+//             npcP.innerHTML = `Woah Great Job! If The Wild Eatermon Reach's 0 Then Your Battle Will End! For This Example It Won't. Now Click Back!`;
+//             afterFirstAttack = true;  
+//             enemyEatermon.hp -= modifiedPower;
+//             enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+//             enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+//         } else {
+//             enemyEatermon.hp -= modifiedPower;
+//             enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+//             enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
+//         }
+//     }
+
+//     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
+
+//     // Check if the enemy is defeated
+//     if(teachingCatching){
+//         if (enemyEatermon.hp <= 0) {
+//         enemyHpInner.style.width = `0%`;
+//         setTimeout(() => {
+//             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
+//             if(talkingToNPC) {
+//                 battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
+//                 setTimeout(() => {
+//                     npcNormal = true; 
+//                     normal = true; 
+//                     isNpcEatermon = false; 
+//                     currentNPC.canTalkAgain = false; 
+//                     currentNPC.canBattle = false; 
+//                     npcText.innerHTML = `${currentNPC.lostMessage}`;
+//                     showNpcText(); // Show the npc text box after battle
+//                     inBattle = false;
+//                     // battleMenuScript.style.display = 'none';
+
+//                 }, 1000); 
+//             }
+//             enemyHpInner.style.display = `none`;
+//             if (normal) {
+//                 setTimeout(() => {
+//                     battleMenuScript.style.display = 'none';
+//                     inBattle = false; // End the battle
+//                 }, 1000);
+//             }
+//         }, 1000);
+
+//     } 
+//     } else if (enemyEatermon.hp <= 0 && !teachingCatching) {
+//         enemyHpInner.style.width = `0%`;
+//         setTimeout(() => {
+//             battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
+//             if(talkingToNPC) {
+//                 battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
+//                 setTimeout(() => {
+//                     npcNormal = true; 
+//                     normal = true; 
+//                     isNpcEatermon = false; 
+//                     currentNPC.canTalkAgain = false; 
+//                     currentNPC.canBattle = false; 
+//                     npcText.innerHTML = `${currentNPC.lostMessage}`;
+//                     showNpcText(); // Show the npc text box after battle
+//                     inBattle = false;
+//                     battleMenuScript.style.display = 'none';
+//                 }, 1000); 
+//             }
+//             enemyHpInner.style.display = `none`;
+//             // Add XP to the current eatermon instead of resetting it
+//             const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
+//             eatermon[currentEatermonIndex].xp += xpGained;  // Add XP
+//             updateXpBarDisplay();  // Update the XP bar display
+//             checkIfXpIsFull();     // Check if it's time to level up
+//             if (normal) {
+//                 setTimeout(() => {
+//                     battleMenuScript.style.display = 'none';
+//                     inBattle = false; // End the battle
+//                 }, 1000);
+//             }
+//         }, 1000);
+
+//     } else {
+//         // If the enemy is not defeated, switch to the enemy's turn
+//         playerTurn = false;
+//         setTimeout(() => {
+//             if (enemyEatermon.hp > 0) {
+//                 enemyMove();  // Enemy attacks
+//             }
+//         }, 1000);
+//     }
+
+//     updateHp();  // Update the UI after the attack
+// }
+
 function attackMove(eatermonIndex, moveIndex) {
     if (!playerTurn) {
         return;  // If it's not the player's turn, don't proceed with the attack
     }
 
     const selectedEatermon = eatermon[eatermonIndex];
-    const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex]; //Issue Right Here. 
+    const selectedMove = eatermonMoves[eatermonIndex].moves[moveIndex];
     const enemyEatermon = eatermon[enemyEatermonIndex];
     const enemyType = enemyEatermon.type;
 
-    console.log(selectedMove); 
+    console.log("Selected Move:", selectedMove); 
+    console.log("Selected Eatermon:", selectedEatermon); 
+    console.log("Enemy Eatermon:", enemyEatermon); 
 
     // Handle type effectiveness
     const moveType = selectedMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, enemyType);
+    
+    let modifiedPower = selectedMove.power;
+    console.log("Initial Modified Power:", modifiedPower);  // Log modified power
 
-    let modifiedPower = selectedMove.power;  // Now we're using the power from the move object
-    let moveHeal = selectedMove.heal; 
-    let playerEatermon = eatermon[currentEatermonIndex];
-    // Handle effectiveness
+    // Handle type effectiveness
     if (typeEffectiveness === 'strong') {
         modifiedPower *= 2;
     } else if (typeEffectiveness === 'weak') {
@@ -61,106 +198,63 @@ function attackMove(eatermonIndex, moveIndex) {
         modifiedPower = 0;
     }
 
-    // If it's a Fire-type move and the enemy has an ability that negates it, set power to 0
-    if (moveType === "Fire" && eatermonAbilitys[0].checkAbility(enemyEatermon) && enemyEatermon.type === "Fire") {
-        modifiedPower = 0; // No damage dealt
+    console.log("Modified Power after Type Effectiveness:", modifiedPower);  // Log modified power after effectiveness
+
+    // Add attack stat and defense stat to the damage calculation
+    const attacker = selectedEatermon;
+    const defender = enemyEatermon;
+    
+    const attackStat = selectedEatermon.attack;  // Assuming each Pokémon has an `attack` stat
+    const defenseStat = enemyEatermon.defense;  // Assuming each Pokémon has a `defense` stat
+    const level = selectedEatermon.level;  // Assuming Pokémon have a `level`
+
+    console.log("Attack Stat:", attackStat);
+    console.log("Defense Stat:", defenseStat);
+    console.log("Level:", level);
+
+    if (!attackStat || !defenseStat || !level) {
+        console.error("Invalid values: Attack, Defense, or Level is missing.");
+        return;  // Stop if any stat is missing or invalid
     }
 
-    if(moveHeal > 0) {
-        playerEatermon.hp += moveHeal; 
-        playerEatermon.hp = Math.max(100, playerEatermon.hp);  // Ensure HP doesn't go below 0
+    // Damage formula: (2 * Level / 5 + 2) * Power * Attack / Defense / 50 + 2
+    const baseDamage = ((2 * level) / 5 + 2) * (modifiedPower * attackStat / defenseStat) / 50 + 2;
+    console.log("Base Damage:", baseDamage);  // Log base damage
+
+    // Add random factor (between 0.85 and 1.0)
+    const randomFactor = Math.random() * (1 - 0.85) + 0.85;  // Random factor between 0.85 and 1.0
+    const finalDamage = Math.floor(baseDamage * randomFactor);
+
+    console.log("Final Damage:", finalDamage);  // Log final damage
+
+    // Apply heal if necessary
+    if (selectedMove.heal > 0) {
+        playerEatermon.hp += selectedMove.heal; 
+        playerEatermon.hp = Math.max(playerEatermon.hp, playerEatermon.maxHp);  // Ensure HP doesn't go above max
         playerEatermon.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
-
     }
 
-    // Apply damage to the enemy
-    if (modifiedPower > 0) {
-        if(teachingCatching) {
-            npcP.innerHTML = `Woah Great Job! If The Wild Eatermon Reach's 0 Then Your Battle Will End! For This Example It Won't. Now Click Back!`;
-            afterFirstAttack = true;  
-            enemyEatermon.hp -= modifiedPower;
-            enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
-            enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
-        } else {
-            enemyEatermon.hp -= modifiedPower;
-            enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
-            enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
-        }
+    // Apply damage to the enemy if move has damage
+    if (finalDamage > 0) {
+        enemyEatermon.hp -= finalDamage;
+        enemyEatermon.hp = Math.max(0, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+        enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
     }
+    if (enemyEatermon.hp > 0) {
+    // Set player turn to false
+    playerTurn = false;
+    console.log("Switching to enemy's turn...");
+    
+    // Delay the enemy's move to simulate turn-based gameplay
+    setTimeout(() => {
+        enemyMove();  // Enemy attacks
+    }, 1000);  // Adjust time as needed for turn transition
+}
 
     battleText.innerHTML = `${selectedEatermon.name} used ${selectedMove.name}! <br><b>${enemyEatermon.name}'s HP: ${enemyEatermon.hp}</b>`;
 
-    // Check if the enemy is defeated
-    if(teachingCatching){
-        if (enemyEatermon.hp <= 0) {
-        enemyHpInner.style.width = `0%`;
-        setTimeout(() => {
-            battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
-            if(talkingToNPC) {
-                battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
-                setTimeout(() => {
-                    npcNormal = true; 
-                    normal = true; 
-                    isNpcEatermon = false; 
-                    currentNPC.canTalkAgain = false; 
-                    currentNPC.canBattle = false; 
-                    npcText.innerHTML = `${currentNPC.lostMessage}`;
-                    showNpcText(); // Show the npc text box after battle
-                    inBattle = false;
-                    battleMenuScript.style.display = 'none';
-                }, 1000); 
-            }
-            enemyHpInner.style.display = `none`;
-            if (normal) {
-                setTimeout(() => {
-                    battleMenuScript.style.display = 'none';
-                    inBattle = false; // End the battle
-                }, 1000);
-            }
-        }, 1000);
-
-    } 
-    } else if (enemyEatermon.hp <= 0 && !teachingCatching) {
-        enemyHpInner.style.width = `0%`;
-        setTimeout(() => {
-            battleText.innerHTML = `You Won Against ${enemyEatermon.name}!`;
-            if(talkingToNPC) {
-                battleText.innerHTML = `You Won Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
-                setTimeout(() => {
-                    npcNormal = true; 
-                    normal = true; 
-                    isNpcEatermon = false; 
-                    currentNPC.canTalkAgain = false; 
-                    currentNPC.canBattle = false; 
-                    npcText.innerHTML = `${currentNPC.lostMessage}`;
-                    showNpcText(); // Show the npc text box after battle
-                    inBattle = false;
-                    battleMenuScript.style.display = 'none';
-                }, 1000); 
-            }
-            enemyHpInner.style.display = `none`;
-            // Add XP to the current eatermon instead of resetting it
-            const xpGained = generateXpForLevel(selectedEatermon.level);  // You can customize the amount of XP earned here
-            eatermon[currentEatermonIndex].xp += xpGained;  // Add XP
-            updateXpBarDisplay();  // Update the XP bar display
-            checkIfXpIsFull();     // Check if it's time to level up
-            if (normal) {
-                setTimeout(() => {
-                    battleMenuScript.style.display = 'none';
-                    inBattle = false; // End the battle
-                }, 1000);
-            }
-        }, 1000);
-
-    } else {
-        // If the enemy is not defeated, switch to the enemy's turn
-        playerTurn = false;
-        setTimeout(() => {
-            if (enemyEatermon.hp > 0) {
-                enemyMove();  // Enemy attacks
-            }
-        }, 1000);
-    }
+    // Check if the enemy is defeated (handling win and other logic follows)
+    // Add your win/loss check code as you have already implemented.
 
     updateHp();  // Update the UI after the attack
 }
@@ -172,12 +266,11 @@ function enemyMove() {
     const playerEatermon = eatermon[currentEatermonIndex];
     const playerType = playerEatermon.type;
 
-    console.log(enemyEatermon);
-    console.log(enemyMoves);
-    console.log(selectedEnemyMove);
-    console.log(playerEatermon);
-    console.log(playerType);
-
+    console.log("Enemy Eatermon:", enemyEatermon);
+    console.log("Enemy Moves:", enemyMoves);
+    console.log("Selected Enemy Move:", selectedEnemyMove);
+    console.log("Player Eatermon:", playerEatermon);
+    console.log("Player Type:", playerType);
 
     if (playerEatermon.hp <= 0) {
         // If player is already defeated, stop enemy from attacking
@@ -185,14 +278,15 @@ function enemyMove() {
     }
 
     let modifiedPower = selectedEnemyMove.power;
-    let moveHeal = selectedEnemyMove.heal; 
+    let moveHeal = selectedEnemyMove.heal;
 
-    if(moveHeal > 0) {
+    if (moveHeal > 0) {
         enemyEatermon.hp += moveHeal; 
-        enemyEatermon.hp = Math.max(enemyEatermon.maxHp, enemyEatermon.hp);  // Ensure HP doesn't go below 0
+        enemyEatermon.hp = Math.max(enemyEatermon.maxHp, enemyEatermon.hp);  // Ensure HP doesn't go above max
+        const enemyHpInner = document.getElementById('enemyinnerBar');
         enemyHpInner.style.width = `${(enemyEatermon.hp / enemyEatermon.maxHp) * 100}%`;
-
     }
+
     // Check if the enemy's move is strong or weak against the player's type
     const moveType = selectedEnemyMove.type;
     const typeEffectiveness = getTypeEffectiveness(moveType, playerType);
@@ -203,13 +297,39 @@ function enemyMove() {
     } else if (typeEffectiveness === 'weak') {
         modifiedPower *= 0.5;
     } else if (typeEffectiveness === 'noEffect') {
-        modifiedPower *= 0;
+        modifiedPower = 0;  // If no effect, set power to 0
     }
 
-    // Apply the modified power to the player's HP
-    if (modifiedPower > 0) {
-        playerEatermon.hp -= modifiedPower;
-        playerEatermon.hp = Math.max(0, playerEatermon.hp);
+    console.log("Modified Power after Type Effectiveness:", modifiedPower);
+
+    // Add attack stat and defense stat to the damage calculation
+    const attackStat = enemyEatermon.attack;  // Assuming enemy has an `attack` stat
+    const defenseStat = playerEatermon.defense;  // Assuming player has a `defense` stat
+    const level = enemyEatermon.level;  // Assuming enemy has a `level`
+
+    console.log("Attack Stat:", attackStat);
+    console.log("Defense Stat:", defenseStat);
+    console.log("Level:", level);
+
+    if (!attackStat || !defenseStat || !level) {
+        console.error("Invalid values: Attack, Defense, or Level is missing.");
+        return;  // Stop if any stat is missing or invalid
+    }
+
+    // Damage formula: (2 * Level / 5 + 2) * Power * Attack / Defense / 50 + 2
+    const baseDamage = ((2 * level) / 5 + 2) * (modifiedPower * attackStat / defenseStat) / 50 + 2;
+    console.log("Base Damage:", baseDamage);
+
+    // Add random factor (between 0.85 and 1.0)
+    const randomFactor = Math.random() * (1 - 0.85) + 0.85;  // Random factor between 0.85 and 1.0
+    const finalDamage = Math.floor(baseDamage * randomFactor);
+
+    console.log("Final Damage:", finalDamage);  // Log final damage
+
+    // Apply damage to the player if move has damage
+    if (finalDamage > 0) {
+        playerEatermon.hp -= finalDamage;
+        playerEatermon.hp = Math.max(0, playerEatermon.hp);  // Ensure HP doesn't go below 0
         const playerHpInner = document.getElementById('playerinnerBar');
         playerHpInner.style.width = `${(playerEatermon.hp / playerEatermon.maxHp) * 100}%`;
     }
@@ -221,11 +341,10 @@ function enemyMove() {
         setTimeout(() => {
             playerHpInner.style.display = `none`;
             battleText.innerHTML = `You Lost Against ${enemyEatermon.name}!`;
-           generateAttackButtons(true); 
+            generateAttackButtons(true);  // Disable attack buttons when player is dead
         }, 1000);
         setTimeout(() => {
-            if(talkingToNPC) {
-                generateAttackButtons(true);
+            if (talkingToNPC) {
                 battleText.innerHTML = `You Lost Against ${currentNPC.name}'s ${enemyEatermon.name}!`;
                 setTimeout(() => {
                     normal = true; 
@@ -234,14 +353,14 @@ function enemyMove() {
                     currentNPC.canTalkAgain = false; 
                     currentNPC.canBattle = false; 
                     npcText.innerHTML = `${currentNPC.wonMessage}`;
-                    showNpcText(); // Show the text box
+                    showNpcText();  // Show the text box
                     inBattle = false;
                     battleMenuScript.style.display = 'none';
                     normal = true; 
                     setTimeout(() => {
                         generateAttackButtons(); 
                     }, 2000); 
-                    }, 1000); 
+                }, 1000); 
             } else {
                 inBattle = false; // End the battle if the player is dead
                 battleMenuScript.style.display = 'none'; // End the battle
@@ -258,6 +377,7 @@ function enemyMove() {
     // End the enemy's turn, and it's now the player's turn again
     playerTurn = true;
 }
+
 
 // Get type effectiveness between two types
 function getTypeEffectiveness(attackType, defenseType) {

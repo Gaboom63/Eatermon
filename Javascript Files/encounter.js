@@ -9,11 +9,14 @@ let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
 let playerHpInner = document.getElementById('playerinnerBar');
 
+
+
 function pickRandomEnemy() {
     // Choose a random enemy index, but don't modify the actual eatermon array
     const randomNumber = Math.floor(Math.random() * eatermon.length); 
     enemyEatermonIndex = randomNumber;  // Just update the index, don't modify the eatermon array itself
 }
+
 
 // Modified encounter function to trigger coin flip animation
 const encounter = () => {
@@ -22,14 +25,14 @@ const encounter = () => {
     const playerTileY = Math.floor(playerY);
 
     if(currentEatermonIndex === enemyEatermonIndex) {
-        pickRandomEnemy(); 
+        pickRandomEnemy();
     }
 
     // Look for green square overlap (event tiles)
     const greenSquare = currentMap.grass.find(grass => grass.x === playerTileX && grass.y === playerTileY);
     if (greenSquare) {
         let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
-        // console.log(`Number: ${pickNum}`); 
+        // console.log(`Number: ${pickNum}`);
         // Check if the encounter chance is met and if the player isn't already in a battle
         if (pickNum < 50 && !inBattle && eatermon[enemyEatermonIndex] != eatermon[currentEatermonIndex]) {
             hasEncounted = true;
@@ -38,9 +41,13 @@ const encounter = () => {
             // List of encountered Eatermons indexes (could be stored globally or in localStorage if persistent)
             let encounteredEatermons = [];
 
-            // Randomly choose an enemy Eatermon, ensuring it hasn't been encountered before
+            const possibleEnemiesOnRoute = currentMap.encounters; // Directly use the array of eatermon objects
+
+            let chosenEnemy;
             do {
-                enemyEatermonIndex = Math.floor(Math.random() * eatermon.length);
+                const randomIndexInRoute = Math.floor(Math.random() * possibleEnemiesOnRoute.length);
+                chosenEnemy = possibleEnemiesOnRoute[randomIndexInRoute];
+                enemyEatermonIndex = eatermon.indexOf(chosenEnemy); // Get the index from the main eatermon array
             } while (enemyEatermonIndex === currentEatermonIndex || encounteredEatermons.includes(enemyEatermonIndex));
 
             // Add the enemy Eatermon index to the list of encountered Eatermons
@@ -142,17 +149,22 @@ function showEmblems() {
 let teachingCatching = false; 
 
 function battleTestForCutScene() {
-    //THIS IS ONLY FOR TEST
-    currentEatermonIndex = 1; 
-    //END OF ONLY TEST
+    restorePlayerHp(); 
     npcNormal = false; 
     normal = false; 
     waitingForEnter = false; 
     enemyEatermonIndex = 12;
+    battleMenuOptions.innerHTML = `
+        <button id="attack" onclick="Attack()">Attack!</button> <br>
+        <button id="bag" onclick="Bag()">Bag</button> <br>
+        <button id="run" onclick="Run()">Run</button> <br>
+    `;
     eatermon[enemyEatermonIndex].hp = 30; 
     eatermon[enemyEatermonIndex].maxHp = 30; 
     battleMenuScript.style.display = 'block'; // Show battle menu
     npcTextContainer.style.display = "block";
+    restoreEnemyHp();
+    updateHp();
     npcName.innerHTML = `Elijah Says:`
     npcP.innerHTML = `Okay! Here's A Quick Run Down! First There's An Attack Button Click That!`;
     startBattleAnimation(); // Trigger the battle animation

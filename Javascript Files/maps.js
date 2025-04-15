@@ -7,6 +7,7 @@ let maps = [
         mapWidth: 16,
         mapHeight: 16,
         zoom: 4,
+        encounters: eatermonForEachRoute[0], 
         walls: [
             { x: 0, y: 0 },
             { x: 1, y: 0 },
@@ -182,7 +183,7 @@ let maps = [
         zoom: 3,
         mapWidth: 32,
         mapHeight: 32,
-
+        encounters: eatermonForEachRoute[0], 
         walls: [
             { x: 21, y: 26 },
             { x: 21, y: 27 },
@@ -600,7 +601,7 @@ let maps = [
         zoom: 3,//Number, 
         mapWidth: 24,
         mapHeight: 24,
-
+        encounters: eatermonForEachRoute[0], 
         walls: [
             { x: 17, y: 1 },
             { x: 17, y: 6 },
@@ -919,7 +920,7 @@ let maps = [
         zoom: 3,//Number, 
         mapWidth: 32,
         mapHeight: 64,
-
+        encounters: eatermonForEachRoute[0], 
         walls: [
             { x: 8, y: 6 },
             { x: 9, y: 6 },
@@ -1604,7 +1605,7 @@ let maps = [
         zoom: 3,//Number, 
         mapWidth: 24,
         mapHeight: 24,
-
+        encounters: eatermonForEachRoute[0], 
         walls: [
             { x: 17, y: 1 },
             { x: 17, y: 6 },
