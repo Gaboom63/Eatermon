@@ -8,6 +8,7 @@ let battleText = document.getElementById('battleTextContainer');
 let enemyHP = document.getElementById("enemyHP");
 let enemyHpInner = document.getElementById('enemyinnerBar');
 let playerHpInner = document.getElementById('playerinnerBar');
+let resetTimeDone = true; 
 
 
 
@@ -30,7 +31,7 @@ const encounter = () => {
 
     // Look for green square overlap (event tiles)
     const greenSquare = currentMap.grass.find(grass => grass.x === playerTileX && grass.y === playerTileY);
-    if (greenSquare) {
+    if (greenSquare && resetTimeDone) {
         let pickNum = Math.random() * (10000 - 1) + 1; // Random number for encounter chance
         // console.log(`Number: ${pickNum}`);
         // Check if the encounter chance is met and if the player isn't already in a battle
@@ -62,6 +63,7 @@ const encounter = () => {
 
             battleMenuScript.style.display = 'block'; // Show battle menu
             startBattleAnimation(); // Trigger the battle animation
+            resetTimeDone = false; 
         }
     }
 };

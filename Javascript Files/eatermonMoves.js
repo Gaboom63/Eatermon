@@ -117,14 +117,19 @@ let eatermonMoves = [
         eatermon: eatermon[14],
         moves: [
             { name: "Peel Slam", power: 60, type: eatermonTypes[2].type }, // Water-type move (melting, smooth wave of chocolate)
-            { name: "Split 'n' Smash", power: 550, type: eatermonTypes[3].type }, // Electric-type move (vibrations of the shake)
+            { name: "Split 'n' Smash", power: 55, type: eatermonTypes[3].type }, // Electric-type move (vibrations of the shake)
             { name: "Banana Peel Barrage", power: 40, type: eatermonTypes[1].type }, // Ice-type move (fudgy ice cream rush)
-            { name: "Peel Armor", power: 0, type: eatermonTypes[6].type }, // Ice-type move (chocolate snowstorm)
+            { name: "Peel Armor", power: 0, defense: 10, type: eatermonTypes[6].type }, // Ice-type move (chocolate snowstorm)
+        ]
+    },
+    {
+        eatermon: eatermon[15],
+        moves: [
+
         ]
     }
 ];
 
-// //console.log(eatermonMoves); 
 
 
 const eatermonLearnableMoves = [
