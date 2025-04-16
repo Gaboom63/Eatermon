@@ -39,112 +39,112 @@ function clearMenu() {
 function generateAttackButtons(disableButtons = false) {
     let selectedEatermon = eatermon[currentEatermonIndex];
     let moves = eatermonMoves.find(e => e.eatermon.name === selectedEatermon.name)?.moves;
-    console.log(selectedEatermon)
-    // Generate attack buttons based on available moves
+    console.log(selectedEatermon);
+
     let attackButtonsHtml = '';
 
-if(teachingCatching) {
-    npcP.innerHTML = `Good Job! Next Select A Move! Your Eatermon Learns Up to <b>4 Moves</b>! They Can Learn New Moves By Leveling Up.`;
-     if (moves && moves.length >= 4) {
-        attackButtonsHtml = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-            <br><br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
-            <br>
-            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-        `;
-    } else if(moves && moves.length >= 3) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-        <br><br>
-        <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }else if(moves && moves.length >= 2) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-        <br><br>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }else if(moves && moves.length >= 1) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <br><br>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }  else {
-        attackButtonsHtml = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
-            <br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
-            <br>
-            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-        `;
-    }
- 
- // Add the generated buttons to the battle menu
- battleMenuOptions.innerHTML = attackButtonsHtml;
+    if (teachingCatching) {
+        npcP.innerHTML = `Good Job! Next Select A Move! Your Eatermon Learns Up to <b>4 Moves</b>! They Can Learn New Moves By Leveling Up.`;
 
-} else { //This Is AFTER the inital Catching Scene :)
-    if (moves && moves.length >= 4) {
-        attackButtonsHtml = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-            <br><br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
-            <br>
-            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-        `;
-    } else if(moves && moves.length >= 3) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-        <br><br>
-        <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }else if(moves && moves.length >= 2) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
-        <br><br>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }else if(moves && moves.length >= 1) {
-        attackButtonsHtml = `
-        <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
-        <br><br>
-        <br>
-        <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-    `;
-    }  else {
-        attackButtonsHtml = `
-            <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
-            <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
-            <br>
-            <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
-            <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
-            <br>
-            <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
-        `;
-    }
+        if (moves && moves.length >= 4) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" style="${getMoveButtonStyle(moves[2])}" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+                <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" style="${getMoveButtonStyle(moves[3])}" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 3) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" style="${getMoveButtonStyle(moves[2])}" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 2) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 1) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <br><br>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
+                <br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
+                <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        }
 
-    // Add the generated buttons to the battle menu
-    battleMenuOptions.innerHTML = attackButtonsHtml;
+        battleMenuOptions.innerHTML = attackButtonsHtml;
+
+    } else {
+        if (moves && moves.length >= 4) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" style="${getMoveButtonStyle(moves[2])}" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+                <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" style="${getMoveButtonStyle(moves[3])}" ${disableButtons ? 'disabled' : ''}>${moves[3].name || 'Attack 4'}</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 3) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" style="${getMoveButtonStyle(moves[2])}" ${disableButtons ? 'disabled' : ''}>${moves[2].name || 'Attack 3'}</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 2) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" style="${getMoveButtonStyle(moves[1])}" ${disableButtons ? 'disabled' : ''}>${moves[1].name || 'Attack 2'}</button>
+                <br><br>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else if (moves && moves.length >= 1) {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" style="${getMoveButtonStyle(moves[0])}" ${disableButtons ? 'disabled' : ''}>${moves[0].name || 'Attack 1'}</button>
+                <br><br>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        } else {
+            attackButtonsHtml = `
+                <button id="attackButton1" onclick="attackMove(${currentEatermonIndex}, 0)" ${disableButtons ? 'disabled' : ''}>Attack 1</button>
+                <button id="attackButton2" onclick="attackMove(${currentEatermonIndex}, 1)" ${disableButtons ? 'disabled' : ''}>Attack 2</button>
+                <br>
+                <button id="attackButton3" onclick="attackMove(${currentEatermonIndex}, 2)" ${disableButtons ? 'disabled' : ''}>Attack 3</button>
+                <button id="attackButton4" onclick="attackMove(${currentEatermonIndex}, 3)" ${disableButtons ? 'disabled' : ''}>Attack 4</button>
+                <br>
+                <button id="backButton" onclick="backButton()" ${disableButtons ? 'disabled' : ''}>Back</button>
+            `;
+        }
+
+        battleMenuOptions.innerHTML = attackButtonsHtml;
+    }
 }
-}
+
 
 
 function Attack() {

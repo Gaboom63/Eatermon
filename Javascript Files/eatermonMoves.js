@@ -125,11 +125,41 @@ let eatermonMoves = [
     {
         eatermon: eatermon[15],
         moves: [
-
+            { name: "Hot Potato", power: 30, type: eatermonTypes[0].type},
+            { name: "Soften", heal: 30, defense: -10, type: eatermonTypes[4].type},
+            { name: "Potato Explosion", power: 60, type: eatermonTypes[0].type},
+            { name: "Po-Pow", power: 40, type: eatermonTypes[7].type}
+        ]
+    },
+    {
+        eatermon: eatermon[16],
+        moves: [
+            { name: "Knife Wipe", power: 20, type: eatermonTypes[11].type},
+            { name: "Jammin Out", power: 40, heal: 10, type: eatermonTypes[11].type},
+            { name: "Lid Throw", power: 45, type: eatermonTypes[5].type},
+            { name: "Jelly Goon", power: 60, type: eatermonTypes[11].type},
         ]
     }
 ];
 
+/*
+    * Fire - id[0]
+    * Water - id[1]
+    * Grass - id[2]
+    * Ice - id[3]
+    * Normal - id[4]
+    * Fighting - id[5]
+    * Poison - id[6]
+    * Flying - id[7]
+    * Crisp - id[8]
+    * Ground - id[9]
+    * Sticky - id[10]
+    * Sweet - id[11]
+    * Sour - id[12]
+    * Salty - id[13]
+    * Dragin - id [14] 
+    * Template: { name: "", power: , type: eatermonTypes[].type},
+*/
 
 
 const eatermonLearnableMoves = [
