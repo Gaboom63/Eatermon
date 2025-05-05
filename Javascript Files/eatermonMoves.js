@@ -139,6 +139,15 @@ let eatermonMoves = [
             { name: "Lid Throw", power: 45, type: eatermonTypes[5].type},
             { name: "Jelly Goon", power: 60, type: eatermonTypes[11].type},
         ]
+    },
+     {
+        eatermon: eatermon[17],
+        moves: [
+            { name: "Kernel Puff", power: 40, type: eatermonTypes[2].type},
+            { name: "Corn Lob", power: 40, type: eatermonTypes[11].type}, //Add Chance Of Paralysis later 
+            { name: "Cornhub", power: 60, type: eatermonTypes[0].type},
+            { name: "Shuck 'n Blast", power: 40, type: eatermonTypes[2].type},
+        ]
     }
 ];
 
@@ -159,8 +168,16 @@ let eatermonMoves = [
     * Salty - id[13]
     * Dragin - id [14] 
     * Template: { name: "", power: , type: eatermonTypes[].type},
+    *   {
+        eatermon: eatermon[],
+        moves: [
+            { name: "", power: , type: eatermonTypes[].type},
+            { name: "", power: , type: eatermonTypes[].type},
+            { name: "", power: , type: eatermonTypes[].type},
+            { name: "", power: , type: eatermonTypes[].type},
+        ]
+    }
 */
-
 
 const eatermonLearnableMoves = [
     {
