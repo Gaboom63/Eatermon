@@ -70,20 +70,20 @@ let eatermonMoves = [
     },
     {
         eatermon: eatermon[9], // Tomadoodle
-            moves: [
-                { name: "Flamin' Chickin", power: 40, type: eatermonTypes[0].type },
-                { name: "Protien Bulk", power: 20, type: eatermonTypes[6].type },
-                { name: "Bone Recycle", power: 10, type: eatermonTypes[7].type },        
-            ]
+        moves: [
+            { name: "Flamin' Chickin", power: 40, type: eatermonTypes[0].type },
+            { name: "Protien Bulk", power: 20, type: eatermonTypes[6].type },
+            { name: "Bone Recycle", power: 10, type: eatermonTypes[7].type },
+        ]
     },
     {
         eatermon: eatermon[10], // ChocolateBar
-            moves: [
-                { name: "Crunch", power: 50, type: eatermonTypes[8].type }, // Crisp
-                { name: "Crisp Fury", power: 80, type: eatermonTypes[8].type }, // Crisp
-                { name: "Fry", power: 60, type: eatermonTypes[1].type }, // Fire
-                { name: "Chip Toss", power: 40, type: eatermonTypes[7].type }, // Flying
-            ]
+        moves: [
+            { name: "Crunch", power: 50, type: eatermonTypes[8].type }, // Crisp
+            { name: "Crisp Fury", power: 80, type: eatermonTypes[8].type }, // Crisp
+            { name: "Fry", power: 60, type: eatermonTypes[1].type }, // Fire
+            { name: "Chip Toss", power: 40, type: eatermonTypes[7].type }, // Flying
+        ]
     },
     {
         eatermon: eatermon[11],
@@ -93,7 +93,7 @@ let eatermonMoves = [
             { name: "Baked Ziti", power: 90, type: eatermonTypes[0].type }, // Fire-type move (baked in the oven)
             { name: "Fusilli Twist", power: 50, type: eatermonTypes[1].type }, // Water-type move (spinning in water)
         ]
-    
+
     },
     {
         eatermon: eatermon[12],
@@ -125,48 +125,111 @@ let eatermonMoves = [
     {
         eatermon: eatermon[15],
         moves: [
-            { name: "Hot Potato", power: 30, type: eatermonTypes[0].type},
-            { name: "Soften", heal: 30, defense: -10, type: eatermonTypes[4].type},
-            { name: "Potato Explosion", power: 60, type: eatermonTypes[0].type},
-            { name: "Po-Pow", power: 40, type: eatermonTypes[7].type}
+            { name: "Hot Potato", power: 30, type: eatermonTypes[0].type },
+            { name: "Soften", heal: 30, defense: -10, type: eatermonTypes[4].type },
+            { name: "Potato Explosion", power: 60, type: eatermonTypes[0].type },
+            { name: "Po-Pow", power: 40, type: eatermonTypes[7].type }
         ]
     },
     {
         eatermon: eatermon[16],
         moves: [
-            { name: "Knife Wipe", power: 20, type: eatermonTypes[11].type},
-            { name: "Jammin Out", power: 40, heal: 10, type: eatermonTypes[11].type},
-            { name: "Lid Throw", power: 45, type: eatermonTypes[5].type},
-            { name: "Jelly Goon", power: 60, type: eatermonTypes[11].type},
+            { name: "Knife Wipe", power: 20, type: eatermonTypes[11].type },
+            { name: "Jammin Out", power: 40, heal: 10, type: eatermonTypes[11].type },
+            { name: "Lid Throw", power: 45, type: eatermonTypes[5].type },
+            { name: "Jelly Goon", power: 60, type: eatermonTypes[11].type },
         ]
     },
-     {
+    {
         eatermon: eatermon[17],
         moves: [
-            { name: "Kernel Puff", power: 40, type: eatermonTypes[2].type},
-            { name: "Corn Lob", power: 40, type: eatermonTypes[11].type}, //Add Chance Of Paralysis later 
-            { name: "Cornhub", power: 60, type: eatermonTypes[0].type},
-            { name: "Shuck 'n Blast", power: 40, type: eatermonTypes[2].type},
+            { name: "Kernel Puff", power: 40, type: eatermonTypes[2].type },
+            { name: "Corn Lob", power: 40, type: eatermonTypes[11].type }, //Add Chance Of Paralysis later 
+            { name: "Cornhub", power: 60, type: eatermonTypes[0].type },
+            { name: "Shuck 'n Blast", power: 40, type: eatermonTypes[2].type },
         ]
     },
     {
         eatermon: eatermon[18],
         moves: [
-            { name: "Blue Burst", power: 50, type: eatermonTypes[1].type},
-            { name: "Frozen Berry", power: 60, type: eatermonTypes[3].type}, //Add Freezing Effects Later
-            { name: "Squishy Berry", power: 80, type: eatermonTypes[6].type},
-            { name: "Berry Blast", power: 50, type: eatermonTypes[3].type}, //Also add CHANCE of freezing
+            { name: "Blue Burst", power: 50, type: eatermonTypes[1].type },
+            { name: "Frozen Berry", power: 60, type: eatermonTypes[3].type }, //Add Freezing Effects Later
+            { name: "Squishy Berry", power: 80, type: eatermonTypes[6].type },
+            { name: "Berry Blast", power: 50, type: eatermonTypes[3].type }, //Also add CHANCE of freezing
         ]
     },
     {
         eatermon: eatermon[19],
         moves: [
-            { name: "Feeling At The Pit", power: 100, type: eatermonTypes[2].type},
-            { name: "Pit Scooper", power: 40, type: eatermonTypes[7].type}, //Add ability for 1-5 hit chance
-            { name: "Pit o' Power", power: 50, type: eatermonTypes[9].type},
-            { name: "Avacado Split", power: 40, defense: 40, type: eatermonTypes[2].type},
+            { name: "Feeling At The Pit", power: 100, type: eatermonTypes[2].type },
+            { name: "Pit Scooper", power: 40, type: eatermonTypes[7].type }, //Add ability for 1-5 hit chance
+            { name: "Pit o' Power", power: 50, type: eatermonTypes[9].type },
+            { name: "Avacado Split", power: 40, defense: 40, type: eatermonTypes[2].type },
         ]
-    }
+    },
+    {
+        eatermon: eatermon[20],
+        moves: [
+            { name: "Bread Burst", power: 50, type: eatermonTypes[11].type },
+            { name: "Sweet Scent", power: 20, defense: -30, type: eatermonTypes[11].type },
+            { name: "Under-Baked", power: 50, type: eatermonTypes[12].type },
+            { name: "March Muffin!", power: 30, defense: 30, type: eatermonTypes[4].type },
+        ]
+    },
+    {
+        eatermon: eatermon[21],
+        moves: [
+            { name: "Whats The Officer Problem?", power: 40, type: eatermonTypes[6].type },
+            { name: "Crack A Bottle", power: 30, type: eatermonTypes[11].type }, // Eminem ;)
+            { name: "I Don't Have A Drinking Problem!", power: 90, type: eatermonTypes[6].type }, //Poison Opponet 
+            { name: "Simply Bitter", power: 40, type: eatermonTypes[12].type },
+        ]
+    },
+    {
+        eatermon: eatermon[22],
+        moves: [
+            { name: "Purp Trio", power: 30, type: eatermonTypes[6].type }, // * Three. 15% Of Poisoning 
+            { name: "One, A Two, A Three!", power: 90, type: eatermonTypes[2].type },
+            { name: "I'm Grapin It", power: 40, type: eatermonTypes[4].type },
+            { name: "Early Harvest", power: 50, type: eatermonTypes[3].type },
+        ]
+    },
+    {
+        eatermon: eatermon[23],
+        moves: [
+            { name: "Launcher Head", power: 40, type: eatermonTypes[7].type },
+            { name: "Ethylene Pump", power: 0, defense: 50, type: eatermonTypes[11].type },
+            { name: "Un-peel", power: 60, defense: -40, type: eatermonTypes[2].type },
+            { name: "DK Attractor", power: 40, defense: -30, type: eatermonTypes[13].type },
+        ]
+    },
+    {
+        eatermon: eatermon[24],
+        moves: [
+            { name: "It's Legal I Swear!", power: 40, type: eatermonTypes[12].type },
+            { name: "Toxic", power: 0, type: eatermonTypes[6].type }, // Poison 
+            { name: "So... You Just Snort It?", power: 40, defense: 30, type: eatermonTypes[13].type },
+            { name: "Everythings Normal", power: 30, type: eatermonTypes[4].type },
+        ]
+    },
+    {
+        eatermon: eatermon[25],
+        moves: [
+            { name: "Pizzazz", power: 60, type: eatermonTypes[11].type },
+            { name: "Worm Tail", power: 30, type: eatermonTypes[14].type },
+            { name: "Too Much Style", power: 0, defense: -30, type: eatermonTypes[11].type },
+            { name: "Poor Points", power: 40, type: eatermonTypes[14].type },
+        ]
+    },
+    // {
+    //     eatermon: eatermon[26],
+    //     moves: [
+    //         { name: "Top Hat Smack", power: 40, type: eatermonTypes[].type},
+    //         { name: "", power: , type: eatermonTypes[].type},
+    //         { name: "", power: , type: eatermonTypes[].type},
+    //         { name: "", power: , type: eatermonTypes[].type},
+    //     ]
+    // }
 ];
 
 /*
@@ -384,7 +447,7 @@ const eatermonLearnableMoves = [
             90: [{ name: "Avian Talons", power: 70, type: "Fairy" }],
             100: [{ name: "Inferno Wing", power: 80, type: "Fire" }]
         }
-    }    
+    }
 ]
 
 
