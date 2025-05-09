@@ -12,8 +12,8 @@ let eatermonMoves = [
         eatermon: eatermon[1], // Tomadoodle
         moves: [
             { name: "Fireball", power: 30, type: eatermonTypes[0].type },
-            // { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
-            // { name: "Scratch", power: 10, type: eatermonTypes[4].type },
+            { name: "Flame Burst", power: 35, type: eatermonTypes[0].type },
+            { name: "Scratch", power: 10, type: eatermonTypes[4].type },
             { name: "Debug Ember", power: 2500, type: eatermonTypes[4].type }
         ]
     },
@@ -147,6 +147,24 @@ let eatermonMoves = [
             { name: "Corn Lob", power: 40, type: eatermonTypes[11].type}, //Add Chance Of Paralysis later 
             { name: "Cornhub", power: 60, type: eatermonTypes[0].type},
             { name: "Shuck 'n Blast", power: 40, type: eatermonTypes[2].type},
+        ]
+    },
+    {
+        eatermon: eatermon[18],
+        moves: [
+            { name: "Blue Burst", power: 50, type: eatermonTypes[1].type},
+            { name: "Frozen Berry", power: 60, type: eatermonTypes[3].type}, //Add Freezing Effects Later
+            { name: "Squishy Berry", power: 80, type: eatermonTypes[6].type},
+            { name: "Berry Blast", power: 50, type: eatermonTypes[3].type}, //Also add CHANCE of freezing
+        ]
+    },
+    {
+        eatermon: eatermon[19],
+        moves: [
+            { name: "Feeling At The Pit", power: 100, type: eatermonTypes[2].type},
+            { name: "Pit Scooper", power: 40, type: eatermonTypes[7].type}, //Add ability for 1-5 hit chance
+            { name: "Pit o' Power", power: 50, type: eatermonTypes[9].type},
+            { name: "Avacado Split", power: 40, defense: 40, type: eatermonTypes[2].type},
         ]
     }
 ];

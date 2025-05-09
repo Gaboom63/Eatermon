@@ -448,7 +448,108 @@ const eatermon = [
         canFlee: false, 
         emblem: "images/emblems/dragonEmblem.png" 
     },
+    {
+        type: eatermonTypes[2],
+        id: 28, 
+        name: "C. Lanatus",
+        hp: 100,
+        maxHp: 100, 
+        attack: eatermonStats[28].attack,
+        defense: eatermonStats[28].defense,
+        speed: eatermonStats[28].speed,
+        src: "images/Eatermons/C. lanatus.png",
+        xp: eatermonExp[28].xp,
+        level: eatermonExp[28].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/grassEmblem.png" 
+    },
+    {
+        type: eatermonTypes[1],
+        id: 29, 
+        name: "Calamares",
+        hp: 100,
+        maxHp: 100, 
+        attack: eatermonStats[29].attack,
+        defense: eatermonStats[29].defense,
+        speed: eatermonStats[29].speed,
+        src: "images/Eatermons/Calamares.png",
+        xp: eatermonExp[29].xp,
+        level: eatermonExp[29].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/waterEmblem.png" 
+    },
+    {
+        type: eatermonTypes[11],
+        id: 30, 
+        name: "Calamars",
+        hp: 100,
+        maxHp: 100, 
+        attack: eatermonStats[30].attack,
+        defense: eatermonStats[30].defense,
+        speed: eatermonStats[30].speed,
+        src: "images/Eatermons/Calamars.png",
+        xp: eatermonExp[30].xp,
+        level: eatermonExp[30].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/sweetEmblem.png" 
+    },
+    {
+        type: eatermonTypes[13],
+        id: 31, 
+        name: "Kalamar",
+        hp: 100,
+        maxHp: 100, 
+        attack: eatermonStats[31].attack,
+        defense: eatermonStats[31].defense,
+        speed: eatermonStats[31].speed,
+        src: "images/Eatermons/Kalamar.png",
+        xp: eatermonExp[31].xp,
+        level: eatermonExp[31].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/saltyEmblem.png" 
+    },
 ]
+/*
+    * Fire - id[0]
+    * Water - id[1]
+    * Grass - id[2]
+    * Ice - id[3]
+    * Normal - id[4]
+    * Fighting - id[5]
+    * Poison - id[6]
+    * Flying - id[7]
+    * Crisp - id[8]
+    * Ground - id[9]
+    * Sticky - id[10]
+    * Sweet - id[11]
+    * Sour - id[12]
+    * Salty - id[13]
+    * Dragin - id [14] 
+    * Template: { name: "", power: , type: eatermonTypes[].type},
+*/
+ /**
+     * {
+        type: eatermonTypes[#],
+        id: #, 
+        name: "",
+        hp: 100,
+        maxHp: 100, 
+        attack: eatermonStats[#].attack,
+        defense: eatermonStats[#].defense,
+        speed: eatermonStats[#].speed,
+        src: "images/Eatermons/.png",
+        xp: eatermonExp[#].xp,
+        level: eatermonExp[#].level,
+        maxXp: 100, 
+        canFlee: false, 
+        emblem: "images/emblems/.png" 
+    },
+     */
+
 let eatermonForEachRoute = [
     [
         //Route One
