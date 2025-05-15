@@ -69,17 +69,17 @@ function movePlayer(dx, dy, direction) {
                             drawPlayer();
                             drawCoordinates();
                             updatePlayerSprite(direction);
-                            // if (game.currentMessageArray === game.momMessageText) {
-                            //     npcNormal = true;
-                            //     setTimeout(() => {
-                            //         npcNormal = false;
-                            //     }, 1000);
-                            //     console.log("isMomMessageActive (Downstairs Transition)");
-                            //     setCutScene(1);
-                            // } else if(game.goingToElijah) {
-                            //     setCutScene(3);
-                            // } else if(game.routeOne){
-                            //}        
+                            if (game.currentMessageArray === game.momMessageText) {
+                                npcNormal = true;
+                                setTimeout(() => {
+                                    npcNormal = false;
+                                }, 1000);
+                                console.log("isMomMessageActive (Downstairs Transition)");
+                                setCutScene(1);
+                            } else if(game.goingToElijah) {
+                                setCutScene(3);
+                            } else if(game.routeOne){
+                            }        
                             if(maps[currentMap.id].id === 3 && game.routeOne) {
                                npcNormal = false; 
                                normal = false;                         

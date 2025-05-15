@@ -1,4 +1,4 @@
-let hideText = false; 
+let hideText = false;
 let game = {
     messageIndex: 0,
     gettingName: true,
@@ -17,46 +17,45 @@ let game = {
     downstairsMomMessageText: [
         "",
         `Some kid named Elijah is outside waiting for you. You Should Go See Him!`,
-
     ],
     firstElijahMessageText: [
         "",
         `The professor (or my dad pretty cool huh) has been waiting for both of us since we both turned 16 today!`,
         `We should go meet him... My house is the one on the right.`
-
     ],
     professerInitalText: [
-        "",
+        "", // Will be set dynamically with playerName
         `Lets Get Elijah In Here Before We Begin...`,
-        `Well Hello Elijah Perfect Timing, I want to give you and ${this.playerName} A Eatermon!`,
+        `Well Hello Elijah Perfect Timing, I want to give you and \${game.playerName} A Eatermon!`,
         `The Eatermon You Choose Really Will Affect Your Experience In This World`,
         `Please Pick Wisely!`,
         `Please Pick Wisely!`,
-        `${this.playerName}, You Should Battle Elijah! `
-
+        `\${game.playerName}, You Should Battle Elijah! `
     ],
     elijahRouteOne: [
-        ``,
+        "",
         `Professor Ron Told Me To Teach You How To Catch An Eatermon`,
         `Follow Me!`,
+        `Follow Me!` // This index is referenced explicitly in showNextMessage
     ],
     elijahCatchMessage: [
         `Ok! Here We Go!`
     ],
     currentMessageArray: [],
     isMomMessageComplete: false,
-    currentMessageHandler: null, // Function to handle key press
-    cutSceneState: 0, // 0: initial, 1: downstairs
-    isTransitioning: false, // New flag to prevent multiple transitions during an active one
-    buttonClicked: false, // Flag to track if a button was clicked
-    buttonResult: "", // Stores the result of the button click
-    buttonResultShown: false, // Track if button result has been shown.
-    waitingForEnter: false, // Flag to track if waiting for enter press
+    currentMessageHandler: null,
+    cutSceneState: 0,
+    isTransitioning: false,
+    buttonClicked: false,
+    buttonResult: "",
+    buttonResultShown: false,
+    waitingForEnter: false,
     routeOne: false,
     meetingProfesser: false,
     goingToElijah: false,
-    inBattle: false, // New flag to track if the game is currently in battle
+    inBattle: false,
 };
+
 
 
 let momMessageDone = false;
@@ -116,107 +115,136 @@ let finishedInitalBattle = false;
 
 
 function showNextMessage() {
-    let questionOneButton = document.getElementById('questionButton1');
-    let questionTwoButton = document.getElementById('questionButton2');
-
-    console.log("showNextMessage called. game.messageIndex:", game.messageIndex, "game.currentMessageArray.length:", game.currentMessageArray.length);
+    const questionOneButton = document.getElementById('questionButton1');
+    const questionTwoButton = document.getElementById('questionButton2');
     const currentArray = game.currentMessageArray;
 
+    console.log("showNextMessage called. messageIndex:", game.messageIndex, "Array length:", currentArray.length);
 
-    if (currentArray[game.messageIndex] === game.professerInitalText[0] && canPressEnter) {
-        game.messageIndex++; // Move to the next message
-        canPressEnter = false; // Disable Enter key while fade-in is in progress
+    // Handle fade-in scene before giving Eatermon
+    if (
+        currentArray === game.professerInitalText &&
+        game.messageIndex === 0 &&
+        canPressEnter
+    ) {
+        game.messageIndex++;
+        canPressEnter = false;
         fadeIn();
+
         setTimeout(() => {
             afterMeetingProfessor = true;
-            showNPC('Elijah'); // Show Elijah after fade-in completes
-            fadeOut(); // Start fade-out after Elijah is shown
+            showNPC('Elijah');
+            fadeOut();
 
             setTimeout(() => {
-                showNpcText(); // Show the text box again after fade-out
-                // game.messageIndex++; // Move to the next message
-                showNextMessage(); // Proceed with the next message
+                showNpcText();
+                showNextMessage(); // Proceed to the next message
                 setTimeout(() => {
                     canPressEnter = true;
                 }, 1000);
-            }, 2000); // Delay to wait for fade-out to complete
-        }, 3000); // Fade-in delay
+            }, 2000);
+        }, 3000);
+        return;
     }
 
-    if (currentArray[game.messageIndex] === game.professerInitalText[5]) {
+    // Handle Eatermon choice buttons
+    if (
+        currentArray === game.professerInitalText &&
+        game.messageIndex === 5
+    ) {
         showQuestionButtons();
         questionOneButton.innerHTML = `I choose: Tomadoodle!`;
         questionTwoButton.innerHTML = `I choose: Woodle!`;
-        game.buttonClicked = true;
-        // Add event listeners to the buttons
-        questionOneButton.addEventListener('click', function () {
+
+        // Prevent multiple event listeners
+        questionOneButton.replaceWith(questionOneButton.cloneNode(true));
+        questionTwoButton.replaceWith(questionTwoButton.cloneNode(true));
+
+        document.getElementById('questionButton1').addEventListener('click', () => {
             displayResultMessage("I choose: Tomadoodle!");
         });
-
-        questionTwoButton.addEventListener('click', function () {
+        document.getElementById('questionButton2').addEventListener('click', () => {
             displayResultMessage("I choose: Woodle!");
         });
 
+        game.buttonClicked = true;
+        return;
     }
 
-    // LET ME MAKE THIS REAL CLEAR FOR MYSELF. currentArray is equal to the game.currentMessageIndex 
-    //and its getting passed in the number of the messageIndex so whatever the text is[number something]
-    // For example if game.currentMessageArray[game.messageIndex] = 'Follow Me!' and if game.whateverTextIs[number] = 'Follow Me!' then do something 
-   if (currentArray[game.messageIndex] === game.elijahRouteOne[3] && game.routeOne) {
-    console.log(game.messageIndex); 
-    canPressEnter = false;
-    setTimeout(() => {
-        hideText = true; 
-        game.messageIndex++
-    }, 1000) 
-    setCutScene(7, () => {
-        hideText = false; 
-        // canPressEnter = true; 
-        currentMap.npcs[0].x = 20;
-        currentMap.npcs[0].y = 53;
-        elijahCatch(); 
-        showNpcText();
-    });
-    return; 
-}
-    if(currentArray[game.messageIndex] === game.professerInitalText[7] && !finishedInitalBattle){
-            // npcTextContainer.style.display = 'none';
-            // hideText = true; 
-            game.inBattle = true; // Set the inBattle flag to true when the battle starts
-            npcBattle();
-            setTimeout(() => {
-                finishedInitalBattle = true;
-                npcTextContainer.style.display = 'none';
-                game.routeOne = true; 
-                game.meetingProfesser = false; 
-            }, 1000);
+    // Handle Elijah saying "Follow Me!" in route one
+    if (
+        currentArray === game.elijahRouteOne &&
+        currentArray[game.messageIndex] === 'Follow Me!' &&
+        game.routeOne
+    ) {
+        console.log("Route one transition at message index:", game.messageIndex);
+        canPressEnter = false;
 
-    } else {
-        if (game.messageIndex < currentArray.length) {
-            console.log("Before showing message. game.messageIndex:", game.messageIndex);
-            npcP.innerHTML = currentArray[game.messageIndex].replace('${game.playerName}', game.playerName);
-            console.log("Showing message:", currentArray[game.messageIndex]);
+        setTimeout(() => {
+            hideText = true;
             game.messageIndex++;
-            console.log("After showing message. game.messageIndex:", game.messageIndex);
-        } else {
-            console.log("No more messages. Calling completion handler for:", currentArray);
-            if (currentArray === game.initialDreamMessages) {
+        }, 1000);
+
+        setCutScene(7, () => {
+            hideText = false;
+            currentMap.npcs[0].x = 20;
+            currentMap.npcs[0].y = 53;
+            elijahCatch();
+            showNpcText();
+        });
+
+        return;
+    }
+
+    // Start battle
+    if (
+        currentArray === game.professerInitalText &&
+        currentArray[game.messageIndex] === '${game.playerName}, You Should Battle Elijah!' &&
+        !finishedInitalBattle
+    ) {
+        game.inBattle = true;
+        npcBattle();
+        setTimeout(() => {
+            finishedInitalBattle = true;
+            npcTextContainer.style.display = 'none';
+            game.routeOne = true;
+            game.meetingProfesser = false;
+        }, 1000);
+        return;
+    }
+
+    // Show next line if any remain
+    if (game.messageIndex < currentArray.length) {
+        const nextMessage = currentArray[game.messageIndex];
+        console.log("Before showing message:", nextMessage);
+        npcP.innerHTML = nextMessage.replace('${game.playerName}', game.playerName);
+        game.messageIndex++;
+        console.log("After showing message. New index:", game.messageIndex);
+    } else {
+        // If no more messages, trigger end-of-sequence logic
+        console.log("End of current array reached. Handling...");
+        switch (currentArray) {
+            case game.initialDreamMessages:
                 handleInitialDreamMessagesComplete();
-            } else if (currentArray === game.downstairsMomMessageText) {
-                handleDownstairsMomMessagesComplete();
-            } else if (currentArray === game.momMessageText) {
+                break;
+            case game.momMessageText:
                 handleMomMessagesComplete();
-            } else if (currentArray === game.firstElijahMessageText) {
+                break;
+            case game.downstairsMomMessageText:
+                handleDownstairsMomMessagesComplete();
+                break;
+            case game.firstElijahMessageText:
                 handleMeetElijahComplete();
-            } else if (currentArray === game.professerInitalText) {
+                break;
+            case game.professerInitalText:
                 handleMeetProfessorComplete();
-                // talkingToNPC = false;
-            } else {
+                break;
+            default:
                 npcP.innerHTML = "No more messages.";
-            }
         }
     }
 }
+
 
 function handleDownstairsMomMessagesComplete() {
     console.log("Downstairs Mom Messages Complete.");
@@ -243,6 +271,8 @@ function handleMomMessagesComplete() {
     document.removeEventListener('keydown', game.currentMessageHandler);
     momMessageDone = true;
     initalCutScene = false;
+    console.log('Mom Message is done: ', momMessageDone);
+    console.log('initalCutScene is done: ', initalCutScene);
     game.isTransitioning = false; // Flag transition end
 }
 
@@ -300,7 +330,7 @@ function momMessage() {
 function elijahRouteOneMessage() {
     npcNormal = false;
     normal = false;
-    game.inBattle = false; 
+    game.inBattle = false;
     game.elijahRouteOne[0] = `Hey ${game.playerName}!`;
     game.messageIndex = 0;
     npcName.innerHTML = `Elijah`;
@@ -321,7 +351,7 @@ function elijahCatch() {
     game.currentMessageArray = game.elijahCatchMessage;
     game.currentMessageHandler = handleKeyPress;
     document.addEventListener('keydown', game.currentMessageHandler);
-    battleTestForCutScene(); 
+    battleTestForCutScene();
 }
 
 function momMessageDownstairs() {
@@ -338,6 +368,8 @@ function momMessageDownstairs() {
     document.addEventListener('keydown', game.currentMessageHandler);
     showNpcText();
     goingToElijah = true;
+    console.log("Going To Elijah: ", goingToElijah); 
+
 }
 
 function meetingElijah() {
@@ -395,7 +427,7 @@ function handleMeetProfessorComplete() {
     npcTextContainer.style.display = 'none';
     document.removeEventListener('keydown', game.currentMessageHandler);
     meetingProfesser = false;
-    game.routeOne = true; 
+    game.routeOne = true;
 }
 
 function handleMeetElijahComplete() {
@@ -429,7 +461,7 @@ function displayResultMessage(buttonClicked) {
         updateEatermonNpc();
         currentNPC = currentMap.npcs[1]
         playerParty[0] = eatermon[1]
-        console.log(currentNPC); 
+        console.log(currentNPC);
         talkingToNPC = true;
         resultMessage = `Congratulations! You And Tomadoodle Are Going To Be Best Of Buds!`
     } else if (buttonClicked === "I choose: Woodle!") {
@@ -437,10 +469,10 @@ function displayResultMessage(buttonClicked) {
         currentEatermonIndex = 0;
         currentMap.npcs[1].party = npcParty[6].party;
         currentNPCEatermon = currentMap.npcs[1].party;
-        playerParty[0] = eatermon[0]; 
+        playerParty[0] = eatermon[0];
         updateEatermonNpc();
         currentNPC = currentMap.npcs[1];
-        console.log(currentNPC); 
+        console.log(currentNPC);
         talkingToNPC = true;
         resultMessage = `Congratulations! You And Woodle Are Going To Be Best Of Buds!`;
     } else {
@@ -485,7 +517,7 @@ function showQuestionButtons() {
 
 }
 
-// startScreen();
+startScreen();
 
 function debugNoScreen() {
     momMessageDone = true;

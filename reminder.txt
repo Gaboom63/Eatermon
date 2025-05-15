@@ -1,3 +1,9 @@
 Make differenet sprites based on health, or getting hit, etc. Credit FARHANNNNNNN
 
 Woodle Is Based On Romaine Lettece - Pirece 
+
+Ok Let me break down how cutscenes work :)
+ 
+1. In player.js you transition to the different maps. 
+2. If a certain requirement was reached then it will run a cutscene say playCutScene(1)
+3. After that in the utils.js it stores what coords to make the NPC start talking after the cutscene. 
